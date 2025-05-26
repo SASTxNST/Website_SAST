@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import "../index.css"
-import { Link } from "react-router-dom";
 import logo from "../Landing_media/SAST.png";
 import video1 from "../Landing_media/saturnbg.mp4"
 import img1 from "../Landing_media/Newsletter.png"

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
 
@@ -36,33 +37,16 @@ const Navbar = () => {
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
             <ul className="nav-links">
-              <li>
-                <a href="/">Home</a>
-              </li>
-              <li>
-                <a href="#space-service">SAST Services</a>
-              </li>
-              <li>
-                <a href="/newsletter">Newsletter</a>
-              </li>
-              <li>
-                <a href="#products">Products</a>
-              </li>
-              <li>
-                <a href="/events">Events</a>
-              </li>
-              <li>
-                <a href="/projects">Projects</a>
-              </li>
-              <li>
-                <a href="/team">Team</a>
-              </li>
-              <li>
-                <a href="/login">Login</a>
-              </li>
-              <li className="text-s">
-                <a href="/merch">Shop</a>
-              </li>
+              <li><a href="/">Home</a></li>
+              <li><a href="#space-service">SAST Services</a></li>
+              <li><a href="/newsletter">Newsletter</a></li>
+              <li><a href="#products">Products</a></li>
+              <li><a href="/events">Events</a></li>
+              <li><a href="/projects">Projects</a></li>
+              <li><a href="/team">Team</a></li>
+              <li><Link to="/contributions">Contribute</Link></li>
+              {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
+              <Link to="/login">Login</Link>
             </ul>
           </nav>
 

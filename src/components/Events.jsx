@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import "../index.css"
+import videoe1 from "../Landing_media/satellitevid.mp4"
+import waterpng from "../Landing_media/waterrocket.png"
+import watervid from "../Landing_media/bharatmpvid.mp4"
+import bharatmppng from "../Landing_media/bharatmp.jpeg"
+import bharatmpvid from "../Landing_media/bharatmpvid.mp4"
+import damrupng from "../Landing_media/DamruExhibit.jpeg"
+import onboard_png from "../Landing_media/Onboarding.jpeg"
+import onboard_vid from "../Landing_media/onboardentry.mp4"
+import rajkv_png from "../Landing_media/rajkumarv.jpeg"
+import comet_png from "../Landing_media/Tsuchinshan.jpeg"
+import comet_vid from "../Landing_media/Comentvid.mp4"
+import launch_png from "../Landing_media/offlaunch.jpeg"
+import launch_vid from "../Landing_media/launchvid.mp4"
 import "../index.css";
-import videoe1 from "../Landing_media/satellitevid.mp4";
-import waterpng from "../Landing_media/waterrocket.png";
-import bharatmppng from "../Landing_media/bharatmp.jpeg";
-import bharatmpvid from "../Landing_media/bharatmpvid.mp4";
-import damrupng from "../Landing_media/DamruExhibit.jpeg";
-import onboard_png from "../Landing_media/Onboarding.jpeg";
-import onboard_vid from "../Landing_media/onboardentry.mp4";
-import rajkv_png from "../Landing_media/rajkumarv.jpeg";
-import comet_png from "../Landing_media/Tsuchinshan.jpeg";
-import comet_vid from "../Landing_media/Comentvid.mp4";
-import launch_png from "../Landing_media/offlaunch.jpeg";
-import launch_vid from "../Landing_media/launchvid.mp4";
+
 
 const Events = () => {
   const [filterType, setFilterType] = useState("all");

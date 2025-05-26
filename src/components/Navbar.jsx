@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
-import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
@@ -37,14 +36,33 @@ const Navbar = () => {
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
             <ul className="nav-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="#space-service">SAST Services</a></li>
-              <li><a href="/newsletter">Newsletter</a></li>
-              <li><a href="#products">Products</a></li>
-              <li><a href="/events">Events</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li><a href="/team">Team</a></li>
-              <li className="text-s"><a href="/merch">Shop</a></li>
+              <li>
+                <a href="/">Home</a>
+              </li>
+              <li>
+                <a href="#space-service">SAST Services</a>
+              </li>
+              <li>
+                <a href="/newsletter">Newsletter</a>
+              </li>
+              <li>
+                <a href="#products">Products</a>
+              </li>
+              <li>
+                <a href="/events">Events</a>
+              </li>
+              <li>
+                <a href="/projects">Projects</a>
+              </li>
+              <li>
+                <a href="/team">Team</a>
+              </li>
+              <li>
+                <a href="/login">Login</a>
+              </li>
+              <li className="text-s">
+                <a href="/merch">Shop</a>
+              </li>
             </ul>
           </nav>
 
@@ -56,7 +74,6 @@ const Navbar = () => {
           >
             Contact
           </a>
-
         </div>
       </header>
     </>

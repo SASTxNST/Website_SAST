@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
-import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
@@ -45,7 +45,8 @@ const Navbar = () => {
               <li><a href="/projects">Projects</a></li>
               <li><a href="/team">Team</a></li>
               <li><Link to="/contributions">Contribute</Link></li>
-              <li className="text-s"><a href="/merch">Shop</a></li>
+              {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
+              <Link to="/login">Login</Link>
             </ul>
           </nav>
 
@@ -57,7 +58,6 @@ const Navbar = () => {
           >
             Contact
           </a>
-
         </div>
       </header>
     </>

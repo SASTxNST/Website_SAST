@@ -1,4 +1,3 @@
-// updated Leaderboard.jsx with scroll-triggered rows and glowing header bar with fixed width
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCrown, FaMedal, FaRedo } from 'react-icons/fa';

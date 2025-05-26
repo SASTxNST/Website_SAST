@@ -5,7 +5,7 @@ import './index.css';
 import Landing from './components/Landing.jsx';
 import Navbar from "./components/Navbar.jsx";
 import Newsletter from "./components/Newsletter.jsx";
-import Events from "./components/Events.jsx";
+import EventCalendar from './components/EventCalendar.jsx';
 import Projects from "./components/Projects.jsx";
 import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
@@ -16,6 +16,8 @@ const App = () => {
   const location = useLocation();
   const hideNavbarRoutes = ['/merch', '/contributions'];
 
+  
+
   return (
     <>
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
@@ -23,7 +25,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/events" element={<Events />} />
+        <Route path="/events" element={<EventCalendar/>} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/team" element={<Team />} />
         <Route path="/login" element={<Login />} />

@@ -786,7 +786,9 @@ a {
 
 .main-nav .nav-links {
   display: flex;
-  gap: 3rem;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
 }
 
 
@@ -974,4 +976,131 @@ a {
 
 .signup-text span:hover {
   color: #60a5fa;
+}
+
+.dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  margin-top: .7rem;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.05);
+  min-width: 160px;
+  box-shadow: 1px 1px 10px 0px rgba(250, 250, 250, 0.3);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: rgba(255, 255, 255, 0.7);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+/* Hamburger styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  margin-right: 2rem;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dc-1 {
+
+    right: -2.5rem;
+    top: -6.2rem;
+  }
+
+  .dropdown-content a {
+    padding: 6px 8px;
+  }
+
+
+  .dc-2 {
+    top: -3rem;
+    right: 6.4rem;
+  }
+
+  .dc-3 {
+    right: 10rem;
+    top: -2rem;
+  }
+
+  .dc-4 {
+    right: -1rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .main-nav {
+    display: none;
+    /* flex-direction: column; */
+    position: absolute;
+    top: 80px;
+    /* Adjust based on your header height */
+    right: 0;
+    background-color: white;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .main-nav.active {
+    display: flex;
+  }
+
+  .nav-links {
+    /* flex-direction: column; */
+    padding: 1rem;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+
+}
+
+.hamburger.open .bar:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
 }

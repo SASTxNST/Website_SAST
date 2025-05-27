@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
 
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // Set default to false
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -21,46 +20,75 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
-    <>
-      <header className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}>
-        <div className="container header-content">
-          <a href="/" className="logo">
-            <img src={logo} alt="Logo" width="60" height="60" />
-          </a>
+    <header className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}>
+      <div className="container header-content">
+        <a href="/" className="logo">
+          <img src={logo} alt="Logo" width="60" height="60" />
+        </a>
 
-          <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
-            <ul className="nav-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="#space-service">SAST Services</a></li>
-              <li><a href="/newsletter">Newsletter</a></li>
-              <li><a href="#products">Products</a></li>
-              <li><a href="/events">Events</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li><a href="/team">Team</a></li>
-              <li><Link to="/contributions">Contribute</Link></li>
-              {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
-              <Link to="/login">Login</Link>
-            </ul>
-          </nav>
+        {/* Navigation */}
+        <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
+          <ul className="nav-links">
+            <li className="dropdown ">
+              <a className="dropbtn">About</a>
+              <div className="dropdown-content dc-1">
+                <a href="#space-services">SATA Services</a>
+                <a href="/team">Team</a>
+              </div>
+            </li>
+            <li className="dropdown">
+              <a className="dropbtn">Resources</a>
+              <div className="dropdown-content dc-2">
+                <a href="/newsletter">Newsletter</a>
+                <a href="#products">Products</a>
+                <a href="/merch">Merch</a>
+              </div>
+            </li>
+            <li className="dropdown">
+              <a className="dropbtn">Initiatives & Events</a>
+              <div className="dropdown-content dc-3">
+                <a href="/events">Events</a>
+                <a href="/projects">Projects</a>
+              </div>
+            </li>
+            <li className="dropdown">
+              <a className="dropbtn">Get Involve</a>
+              <div className="dropdown-content dc-4">
+                <a href="/events">Contribute</a>
+                <a href="/projects">Login</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
 
-          <a
-            href="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/posts/?feedView=all"
-            className="contact-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contact
-          </a>
-        </div>
-      </header>
-    </>
+        <a
+          href="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/posts/?feedView=all"
+          className="contact-button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact
+        </a>
+
+        {/* Hamburger Button */}
+        <button
+          className={`hamburger ${menuOpen ? "open" : ""}`}
+          onClick={toggleMenu}
+        >
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
+      </div>
+    </header>
   );
 };
 

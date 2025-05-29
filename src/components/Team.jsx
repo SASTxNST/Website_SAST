@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import wood_png from "../Landing_media/woodbg.jpg"
 import team_png from "../Landing_media/teamphoto.webp"
 import person1_png from "../Landing_media/person1.webp"
+import useLenis from '../utils/lenis'
 
 
 
 
 const Team = () => {
+    useLenis();
   return (
     <>
     

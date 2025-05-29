@@ -3,9 +3,10 @@ import "../index.css"
 import logo from "../Landing_media/SAST.png";
 import video1 from "../Landing_media/saturnbg.mp4"
 import img1 from "../Landing_media/Newsletter.png"
+import useLenis from '../utils/lenis'
 
 const Newsletter = () => {
-
+  useLenis();
   return (
     <>
     <div className="h-660 w-full absolute top-0 left-0 -z-10">

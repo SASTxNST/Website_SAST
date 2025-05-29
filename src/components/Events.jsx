@@ -14,10 +14,11 @@ import comet_vid from "../Landing_media/Comentvid.mp4"
 import launch_png from "../Landing_media/offlaunch.jpeg"
 import launch_vid from "../Landing_media/launchvid.mp4"
 import "../index.css";
-
+import useLenis from '../utils/lenis'
 
 const Events = () => {
   const [filterType, setFilterType] = useState("all");
+  useLenis();
 
   useEffect(() => {
     const handleHover = (event, action) => {

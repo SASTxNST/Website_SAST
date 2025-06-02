@@ -6,10 +6,12 @@ import MoonC_png from "../Landing_media/MoonC.webp"
 import Cubesat2_png from "../Landing_media/Cubesatbg.jpg"
 import Monocopter_png from "../Landing_media/monocopter.webp"
 import Cubesat1_png from "../Landing_media/Cubesastr.jpeg"
+import useLenis from '../utils/lenis'
 
 
 const Projects = () => {
     const [filterType, setFilterType] = useState("all");
+    useLenis();
 
     const projects = [
         { id: 1, title: "TARS AI", date: "2025-02-13", type: "current", imgSrc: Tars_png },

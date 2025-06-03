@@ -11,8 +11,8 @@ html {
   right: 0;
   padding: 2rem 0;
   z-index: 100;
-
-
+  display: flex;
+  justify-content: center;
 }
 
 .header-content {

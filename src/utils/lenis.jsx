@@ -22,3 +22,4 @@ const useLenis = () => {
 };
 
 export default useLenis;
+

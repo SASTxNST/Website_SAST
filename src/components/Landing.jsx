@@ -294,12 +294,24 @@ const Landing = () => {
 
       <footer>
         <div
-          className="h-80 w-full foot flex justify-center items-center "
-          style={{ border: "1px solid rgb(255,255,255,0.3)" }}
+          className="h-80 max-w-[99%] foot flex justify-center items-center border-2 mr-0 rounded-lg"
+  style={{
+    border: "2px solid transparent",
+    borderImage: "linear-gradient(to right, lightgray, gray, lightgray)",
+    borderImageSlice: 1,
+  }}
         >
           <div className="h-full w-80 ">
-            <div className="h-62 w-full flex justify-center items-center">
-              <img className="h-50 w-60 opacity-70" src={logo} />
+            <div className="h-full w-full flex justify-center items-center rounded-lg"
+             style={{
+  borderRight: "2px solid transparent",
+    borderImage: "linear-gradient(to bottom, lightgray, gray, lightgray)",
+    borderImageSlice: 1,
+    borderImageSource: "linear-gradient(to bottom, lightgray, gray, lightgray)",
+    borderImageRepeat: "stretch",
+  }}
+            >
+              <img className="h-full w-full opacity-60 hover:opacity-100 transition-opacity duration-300" src={logo} />
             </div>
 
             <div

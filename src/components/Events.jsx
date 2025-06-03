@@ -133,10 +133,10 @@ const Events = () => {
         </video>
       </div>
 
-      <section className="eventssec h-320 flex flex-col  items-center ">
+      <section className="eventssec h-320 flex flex-col items-center mt-28">
         <div
           className=" h-18 w-200 rounded-3xl flex justify-evenly items-center"
-          style={{ marginTop: "11%", backgroundColor: "rgb(255,255,255,0.08)" }}
+          style={{ marginTop: "12%", backgroundColor: "rgb(255,255,255,0.08)" }}
         >
           <button
             className="rounded w-30 h-10 cursor-pointer opacity-80 hover:opacity-100"

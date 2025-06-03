@@ -19,7 +19,6 @@ const App = () => {
   return (
     <>
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
-
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/newsletter" element={<Newsletter />} />
@@ -36,6 +35,6 @@ const App = () => {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
-    <App />
+    <App/>
   </Router>
 );

@@ -70,7 +70,7 @@ const Landing = () => {
   return (
     <>
       <main>
-        <section className="hero">
+        <section className="hero mr-10 ml-10">
           <div className="black_space">
             <video autoPlay loop muted>
               <source src={videosource5} type="video/mp4" />

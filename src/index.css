@@ -443,7 +443,6 @@ a {
 }
 
 
-
 .hero-section {
   position: relative;
   height: 100vh;
@@ -633,21 +632,19 @@ a {
 }
 
 .events {
-  margin-top: 15%;
+  margin-top: 5%;
   width: 100%;
   height: 80vh;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.01vw;
+  gap: 40px;
+  /* gap: 0.01vw; */
   flex-wrap: wrap;
-
-
 }
 
 .card {
-
   width: 25%;
   height: 45%;
   background-color: rgba(255, 255, 255, 0.15);
@@ -656,11 +653,10 @@ a {
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  padding: 5px;
-  gap: 2vh;
-
-
-
+  /* padding: 5px; */
+  /* gap: 2vh; */
+  display: flex;
+  /* flex-direction: column; */
 }
 
 .alignerevent img {
@@ -669,7 +665,6 @@ a {
   object-fit: cover;
   border-radius: 5%;
   transition: opacity 300ms ease-in-out;
-
 }
 
 .eventsbg {
@@ -749,6 +744,11 @@ a {
   opacity: 0;
   transform: translateY(100%);
   transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  /* margin: 20px; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; */
 }
 
 .alignerevent:hover img {
@@ -765,14 +765,13 @@ a {
 }
 
 .card-content {
-
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
-
+  
 }
 
 .alignerevent {

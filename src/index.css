@@ -5,14 +5,13 @@ html {
 }
 
 .header {
-  position: fixed;
+  position:fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 2rem 0;
   z-index: 100;
-
-
+  display: flex;
+  justify-content: center;
 }
 
 .header-content {
@@ -134,8 +133,8 @@ body {
   max-width: 1440px;
   margin: 0 0;
   padding: 0.5rem 2rem;
-  /* margin-right: 10rem; */
-  margin-left: 2rem;
+  /* margin: 0rem 10rem 0rem 10rem; */
+  margin-left: 0rem;
   width: 100%;
   position: absolute;
 }

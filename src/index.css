@@ -608,8 +608,10 @@ a {
 
 
 .fixed {
-  width: 100%;
-  height: 500px;
+  width: 40%;
+  height: 150px;
+  display: block;
+margin-left: 10px;
   background-image: url("../Landing_assets/Landing_media/helm.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -633,14 +635,14 @@ a {
 }
 
 .events {
-  margin-top: 15%;
+  margin-top: 8vh;
   width: 100%;
-  height: 80vh;
+  height: 50vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.01vw;
+  gap: 4vh;
   flex-wrap: wrap;
 
 
@@ -651,7 +653,7 @@ a {
   width: 25%;
   height: 45%;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 5%;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -673,13 +675,22 @@ a {
 }
 
 .eventsbg {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   z-index: -1;
+}
+
+.eventsbg img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .eventsbg video {
@@ -975,3 +986,6 @@ a {
 .signup-text span:hover {
   color: #60a5fa;
 }
+
+
+

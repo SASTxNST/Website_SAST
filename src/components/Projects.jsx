@@ -36,19 +36,36 @@ const Projects = () => {
     return (
         <>
             {/* Filter Buttons */}
-            <div className="fixed top-55 left-338">
-                <div className="h-50 w-30 rounded-3xl flex flex-col items-center justify-center backdrop-blur-[1px] rounded-[2px] shadow-[0px_0px_10px_0px_rgba(250,250,250,0.3)]"
-                     style={{ marginTop: "5%", backgroundColor: "rgba(255,255,255,0.08)" }}>
-                    <button className="rounded w-30 h-10 cursor-pointer opacity-70 hover:opacity-100"
-                            onClick={() => setFilterType('all')}>All</button>
-                    <button className="rounded w-30 h-10 cursor-pointer opacity-70 hover:opacity-100"
-                            onClick={() => setFilterType('past')}>Past</button>
-                    <button className="rounded w-35 h-10 cursor-pointer opacity-70 hover:opacity-100"
-                            onClick={() => setFilterType('ongoing')}>Ongoing</button>
-                    <button className="rounded w-30 h-10 cursor-pointer opacity-70 hover:opacity-100"
-                            onClick={() => setFilterType('future')}>Future</button>
-                </div>
-            </div>
+<div className="fixed top-40 right-120 left-120 z-50 align-center items-center">
+  <div className="flex flex-row items-left justify-left gap-10 rounded-3xl backdrop-blur-sm shadow-[0_0_10px_rgba(250,250,250,0.3)] bg-white/10 px-4 py-4">
+    <button
+      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium "
+      onClick={() => setFilterType('all')}
+    >
+      All
+    </button>
+    <button
+      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      onClick={() => setFilterType('past')}
+    >
+      Past
+    </button>
+    <button
+      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      onClick={() => setFilterType('ongoing')}
+    >
+      Ongoing
+    </button>
+    <button
+      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      onClick={() => setFilterType('future')}
+    >
+      Future
+    </button>
+  </div>
+</div>
+
+
 
             {/* Project Section */}
             <section>

@@ -260,7 +260,7 @@ const Landing = () => {
                   required
                 />
                 <input
-                  className="border border-[#00a1ff] h-10 w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80"
+                  className="border border-[#00a1ff] h-10 w-28 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80"
                   type="submit"
                   value="SUBSCRIBE"
                   name="submit"

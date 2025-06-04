@@ -4,6 +4,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.nav-links li {   
+  transition: transform 0.2s ease, color 0.2s ease;
+}  
+
+.nav-links li:hover {   
+  transform: scale(1.1);   color: white;
+}
+
 .header {
   position: fixed;
   top: 0;

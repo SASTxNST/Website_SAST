@@ -239,9 +239,9 @@ const Landing = () => {
         <br />
 
         <form className="w-full h-60 m5">
-          <div className="news flex justify-evenly ">
+          <div id ="news" className="news overflow-x-auto overflow-y-hidden h-[200px] flex justify-evenly ">
             <div className="flex flex-col gap-8">
-              <div className="text-4xl font-bold w-150 ">
+              <div className="text-2xl font-bold w-150 ">
                 SUBSCRIBE TO OUR SAST NEWSLETTER
               </div>
               <a href="./SAST Landing/newsletter.html">

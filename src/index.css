@@ -2,8 +2,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x:hidden;
 }
-
 .header {
   width:100vw;
   height: 80px;
@@ -70,16 +70,22 @@ html {
 
 .hero {
   min-height: 100vh;
+  width:100vw;
   display: flex;
   align-items: center;
   padding: 0rem 0;
 }
-
+.hero .black_space{
+  width:100vw;
+  height:100vh;
+}
 .hero .subtitle {
+  position:absolute;
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
   max-width: 400px;
   line-height: 1.5;
+  top:65vh  !important;
 }
 
 .hero h1 {
@@ -91,9 +97,9 @@ html {
 
 @media (min-width: 769px) {
   .hero .subtitle {
-    margin-bottom: -2rem;
+    margin-bottom: 1rem;
     position: relative;
-    top: 20rem;
+    top: 70vh;
   }
 
   .hero h1 {

@@ -152,7 +152,7 @@ const Landing = () => {
         </section>
 
         <hr className="vbar opacity-20" />
-        <section className="hero-section">
+        <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline id="bgVideo">
               <source src={videosource2} type="video/mp4" />
@@ -160,21 +160,20 @@ const Landing = () => {
             </video>
           </div>
           <div className="content">
-            <p className="subtitle">The FlatSat Redefined </p>
+            <p className="subtitle">The FlatSat Redefined</p>
             <h1 className="title">CUBESAT</h1>
             <a
               href="Cubesat/Cubesat.html"
               className="cta-button"
               id="discoverBtn"
             >
-              DISCOVER CUBESAT
-              <span className="arrow">→</span>
+              DISCOVER CUBESAT <span className="arrow">→</span>
             </a>
           </div>
         </section>
         <hr className="vbar opacity-20" />
 
-        <section className="hero-section">
+        <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline id="bgVideo">
               <source src={videosource3} type="video/mp4" />
@@ -192,7 +191,7 @@ const Landing = () => {
         </section>
         <hr className="vbar opacity-20" />
 
-        <section className="hero-section">
+        <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline id="bgVideo">
               <source src={videosource4} type="video/mp4" />
@@ -209,6 +208,25 @@ const Landing = () => {
           </div>
         </section>
         <hr className="vbar opacity-20" />
+
+        {/* ADD VIDEO LINK HERE */}
+        <section className="youtube-video-section h-[600px] px-4 bg-black text-white text-center flex flex-col justify-center items-center">
+          <div className="w-full max-w-4xl flex justify-center items-center">
+            <div
+              className="relative w-full rounded-xl overflow-hidden shadow-xl border border-gray-700"
+              style={{ paddingBottom: "55%" }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-xl"
+                src="https://www.youtube.com/embed/HfuWuKACU8Q?autohide=1&showinfo=0&controls=1"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
 
         <div
           className="w-full h-120 bg-cover bg-center bg-no-repeat bg-fixed"

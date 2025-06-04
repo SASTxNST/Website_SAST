@@ -20,7 +20,7 @@ const Newsletter = () => {
         <div className="newsdisplay w-280 h-50 flex flex-col gap-10 justify-between items-end">
             <h2 className="text-7xl font-bold text-[rgb(0,161,255,0.8)] hover:text-[rgb(0,161,255,1)] hover:shadow-xl transition duration-250 ">2022 NEWSLETTER : CUBESAST</h2>
             <div className="w-270 flex justify-center"><img src={img1} className="h-95 rounded shadow-xl shadow-grey-200 hover:scale-180 transition duration-500"/></div>
-            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1740009600&v=beta&t=EUaBYMwZgqf6-tbdcitkP1SwKQrjSOaBhQ2x4vFnnxE" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
+            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1749686400&v=beta&t=-_SoEaLMV5ZYYW3eAUNJ2RzEOwNm8svbYiIOxEyAQeQ" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
         </div>
     </div>
 
@@ -28,7 +28,7 @@ const Newsletter = () => {
         <div className="newsdisplay w-280 h-50 flex flex-col gap-10 justify-between items-end">
             <h2 className="text-7xl font-bold text-[rgb(0,161,255,0.8)] hover:text-[rgb(0,161,255,1)] hover:shadow-xl transition duration-250 ">2022 NEWSLETTER : CUBESAST</h2>
             <div className="w-270 flex justify-center"><img src={img1} className="h-95 rounded shadow-xl shadow-grey-200 hover:scale-180 transition duration-500"/></div>
-            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1740009600&v=beta&t=EUaBYMwZgqf6-tbdcitkP1SwKQrjSOaBhQ2x4vFnnxE" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
+            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1749686400&v=beta&t=-_SoEaLMV5ZYYW3eAUNJ2RzEOwNm8svbYiIOxEyAQeQ" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
         </div>
     </div>
 
@@ -36,7 +36,7 @@ const Newsletter = () => {
         <div className="newsdisplay w-280 h-50 flex flex-col gap-10 justify-between items-end">
             <h2 className="text-7xl font-bold text-[rgb(0,161,255,0.8)] hover:text-[rgb(0,161,255,1)] hover:shadow-xl transition duration-250 ">2022 NEWSLETTER : CUBESAST</h2>
             <div className="w-270 flex justify-center"><img src={img1} className="h-95 rounded shadow-xl shadow-grey-200 hover:scale-180 transition duration-500"/></div>
-            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1740009600&v=beta&t=EUaBYMwZgqf6-tbdcitkP1SwKQrjSOaBhQ2x4vFnnxE" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
+            <a href="https://media.licdn.com/dms/document/media/v2/D4D1FAQFTvI5spYW-9Q/feedshare-document-pdf-analyzed/feedshare-document-pdf-analyzed/0/1732080308313?e=1749686400&v=beta&t=-_SoEaLMV5ZYYW3eAUNJ2RzEOwNm8svbYiIOxEyAQeQ" target="_blank"><div className="w-265 h-15 border border-[rgb(0,161,255,0.8)] rounded flex justify-center items-center font-bold opacity-70 hover:opacity-100 hover:shadow-xl hover:border-text-[rgb(0,161,255,1)] hover:bg-[rgb(0,161,255,0.9)] transition duration-250 text-xs">DOWNLOAD</div></a>
         </div>
     </div>
     

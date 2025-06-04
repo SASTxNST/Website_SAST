@@ -28,6 +28,11 @@ html {
   /* Subtle shadow */
 }
 
+.faq:not(:last-child) {
+  margin: 1rem;
+  border-bottom: 1px solid #efe9e9;
+}
+
 .main-nav ul {
   display: flex;
   gap: 3rem;

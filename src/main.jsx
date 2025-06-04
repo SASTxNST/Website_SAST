@@ -8,9 +8,11 @@ import Newsletter from "./components/Newsletter.jsx";
 import Events from "./components/Events.jsx";
 import Projects from "./components/Projects.jsx";
 import Team from "./components/Team.jsx";
+import Faq from "./FAQ.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from './pages/ContributionRanks.jsx';
+import FAQ from './FAQ.jsx';
 
 const App = () => {
   const location = useLocation();
@@ -29,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/merch" element={<Store />} />
         <Route path="/contributions" element={<ContributionRanks />} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
     </>
   );

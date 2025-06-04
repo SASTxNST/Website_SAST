@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../index.css";
 import videoSource from "../Landing_media/newmaoinsast.mp4";
 import videosource2 from "../Landing_media/Platforms_mobile.mp4";
@@ -386,7 +387,9 @@ const Landing = () => {
             <h4 className="font-lighter text-s">Mission</h4>
             <h4 className="font-lighter text-s">SAST Locations</h4>
             <h4 className="font-lighter text-s">History</h4>
-            <h4 className="font-lighter text-s">FAQs</h4>
+            <h4 className="font-lighter text-s">
+              <a href="/faq">FAQs</a>
+            </h4>
             <h4 className="font-lighter text-s">News & Events</h4>
           </div>
 

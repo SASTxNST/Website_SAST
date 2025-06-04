@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import "../index.css";
 import videoSource from "../Landing_media/newmaoinsast.mp4";
 import videosource2 from "../Landing_media/Platforms_mobile.mp4";

@@ -297,7 +297,7 @@ const Landing = () => {
     
         <footer> 
           <div
-    className=" flex flex-wrap md:flex-nowrap w-full max-w-[100%] border rounded-lg "
+    className=" flex flex-wrap md:flex-nowrap w-full max-w-[100%] border rounded-lg gap-y-6"
     style={{
       border: "1px solid transparent",
       borderImage: "linear-gradient(to right, lightgray, gray, lightgray)",

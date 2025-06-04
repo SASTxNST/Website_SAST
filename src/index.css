@@ -12,10 +12,11 @@ html {
   z-index: 100;
   display: flex;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 95%;
 }
 
 .header-content {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,6 +57,11 @@ html {
 @media (max-width: 768px) {
   .main-nav {
     display: none;
+  }
+
+  .header{
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   .header-content {

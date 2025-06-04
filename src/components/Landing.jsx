@@ -384,10 +384,14 @@ const Landing = () => {
           >
             <h2 className="font-bold text-xl">ABOUT</h2>
             <h4 className="font-lighter text-s">Mission</h4>
-            <h4 className="font-lighter text-s">SAST Locations</h4>
+            <h4 className="font-lighter text-s">
+              <a href="https://maps.app.goo.gl/mvY1seeS7Pt2xDLP8" target="_blank" rel="noopener noreferrer" className="font-lighter text-s hover:underline text-white">SAST Location</a>
+            </h4>
             <h4 className="font-lighter text-s">History</h4>
             <h4 className="font-lighter text-s">FAQs</h4>
-            <h4 className="font-lighter text-s">News & Events</h4>
+            <h4 className="font-lighter text-s">
+              <a href="/events">News & Events</a>
+            </h4>
           </div>
 
           <div

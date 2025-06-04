@@ -67,10 +67,6 @@ html {
     justify-content: space-between;
   }
 }
-  .header-content {
-    justify-content: space-between;
-  }
-}
 
 .hero {
   min-height: 100vh;

@@ -6,7 +6,7 @@ import watervid from "../Landing_media/bharatmpvid.mp4"
 import bharatmppng from "../Landing_media/bharatmp.jpeg"
 import bharatmpvid from "../Landing_media/bharatmpvid.mp4"
 import damrupng from "../Landing_media/DamruExhibit.jpeg"
-import onboard_png from "../Landing_media/Onboarding.jpeg"
+import onboard_png from "../Landing_media/Onboarding_1.jpeg"
 import onboard_vid from "../Landing_media/onboardentry.mp4"
 import rajkv_png from "../Landing_media/rajkumarv.jpeg"
 import comet_png from "../Landing_media/Tsuchinshan.jpeg"
@@ -195,23 +195,28 @@ const Events = () => {
 
         <div className="events">
           {getFilteredEvents().map((event) => (
-            <div key={event.id} className="card" data-date={event.date}>
-              <div className="card-content">
-                <div className="alignerevent">
+            <div 
+              key={event.id} className="card group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300">
+
+                <div className="relative">
                   <img
                     src={event.imgSrc}
                     alt={event.title}
-                    className="card-img"
+                    className="card-img w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 rounded-t-2xl"
                   />
+                  <video
+                    className="card-video absolute top-0 left-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500 rounded-t-2xl"
+                    loop
+                    muted
+                  >
+                    <source src={event.videoSrc} type="video/mp4" />
+                  </video>
                 </div>
-                <video className="card-video" loop muted>
-                  <source src={event.videoSrc} type="video/mp4" />
-                </video>
-                <div className="card-info">
-                  <h2>{event.title}</h2>
-                  <p>{event.description}</p>
+
+                <div className="card-info p-4 text-white">
+                  <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
+                  <p className="text-sm text-gray-300">{event.description}</p>
                 </div>
-              </div>
             </div>
           ))}
 

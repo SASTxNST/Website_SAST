@@ -36,28 +36,41 @@ const Projects = () => {
     return (
         <>
             {/* Filter Buttons */}
-<div className="fixed top-40 right-120 left-120 z-50 align-center items-center">
-  <div className="flex flex-row items-left justify-left gap-10 rounded-3xl backdrop-blur-sm shadow-[0_0_10px_rgba(250,250,250,0.3)] bg-white/10 px-4 py-4">
+<div className="fixed flex left-320 top-40  z-50 align-end items-center ">
+<div
+  className="flex flex-col gap-2 h-55 w-30 bg-transparent shadow-lg justify-center items-center"
+  style={{
+    border: "1px solid rgba(255, 255, 255, 0.15)",  // thin white-ish border
+    boxShadow: "0 0 10px 1px rgba(255, 255, 255, 0.4)", // white glowing shadow
+    borderRadius: "4px", // optional smooth corners
+  }}
+>
+
+
+
+
+
+
     <button
-      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium "
+      className="w-28 h-12 rounded-sm cursor-pointer opacity-80 hover:opacity-100 hover:font-bold text-white font-medium font-sans "
       onClick={() => setFilterType('all')}
     >
       All
     </button>
     <button
-      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      className="w-28 h-12 rounded-sm cursor-pointer opacity-80 hover:opacity-100 hover:font-bold text-white font-medium font-sans" 
       onClick={() => setFilterType('past')}
     >
       Past
     </button>
     <button
-      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      className="w-28 h-12 rounded-md cursor-pointer opacity-80 hover:opacity-100 hover:font-bold text-white font-medium font-sans" 
       onClick={() => setFilterType('ongoing')}
     >
       Ongoing
     </button>
     <button
-      className="w-28 h-12 rounded-4xl cursor-pointer opacity-80 hover:opacity-100 bg-white/20 text-white font-medium"
+      className="w-28 h-12 rounded-md cursor-pointer opacity-80 hover:opacity-100h hover:font-bold text-white font-medium font-sans"
       onClick={() => setFilterType('future')}
     >
       Future

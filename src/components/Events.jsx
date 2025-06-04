@@ -16,7 +16,7 @@ import launch_vid from "../Landing_media/launchvid.mp4"
 import "../index.css";
 import useLenis from '../utils/lenis'
 
-const Events = () => {
+const Events = () => {  
   const [filterType, setFilterType] = useState("all");
   useLenis();
 
@@ -61,6 +61,7 @@ const Events = () => {
     });
   };
 
+  
   const events = [
     {
       id: 1,
@@ -94,7 +95,7 @@ const Events = () => {
       imgSrc: onboard_png,
       videoSrc: onboard_vid,
       description:
-        "Welcoming passionate space enthusiasts to join the SAST Club and embark on a journey of research and innovation.",
+      "Welcoming passionate space enthusiasts to join the SAST Club and embark on a journey of research and innovation.",
     },
     {
       id: 5,
@@ -103,7 +104,7 @@ const Events = () => {
       imgSrc: rajkv_png,
       videoSrc: "assets/tsuchinshan.mp4",
       description:
-        "An insightful session with Dr. Rajkumar Vedam on the scientific advancements shaping the future of space technology.",
+      "An insightful session with Dr. Rajkumar Vedam on the scientific advancements shaping the future of space technology.",
     },
     {
       id: 6,
@@ -112,7 +113,7 @@ const Events = () => {
       imgSrc: comet_png,
       videoSrc: comet_vid,
       description:
-        "Witness the wonders of the universe with this celestial event.",
+      "Witness the wonders of the universe with this celestial event.",
     },
     {
       id: 7,
@@ -121,10 +122,24 @@ const Events = () => {
       imgSrc: launch_png,
       videoSrc: launch_vid,
       description:
-        "Marking the beginning of our journey, the official launch event introduced SAST's vision, mission, and upcoming projects.",
+      "Marking the beginning of our journey, the official launch event introduced SAST's vision, mission, and upcoming projects.",
     },
   ];
 
+  const filterTypes = ["all", "past", "ongoing", "future"];
+  const getLeftPosition = () => {
+    const i = filterTypes.indexOf(filterType);
+    console.log(i);
+    const w = i === 1 ? 148 : i === 2 ? 150 : i === 3 ? 160 : 150
+    return `${i * w}px`
+  }
+  const getWidth = () => {
+    const i = filterTypes.indexOf(filterType);
+    if(i === 0 || i=== 1) return 34;
+    if(i === 2) return 40; 
+    if(i === 3) return 44; 
+  }
+  
   return (
     <>
       <div className="eventsbg">
@@ -134,34 +149,48 @@ const Events = () => {
       </div>
 
       <section className="eventssec h-320 flex flex-col items-center mt-28">
-        <div
-          className=" h-18 w-200 rounded-3xl flex justify-evenly items-center"
-          style={{ marginTop: "12%", backgroundColor: "rgb(255,255,255,0.08)" }}
-        >
+
+        <div 
+          className="relative h-18 w-160 rounded-3xl flex justify-between items-center overflow-hidden "
+          style={{ marginTop: "12%", backgroundColor: "rgb(255,255,255,0.08)",
+            paddingLeft : "40px", paddingRight: "40px",boxShadow: "0 0 12px 4px rgba(59, 130, 246, 0.5)"
+          }}
+          >
+
+          <div
+            className={`h-25 w-${getWidth()} rounded absolute gap-2 transition-all duration-500 ease-in-out bg-blue-500 opacity-30 backdrop-blur-sm `}
+            style={{ left: getLeftPosition(), 
+              }}
+          ></div>
+
           <button
-            className="rounded w-30 h-10 cursor-pointer opacity-80 hover:opacity-100"
+            className="rounded w p-2 h-10 cursor-pointer opacity-80 hover:opacity-100 z-10"
             onClick={() => filterEvents("all")}
           >
             All Events
           </button>
+
           <button
-            className="rounded w-30 h-10 cursor-pointer opacity-80 hover:opacity-100"
+            className="rounded w p-2 h-10 cursor-pointer opacity-80 hover:opacity-100 z-10"
             onClick={() => filterEvents("past")}
           >
             Past Events
           </button>
+
           <button
-            className="rounded w-35 h-10 cursor-pointer opacity-80 hover:opacity-100"
+            className="rounded w p-2 h-10 cursor-pointer opacity-80 hover:opacity-100 z-10"
             onClick={() => filterEvents("ongoing")}
           >
             Ongoing Events
           </button>
+
           <button
-            className="rounded w-30 h-10 cursor-pointer opacity-80 hover:opacity-100"
+            className="rounded w p-2 h-10 cursor-pointer opacity-80 hover:opacity-100 z-10"
             onClick={() => filterEvents("future")}
           >
             Future Events
           </button>
+
         </div>
 
         <div className="events">
@@ -185,6 +214,7 @@ const Events = () => {
               </div>
             </div>
           ))}
+
         </div>
       </section>
     </>

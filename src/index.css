@@ -5,18 +5,21 @@ html {
 }
 
 .header {
+  width:100vw;
+  height: 80px;
   position: fixed;
   top: 0;
+  top: 20px !important;
   left: 0;
   right: 0;
   padding: 2rem 0;
   z-index: 100;
-
-
 }
 
 .header-content {
-
+  position: relative;
+  top:0;
+  right:0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,6 +34,7 @@ html {
 .main-nav ul {
   display: flex;
   gap: 3rem;
+  gap:30px !important;
 }
 
 .main-nav a {
@@ -54,11 +58,15 @@ html {
   color: var(--color-background);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px ) {
   .main-nav {
     display: none;
   }
 
+  .header-content {
+    justify-content: space-between;
+  }
+}
   .header-content {
     justify-content: space-between;
   }

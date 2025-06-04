@@ -427,14 +427,17 @@ className="w-full md:w-[21%] p-4 flex flex-col gap-8 border-t md:border-t-0 md:b
     <h4 className="text-md">Life in SAST</h4>
   </div>
           </div>
-          <div className="h-20 w-full flex justify-evenly items-center">
-            <div className="text-xs font-bold">SAST</div>
-            <div className="text-xs font-bold">PRIVACY POLICY</div>
-            <div className="text-xs font-bold">ACCESSIBILITY</div>
-            <div className="text-xs font-bold">WATCH VIDEOS</div>
-            <div className="text-xs font-bold">SITEMAP</div>
-            <div className="text-xs font-bold">COOKIE SETTINGS</div>
-          </div>
+          <div className="w-full h-auto py-4 px-2">
+  <div className="flex flex-wrap justify-evenly items-center gap-4 sm:gap-2 text-center text-xl mt-3" >
+    <div className="text-[10px] sm:text-xs font-bold">SAST</div>
+    <div className="text-[10px] sm:text-xs font-bold">PRIVACY POLICY</div>
+    <div className="text-[10px] sm:text-xs font-bold">ACCESSIBILITY</div>
+    <div className="text-[10px] sm:text-xs font-bold">WATCH VIDEOS</div>
+    <div className="text-[10px] sm:text-xs font-bold">SITEMAP</div>
+    <div className="text-[10px] sm:text-xs font-bold">COOKIE SETTINGS</div>
+  </div>
+</div>
+
         </footer>
     </>
   );

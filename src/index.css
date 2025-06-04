@@ -131,9 +131,10 @@ body {
 
 
 .container {
-  max-width: 1390px;
+  max-width: 1400px;
   margin: 0 0;
   padding: 0.5rem 2rem;
+  padding-right: 20px;
   /* margin-right: 10rem; */
   margin-left: 2rem;
   width: 100%;

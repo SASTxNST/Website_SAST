@@ -5,18 +5,18 @@ html {
 }
 
 .header {
-  position: fixed;
+  position:fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 2rem 0;
   z-index: 100;
-
-
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 95%;
 }
 
 .header-content {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,6 +57,11 @@ html {
 @media (max-width: 768px) {
   .main-nav {
     display: none;
+  }
+
+  .header{
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   .header-content {
@@ -134,8 +139,6 @@ body {
   max-width: 1440px;
   margin: 0 0;
   padding: 0.5rem 2rem;
-  /* margin-right: 10rem; */
-  margin-left: 2rem;
   width: 100%;
   position: absolute;
 }

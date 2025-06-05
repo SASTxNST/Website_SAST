@@ -32,7 +32,7 @@ const Navbar = () => {
       <header className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}>
         <div className="container header-content">
           <a href="/" className="logo">
-            <img src={logo} alt="Logo" width="60" height="60" />
+            <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
           </a>
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>

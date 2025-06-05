@@ -648,8 +648,8 @@ a {
 
 .card {
 
-  width: 25%;
-  height: 45%;
+  width: 480px;
+  height: 370px;
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 5%;
   display: flex;
@@ -658,6 +658,7 @@ a {
   align-items: center;
   padding: 5px;
   gap: 2vh;
+  margin-bottom: 45px;
 
 
 
@@ -766,19 +767,20 @@ a {
 
 .card-content {
 
-  width: 100%;
-  height: 100%;
+  width: 470px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
+  padding-top: 12px;
 
 }
 
 .alignerevent {
 
-  width: 95%;
-  height: 80%;
+  width: 440px;
+  height: 310px;
   /* border: 5px solid white; */
 
 

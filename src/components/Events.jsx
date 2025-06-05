@@ -41,7 +41,7 @@ const Events = () => {
         card.removeEventListener("mouseleave", (e) => handleHover(e, "pause"));
       });
     };
-  }, []);
+  }, [filterType]);
 
   const filterEvents = (type) => {
     setFilterType(type);
@@ -183,11 +183,12 @@ const Events = () => {
           ))}
         </div>
 
-        <div className="events">
+        <div className="events gap-10">
           {getFilteredEvents().map((event) => (
-            <div
+           <div
               key={event.id}
-              className="card group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+              className="card group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300
+                w-[400px] md:w-[320px] sm:w-[280px] xs:w-[240px]"
             >
               <div className="relative">
                 <img

@@ -636,21 +636,17 @@ a {
 }
 
 .events {
-  margin-top: 15%;
-  width: 100%;
+  margin-top: 8%;
+  width: 95%;
   height: 80vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.01vw;
   flex-wrap: wrap;
-
-
 }
 
 .card {
-
   width: 25%;
   height: 45%;
   background-color: rgba(255, 255, 255, 0.15);
@@ -661,9 +657,6 @@ a {
   align-items: center;
   padding: 5px;
   gap: 2vh;
-
-
-
 }
 
 .alignerevent img {

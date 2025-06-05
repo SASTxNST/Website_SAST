@@ -25,6 +25,7 @@ const Navbar = () => {
 
   return (
     <>
+
       {/* Top Navbar - Hidden when sidebar is open */}
       {!menuOpen && (
         <header className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}>
@@ -78,6 +79,7 @@ const Navbar = () => {
       <X size={20} />
     </button>
   </div>
+
 
   <nav className="flex flex-col px-4 py-4 space-y-3 text-sm font-medium">
     <a href="/" onClick={closeSidebar} className="hover:text-blue-400">Home</a>

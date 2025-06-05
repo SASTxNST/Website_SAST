@@ -16,6 +16,7 @@ import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from "./pages/ContributionRanks.jsx";
+import Profile from "./components/Profile.jsx";
 import { AuthProvider } from "./contexts/authContext";
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/merch" element={<Store />} />
         <Route path="/contributions" element={<ContributionRanks />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

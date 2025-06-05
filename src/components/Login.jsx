@@ -40,7 +40,7 @@ const getFriendlyError = (err) => {
 };
 
 const Login = () => {
-  const { currentUser, login, signup, logout } = useAuth();
+  const { currentUser, login, signup, logout, updateProfileData } = useAuth();
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({
@@ -51,6 +51,14 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showProfileForm, setShowProfileForm] = useState(false);
+  const [profileForm, setProfileForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    dob: "",
+    phone: "",
+  });
 
   const resetForm = () =>
     setForm({
@@ -63,6 +71,25 @@ const Login = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     if (error) setError(""); // Clear error on input change
+  };
+
+  const handleProfileChange = (e) => {
+    setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
+  };
+
+  const handleProfileSubmit = async (e) => {
+    e.preventDefault();
+    // Optionally validate fields here
+    try {
+      await updateProfileData({
+        displayName: `${profileForm.firstName} ${profileForm.lastName}`,
+        dob: profileForm.dob,
+        phone: profileForm.phone,
+      });
+      navigate("/profile");
+    } catch (err) {
+      setError("Failed to update profile. Try again.");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -94,6 +121,15 @@ const Login = () => {
         await login(form.email, form.password);
       } else {
         await signup(form.email, form.password, form.username);
+        setShowProfileForm(true);
+        setProfileForm({
+          firstName: "",
+          lastName: "",
+          email: form.email,
+          dob: "",
+          phone: "",
+        });
+        return; // Don't proceed to login UI
       }
     } catch (err) {
       setError(getFriendlyError(err));
@@ -101,6 +137,85 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  // Show profile completion form if showProfileForm is true, regardless of currentUser
+  if (showProfileForm) {
+    return (
+      <div className="login-body">
+        <div className="login-wrapper">
+          <div className="login-box animate-login">
+            <h1 className="login-title">Complete Your Profile</h1>
+            <form className="login-form" onSubmit={handleProfileSubmit}>
+              <div style={{ display: "flex", gap: 8 }}>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  required
+                  value={profileForm.firstName}
+                  onChange={handleProfileChange}
+                  disabled={loading}
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  required
+                  value={profileForm.lastName}
+                  onChange={handleProfileChange}
+                  disabled={loading}
+                  style={{ flex: 1 }}
+                />
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                  value={profileForm.email}
+                  disabled
+                  style={{ flex: 1 }}
+                />
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <input
+                  type="date"
+                  name="dob"
+                  placeholder="Date of Birth"
+                  required
+                  value={profileForm.dob}
+                  onChange={handleProfileChange}
+                  disabled={loading}
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  required
+                  value={profileForm.phone}
+                  onChange={handleProfileChange}
+                  disabled={loading}
+                  style={{ flex: 1 }}
+                />
+              </div>
+              {error && (
+                <div style={{ color: "red", marginBottom: 8 }}>{error}</div>
+              )}
+              <button type="submit" className="auth-button" disabled={loading}>
+                {loading ? (
+                  <span className="spinner" style={{ marginRight: 8 }} />
+                ) : null}
+                Save & Continue
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (currentUser) {
     return (

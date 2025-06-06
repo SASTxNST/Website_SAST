@@ -113,17 +113,22 @@ const Projects = () => {
                 />
                 <div className="absolute inset-0 bg-black/40" />
               </div>
-              <div className="absolute bottom-20 left-5 w-[90%] max-w-xl p-4 rounded-md z-20">
-                <p className="text-sm uppercase text-gray-300">
-                  {project.type === "past" ? "Past Project" :
-                   project.type === "upcoming" ? "Upcoming Project" : "Current Project"}
-                </p>
-                <h2 className="text-xl font-bold text-white">{project.title}</h2>
-                <Link to={getProjectLink(project)}>
-                  <div className="mt-2 inline-block text-sm px-4 py-2 bg-white/20 hover:bg-white/30 rounded transition">
-                    Learn More
-                  </div>
-                </Link>
+              <div className="absolute bottom-20 left-5 w-[90%] max-w-xl p-4 z-20">
+                <div className="flex flex-col justify-center space-y-2">
+                  <h6 className="text-sm uppercase text-gray-300">
+                    {project.type === "past" ? "Past Project" :
+                     project.type === "upcoming" ? "Upcoming Project" : "Current Project"}
+                  </h6>
+                  <h1 className="text-3xl font-bold text-white">{project.title}</h1>
+                  <a
+                    href={getProjectLink(project)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-bold border border-white w-40 py-2 text-center hover:scale-105 transition duration-150"
+                  >
+                    LEARN MORE
+                  </a>
+                </div>
               </div>
             </div>
           ))}
@@ -136,19 +141,26 @@ const Projects = () => {
             alt={filtered[currentIndex]?.title}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
-          <div className="absolute bottom-20 left-10 w-[85%] max-w-xl p-6 rounded-md z-20">
-            <p className="text-base uppercase text-gray-300">
-              {filtered[currentIndex]?.type === "past" ? "Past Project" :
-               filtered[currentIndex]?.type === "upcoming" ? "Upcoming Project" : "Current Project"}
-            </p>
-            <h2 className="text-3xl font-bold text-white">{filtered[currentIndex]?.title}</h2>
-            <Link to={getProjectLink(filtered[currentIndex])}>
-              <div className="mt-3 inline-block text-base px-4 py-2 bg-white/20 hover:bg-white/30 rounded transition">
-                Learn More
-              </div>
-            </Link>
-          </div>
+         <div className="absolute bottom-40 left-20 w-[85%] max-w-xl p-6 z-20">
+  <div className="flex flex-col justify-center space-y-6">
+    <h6 className="text-xl uppercase text-gray-300 tracking-wide">
+      {filtered[currentIndex]?.type === "past" ? "Past Project" :
+       filtered[currentIndex]?.type === "upcoming" ? "Upcoming Project" : "Current Project"}
+    </h6>
+    <h1 className="text-6xl font-extrabold text-white leading-tight">
+      {filtered[currentIndex]?.title}
+    </h1>
+    <a
+      href={getProjectLink(filtered[currentIndex])}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-lg font-bold border border-white w-48 py-3 text-center hover:scale-105 transition duration-150"
+    >
+      LEARN MORE
+    </a>
+  </div>
+</div>
+
         </div>
       </section>
     </div>
@@ -156,4 +168,3 @@ const Projects = () => {
 };
 
 export default Projects;
-

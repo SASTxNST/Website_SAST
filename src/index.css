@@ -1014,32 +1014,37 @@ a {
   transform: rotate(-45deg);
 }
 
-
 @media (max-width: 768px) {
   .main-nav {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
     height: 100vh;
-    background: white;
-    z-index: 5;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .main-nav.active {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
 
   .nav-links {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 2rem;
+    text-align: center;
+  }
+
+  .nav-links li a {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: white;
   }
 
   .contact-button {

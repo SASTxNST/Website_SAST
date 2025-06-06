@@ -13,17 +13,12 @@ const Navbar = () => {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
-        setIsNavbarHidden(true);
-      } else {
-        setIsNavbarHidden(false);
-      }
+      setIsNavbarHidden(currentScrollY > lastScrollY);
       lastScrollY = currentScrollY;
     };
 
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
-      // Close menu when resizing to desktop if it was open
       if (window.innerWidth >= 768) {
         setMenuOpen(false);
       }
@@ -38,9 +33,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <>
@@ -50,12 +43,11 @@ const Navbar = () => {
             <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
           </a>
 
-          {/* Hamburger menu button for mobile */}
           {isMobile && (
-            <button className="hamburger-menu" onClick={toggleMenu}>
-              <span className={`hamburger-line ${menuOpen ? "open" : ""}`}></span>
-              <span className={`hamburger-line ${menuOpen ? "open" : ""}`}></span>
-              <span className={`hamburger-line ${menuOpen ? "open" : ""}`}></span>
+            <button className={`hamburger-menu ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
             </button>
           )}
 
@@ -69,7 +61,7 @@ const Navbar = () => {
               <li><a href="/projects">Projects</a></li>
               <li><a href="/team">Team</a></li>
               <li><Link to="/contributions">Contribute</Link></li>
-              <Link to="/login">Login</Link>
+              <li><Link to="/login">Login</Link></li>
             </ul>
           </nav>
 

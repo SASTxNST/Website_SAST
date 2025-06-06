@@ -32,6 +32,13 @@ const Projects = () => {
 
   const filtered = getFilteredProjects();
 
+  const getProjectLink = (project) => {
+    if (filterType === "ongoing" && project.title === "MOON CRAWLER") {
+      return "https://custom-link-for-moon-crawler.com"; // replace with your real link
+    }
+    return "https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/?viewAsMember=true";
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % filtered.length);
@@ -65,7 +72,19 @@ const Projects = () => {
               }`}
               onClick={() => {
                 setFilterType(type);
-                setCurrentIndex(0);
+                const currentDate = new Date().toISOString().split('T')[0];
+
+                if (type === "ongoing") {
+                  const ongoingProjects = projects.filter(p => p.date === currentDate);
+                  const moonCrawlerIndex = ongoingProjects.findIndex(p => p.title === "MOON CRAWLER");
+                  setCurrentIndex(moonCrawlerIndex >= 0 ? moonCrawlerIndex : 0);
+                } else if (type === "past") {
+                  const pastProjects = projects.filter(p => p.date < currentDate);
+                  const satV1Index = pastProjects.findIndex(p => p.title === "SAT.V1");
+                  setCurrentIndex(satV1Index >= 0 ? satV1Index : 0);
+                } else {
+                  setCurrentIndex(0);
+                }
               }}
             >
               {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -74,30 +93,34 @@ const Projects = () => {
         </div>
       </div>
 
-      {/* Slideshow */}
       <section className="pt-[15vh]">
+        {/* Mobile Scrollable */}
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth w-full h-[100vh]"
+          className="flex w-full min-h-screen md:hidden overflow-x-auto snap-x snap-mandatory scroll-smooth"
         >
           {filtered.map((project) => (
             <div
               key={project.id}
-              className="flex-shrink-0 snap-center w-screen h-screen relative"
+              className="flex-shrink-0 snap-center w-screen min-h-screen relative"
+              style={{ flexBasis: "100%" }}
             >
-              <img
-                src={project.imgSrc}
-                alt={project.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-20 left-10 sm:left-10 md:left-16 w-[85%] max-w-xl p-6 rounded-md">
-                <p className="text-2xl sm:text-sm uppercase text-gray-300">
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                <img
+                  src={project.imgSrc}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="absolute bottom-20 left-5 w-[90%] max-w-xl p-4 rounded-md z-20">
+                <p className="text-sm uppercase text-gray-300">
                   {project.type === "past" ? "Past Project" :
                    project.type === "upcoming" ? "Upcoming Project" : "Current Project"}
                 </p>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">{project.title}</h2>
-                <Link to="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/?viewAsMember=true">
-                  <div className="mt-3 inline-block text-xl sm:text-sm md:text-base px-4 py-2 hover:text-black transition rounded">
+                <h2 className="text-xl font-bold text-white">{project.title}</h2>
+                <Link to={getProjectLink(project)}>
+                  <div className="mt-2 inline-block text-sm px-4 py-2 bg-white/20 hover:bg-white/30 rounded transition">
                     Learn More
                   </div>
                 </Link>
@@ -105,9 +128,32 @@ const Projects = () => {
             </div>
           ))}
         </div>
+
+        {/* Desktop Static */}
+        <div className="hidden md:flex relative w-full h-screen overflow-hidden">
+          <img
+            src={filtered[currentIndex]?.imgSrc}
+            alt={filtered[currentIndex]?.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute bottom-20 left-10 w-[85%] max-w-xl p-6 rounded-md z-20">
+            <p className="text-base uppercase text-gray-300">
+              {filtered[currentIndex]?.type === "past" ? "Past Project" :
+               filtered[currentIndex]?.type === "upcoming" ? "Upcoming Project" : "Current Project"}
+            </p>
+            <h2 className="text-3xl font-bold text-white">{filtered[currentIndex]?.title}</h2>
+            <Link to={getProjectLink(filtered[currentIndex])}>
+              <div className="mt-3 inline-block text-base px-4 py-2 bg-white/20 hover:bg-white/30 rounded transition">
+                Learn More
+              </div>
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );
 };
 
 export default Projects;
+

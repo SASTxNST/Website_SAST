@@ -6,26 +6,34 @@ import logo from "../Landing_media/SAST.png";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
-        setIsNavbarHidden(true);
-      } else {
-        setIsNavbarHidden(false);
-      }
+      setIsNavbarHidden(currentScrollY > lastScrollY);
       lastScrollY = currentScrollY;
     };
 
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <>
@@ -34,6 +42,14 @@ const Navbar = () => {
           <a href="/" className="logo">
             <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
           </a>
+
+          {isMobile && (
+            <button className={`hamburger-menu ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </button>
+          )}
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
             <ul className="nav-links">
@@ -45,19 +61,20 @@ const Navbar = () => {
               <li><a href="/projects">Projects</a></li>
               <li><a href="/team">Team</a></li>
               <li><Link to="/contributions">Contribute</Link></li>
-              {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
-              <Link to="/login">Login</Link>
+              <li><Link to="/login">Login</Link></li>
             </ul>
           </nav>
 
-          <a
-            href="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/posts/?feedView=all"
-            className="contact-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contact
-          </a>
+          {!isMobile && (
+            <a
+              href="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/posts/?feedView=all"
+              className="contact-button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </a>
+          )}
         </div>
       </header>
     </>

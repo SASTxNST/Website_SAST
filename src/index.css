@@ -624,19 +624,6 @@ a {
   overflow: hidden;
 }
 
-/* .fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../Landing_assets/Landing_media/helm.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: -1; So it stays behind other content
-} */
-
 
 
 .black_space {

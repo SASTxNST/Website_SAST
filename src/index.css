@@ -14,7 +14,6 @@ html, body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -615,14 +614,20 @@ a {
 
 
 .fixed {
-  width: 100%;
-  height: 500px;
   background-image: url("../Landing_assets/Landing_media/helm.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;
+
 }
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
 
 
 .black_space {
@@ -640,17 +645,21 @@ a {
 }
 
 .events {
-  margin-top: 8%;
-  width: 95%;
+  margin-top: 15%;
+  width: 100%;
   height: 80vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
+  gap: 1vw;
   flex-wrap: wrap;
+
+
 }
 
 .card {
+
   width: 25%;
   height: 45%;
   background-color: rgba(255, 255, 255, 0.15);
@@ -661,6 +670,9 @@ a {
   align-items: center;
   padding: 5px;
   gap: 2vh;
+
+
+
 }
 
 .alignerevent img {
@@ -974,4 +986,10 @@ a {
 
 .signup-text span:hover {
   color: #60a5fa;
+}
+
+.learn_more
+{
+  margin-left: 0.5vh;
+  margin-top: 1.4vh;
 }

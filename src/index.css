@@ -394,7 +394,6 @@ a {
   opacity: 0.9;
 }
 
-/* Responsive adjustments */
 @media (min-width: 769px) {
   .stats-container {
     padding-left: 0;

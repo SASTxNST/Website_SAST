@@ -661,7 +661,7 @@ a {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.01vw;
+  gap: 1vw;
   flex-wrap: wrap;
 
 
@@ -997,3 +997,8 @@ a {
   color: #60a5fa;
 }
 
+.learn_more
+{
+  margin-left: 0.5vh;
+  margin-top: 1.4vh;
+}

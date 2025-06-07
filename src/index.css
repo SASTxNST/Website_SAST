@@ -1,22 +1,27 @@
 @import "tailwindcss";
 
-html {
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
 .header {
-  position: fixed;
+  position:fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 2rem 0;
   z-index: 100;
-
-
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 95%;
 }
 
 .header-content {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,6 +62,11 @@ html {
 @media (max-width: 768px) {
   .main-nav {
     display: none;
+  }
+
+  .header{
+    max-width: 90%;
+    margin: 0 auto;
   }
 
   .header-content {
@@ -134,8 +144,6 @@ body {
   max-width: 1440px;
   margin: 0 0;
   padding: 0.5rem 2rem;
-  /* margin-right: 10rem; */
-  margin-left: 2rem;
   width: 100%;
   position: absolute;
 }
@@ -632,21 +640,17 @@ a {
 }
 
 .events {
-  margin-top: 15%;
-  width: 100%;
+  margin-top: 8%;
+  width: 95%;
   height: 80vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.01vw;
   flex-wrap: wrap;
-
-
 }
 
 .card {
-
   width: 25%;
   height: 45%;
   background-color: rgba(255, 255, 255, 0.15);
@@ -657,9 +661,6 @@ a {
   align-items: center;
   padding: 5px;
   gap: 2vh;
-
-
-
 }
 
 .alignerevent img {

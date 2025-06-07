@@ -31,13 +31,18 @@ export default function ProfileCard({
               {(() => {
                 const name = profile.displayName?.trim() || "";
                 if (!name) return "";
-                const parts = name.split(" ");
-                if (parts.length > 1) {
-                  return parts[0][0].toUpperCase() + parts[1][0].toUpperCase();
+                const parts = name.split(" ").filter(Boolean);
+                if (parts.length > 1 && parts[0][0] && parts[1][0]) {
+                  return (
+                    (parts[0][0] || "").toUpperCase() +
+                    (parts[1][0] || "").toUpperCase()
+                  );
                 } else if (name.length > 1) {
                   return name.slice(0, 2).toUpperCase();
-                } else {
+                } else if (name.length === 1) {
                   return name[0].toUpperCase();
+                } else {
+                  return "";
                 }
               })()}
             </div>

@@ -10,6 +10,8 @@ import img2 from "../Landing_media//frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
 import useLenis from '../utils/lenis'
+import { FaYoutube, FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+
 
 const Landing = () => {
   useLenis();
@@ -310,140 +312,139 @@ const Landing = () => {
         </section>
       </main>
 
-      <footer>
-        <div
-          className="h-80 w-full foot flex justify-center items-center "
-          style={{ border: "1px solid rgb(255,255,255,0.3)" }}
+
+      
+<footer className="bg-transparent text-white">
+  <div className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/30">
+    {/* Logo + Socials */}
+    <div
+      className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/30"
+      style={{ borderRightColor: "rgba(255,255,255,0.3)" }}
+    >
+      <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
+        <img
+          className="w-full h-full object-cover opacity-70"
+          src={logo}
+          alt="Logo"
+        />
+      </div>
+
+      <div className="social_icons flex justify-center gap-6 items-center pt-4 w-full h-[30%]">
+        <a
+          href="https://youtube.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white text-2xl hover:text-red-600 transition"
+          aria-label="YouTube"
         >
-          <div className="h-full w-80 ">
-            <div className="h-62 w-full flex justify-center items-center">
-              <img className="h-50 w-60 opacity-70" src={logo} />
-            </div>
+          <FaYoutube />
+        </a>
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white text-2xl hover:text-pink-600 transition"
+          aria-label="Instagram"
+        >
+          <FaInstagram />
+        </a>
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white text-2xl hover:text-blue-600 transition"
+          aria-label="Facebook"
+        >
+          <FaFacebookF />
+        </a>
+        <a
+          href="https://x.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white text-2xl hover:text-sky-400 transition"
+          aria-label="X"
+        >
+          <FaTwitter />
+        </a>
+      </div>
+    </div>
 
-            <div
-              className="h-18 w-full flex justify-evenly items-center"
-              style={{ borderTop: "1px solid rgb(255,255,255,0.3)" }}
+    {/* About, Careers, Capabilities, How To Join */}
+    <div className="hidden md:flex flex-wrap min-w-[220px] md:w-full h-full justify-center items-center text-center">
+      {[
+        {
+          title: "ABOUT",
+          items: ["Mission", "SAST Locations", "History", "FAQs", "News & Events"],
+        },
+        {
+          title: "CAREERS",
+          items: ["Career Finder", "Benefits", "Education", "Training", "Life in SAST"],
+        },
+        {
+          title: "CAPABILITIES",
+          items: [
+            "Protecting Satellites",
+            "Facilitating Launches",
+            "Education",
+            "Experience a Launch",
+            "Life in SAST",
+          ],
+        },
+        {
+          title: "HOW TO JOIN",
+          items: [
+            "What to Expect",
+            "For Families",
+            "Live Chat",
+            "Training",
+            "Life in SAST",
+          ],
+        },
+      ].map(({ title, items }, idx) => (
+        <div
+          key={title}
+          className={`flex flex-col justify-center items-center gap-4 h-full min-w-[150px] flex-1 px-4 text-white
+            ${idx === 0 ? "mr-4" : ""}
+            ${idx !== 3 ? "border-r border-white/30" : ""}
+          `}
+        >
+          <h2 className="font-bold text-xl">{title}</h2>
+          {items.map((item) => (
+            <h4
+              key={item}
+              className="font-light text-sm cursor-pointer hover:underline whitespace-nowrap text-center"
             >
-              <div>
-                <svg
-                  viewBox="0 0 23 23"
-                  focusable="false"
-                  className="chakra-icon css-20vzky"
-                >
-                  <path
-                    d="M21.537 6.383a2.636 2.636 0 0 0-1.842-1.914C18.044 4 11.518 4 11.518 4s-6.564 0-8.215.469a2.636 2.636 0 0 0-1.841 1.914C1 8.023 1 11.539 1 11.539s0 3.477.462 5.156c.23.938.959 1.64 1.843 1.875 1.65.43 8.214.43 8.214.43s6.526 0 8.176-.43a2.583 2.583 0 0 0 1.843-1.875c.462-1.68.462-5.156.462-5.156s0-3.516-.462-5.156Zm-12.169 8.32V8.375l5.451 3.164-5.45 3.164h-.001Z"
-                    fillRule="nonzero"
-                  ></path>
-                </svg>
-              </div>
-              <div>
-                <svg
-                  viewBox="0 0 23 23"
-                  focusable="false"
-                  className="chakra-icon css-20vzky"
-                >
-                  <path
-                    d="M11.518 7.118a4.365 4.365 0 0 0-4.363 4.364 4.34 4.34 0 0 0 4.363 4.363 4.365 4.365 0 0 0 4.364-4.363c0-2.39-1.973-4.364-4.364-4.364Zm0 7.21a2.843 2.843 0 0 1-2.846-2.846c0-1.557 1.253-2.808 2.846-2.808a2.8 2.8 0 0 1 2.808 2.808c0 1.593-1.251 2.846-2.808 2.846Zm5.54-7.362a1.02 1.02 0 0 0-1.024-1.025 1.02 1.02 0 0 0-1.024 1.025 1.02 1.02 0 0 0 1.024 1.024 1.02 1.02 0 0 0 1.025-1.024Zm2.885 1.024c-.076-1.366-.379-2.58-1.366-3.567-.987-.985-2.201-1.29-3.567-1.366-1.405-.076-5.616-.076-7.02 0-1.367.076-2.543.379-3.568 1.366-.986.987-1.29 2.201-1.365 3.567-.076 1.405-.076 5.617 0 7.02.076 1.367.379 2.543 1.366 3.568 1.024.986 2.2 1.29 3.566 1.365 1.405.076 5.616.076 7.021 0 1.366-.076 2.58-.379 3.567-1.366.986-1.025 1.29-2.201 1.366-3.567.076-1.404.076-5.616 0-7.02Zm-1.821 8.5c-.267.76-.874 1.329-1.594 1.633-1.14.455-3.795.342-5.01.342-1.253 0-3.908.113-5.009-.342a2.878 2.878 0 0 1-1.632-1.632c-.455-1.101-.342-3.757-.342-5.01 0-1.214-.113-3.87.342-5.008A2.927 2.927 0 0 1 6.51 4.879c1.101-.456 3.757-.342 5.01-.342 1.214 0 3.87-.114 5.008.341.721.267 1.29.874 1.594 1.594.456 1.14.342 3.795.342 5.01 0 1.253.114 3.908-.341 5.009Z"
-                    fillRule="nonzero"
-                  ></path>
-                </svg>
-              </div>
-              <div>
-                <svg
-                  viewBox="0 0 23 23"
-                  focusable="false"
-                  className="chakra-icon css-20vzky"
-                >
-                  <path
-                    d="M21 11.558c0-2.535-1-4.966-2.782-6.759A9.469 9.469 0 0 0 11.5 2a9.469 9.469 0 0 0-6.718 2.799A9.586 9.586 0 0 0 2 11.559c0 4.778 3.448 8.747 8.007 9.441v-6.667H7.593v-2.775h2.413V9.476c0-2.388 1.418-3.737 3.562-3.737 1.073 0 2.146.193 2.146.193v2.35h-1.188c-1.187 0-1.57.733-1.57 1.503v1.773h2.643l-.422 2.776h-2.222V21C17.514 20.306 21 16.337 21 11.558Z"
-                    fillRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-              <div>
-                <svg
-                  viewBox="0 0 1200 1227"
-                  focusable="false"
-                  className="chakra-icon css-1m5ng7y"
-                >
-                  <path
-                    d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
-                    fillRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="h-full w-80  flex flex-col gap-5 "
-            style={{
-              padding: "30px",
-              borderLeft: "1px solid rgb(255,255,255,0.3)",
-            }}
-          >
-            <h2 className="font-bold text-xl">ABOUT</h2>
-            <h4 className="font-lighter text-s">Mission</h4>
-            <h4 className="font-lighter text-s">SAST Locations</h4>
-            <h4 className="font-lighter text-s">History</h4>
-            <h4 className="font-lighter text-s">FAQs</h4>
-            <h4 className="font-lighter text-s">News & Events</h4>
-          </div>
-
-          <div
-            className="h-full w-80  flex flex-col gap-5 margin-5 border-l-1 border-white-800"
-            style={{
-              padding: "30px",
-              borderLeft: "1px solid rgb(255,255,255,0.3)",
-            }}
-          >
-            <h2 className="font-bold text-xl">CAREERS</h2>
-            <h4 className="font-lighter text-s">Career Finder</h4>
-            <h4 className="font-lighter text-s">Benefits</h4>
-            <h4 className="font-lighter text-s">Education</h4>
-            <h4 className="font-lighter text-s">Training</h4>
-            <h4 className="font-lighter text-s">Life in SAST</h4>
-          </div>
-
-          <div
-            className="h-full w-80  flex flex-col gap-5 border-l-1 border-white-800"
-            style={{
-              padding: "30px",
-              borderLeft: "1px solid rgb(255,255,255,0.3)",
-            }}
-          >
-            <h2 className="font-bold text-xl">CAPABILITIES</h2>
-            <h4 className="font-lighter text-s">Protecting Satellites</h4>
-            <h4 className="font-lighter text-s">Facilitating Launches</h4>
-            <h4 className="font-lighter text-s">Education</h4>
-            <h4 className="font-lighter text-s">Experience a Launch</h4>
-            <h4 className="font-lighter text-s">Life in SAST</h4>
-          </div>
-
-          <div
-            className="h-full w-80  flex flex-col gap-5 border-l-1 border-white-800"
-            style={{
-              padding: "30px",
-              borderLeft: "1px solid rgb(255,255,255,0.3)",
-            }}
-          >
-            <h2 className="font-bold text-xl">HOW TO JOIN</h2>
-            <h4 className="font-lighter text-s">What to Expect</h4>
-            <h4 className="font-lighter text-s">For Families</h4>
-            <h4 className="font-lighter text-s">Live Chat</h4>
-            <h4 className="font-lighter text-s">Training</h4>
-            <h4 className="font-lighter text-s">Life in SAST</h4>
-          </div>
+              {item}
+            </h4>
+          ))}
         </div>
-        <div className="h-20 w-full flex justify-evenly items-center">
-          <div className="text-xs font-bold">SAST</div>
-          <div className="text-xs font-bold">PRIVACY POLICY</div>
-          <div className="text-xs font-bold">ACCESSIBILITY</div>
-          <div className="text-xs font-bold">WATCH VIDEOS</div>
-          <div className="text-xs font-bold">SITEMAP</div>
-          <div className="text-xs font-bold">COOKIE SETTINGS</div>
-        </div>
-      </footer>
+      ))}
+    </div>
+  </div>
+
+  {/* Bottom Bar */}
+  <div className="h-20 w-full flex flex-wrap justify-evenly items-center gap-2 px-6 bg-transparent">
+    {[
+      "SAST",
+      "PRIVACY POLICY",
+      "ACCESSIBILITY",
+      "WATCH VIDEOS",
+      "SITEMAP",
+      "COOKIE SETTINGS",
+    ].map((text) => (
+      <div
+        key={text}
+        className="text-xs font-bold whitespace-nowrap cursor-pointer hover:underline"
+      >
+        {text}
+      </div>
+    ))}
+  </div>
+
+
+</footer>
+
+
     </>
   );
 };

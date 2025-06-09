@@ -10,7 +10,7 @@ import img2 from "../Landing_media//frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
 import useLenis from '../utils/lenis'
-import { FaYoutube, FaInstagram, FaFacebookF, FaTwitter } from "react-icons/fa";
+ import { FaYoutube, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 
 const Landing = () => {
@@ -312,14 +312,14 @@ const Landing = () => {
         </section>
       </main>
 
-
-      
 <footer className="bg-transparent text-white">
-  <div className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/30">
+  <div
+    className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/15"
+  >
     {/* Logo + Socials */}
     <div
-      className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/30"
-      style={{ borderRightColor: "rgba(255,255,255,0.3)" }}
+      className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/15 pt-4 md:pt-0"
+      style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
     >
       <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
         <img
@@ -329,7 +329,9 @@ const Landing = () => {
         />
       </div>
 
-      <div className="social_icons flex justify-center gap-6 items-center pt-4 w-full h-[30%]">
+      <div
+        className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9"
+      >
         <a
           href="https://youtube.com"
           target="_blank"
@@ -340,7 +342,7 @@ const Landing = () => {
           <FaYoutube />
         </a>
         <a
-          href="https://instagram.com"
+          href="https://www.instagram.com/sast.rishihood/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white text-2xl hover:text-pink-600 transition"
@@ -349,13 +351,13 @@ const Landing = () => {
           <FaInstagram />
         </a>
         <a
-          href="https://facebook.com"
+          href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white text-2xl hover:text-blue-600 transition"
-          aria-label="Facebook"
+          aria-label="LinkedIn"
         >
-          <FaFacebookF />
+          <FaLinkedinIn />
         </a>
         <a
           href="https://x.com"
@@ -369,8 +371,8 @@ const Landing = () => {
       </div>
     </div>
 
-    {/* About, Careers, Capabilities, How To Join */}
-    <div className="hidden md:flex flex-wrap min-w-[220px] md:w-full h-full justify-center items-center text-center">
+    {/* Sections - completely hidden below xl */}
+    <div className="hidden xl:flex flex-wrap w-full h-full justify-center items-center text-center">
       {[
         {
           title: "ABOUT",
@@ -403,10 +405,11 @@ const Landing = () => {
       ].map(({ title, items }, idx) => (
         <div
           key={title}
-          className={`flex flex-col justify-center items-center gap-4 h-full min-w-[150px] flex-1 px-4 text-white
+          className={`flex flex-col justify-center items-center gap-8 h-full min-w-[150px] flex-1 px-4 text-white
             ${idx === 0 ? "mr-4" : ""}
-            ${idx !== 3 ? "border-r border-white/30" : ""}
+            ${idx !== 3 ? "border-r border-white/15" : ""}
           `}
+          style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
         >
           <h2 className="font-bold text-xl">{title}</h2>
           {items.map((item) => (
@@ -440,9 +443,8 @@ const Landing = () => {
       </div>
     ))}
   </div>
-
-
 </footer>
+
 
 
     </>

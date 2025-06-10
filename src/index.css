@@ -645,7 +645,7 @@ a {
 }
 
 .events {
-  margin-top: 15%;
+  margin-top: 5%;
   width: 100%;
   height: 80vh;
   display: flex;
@@ -654,7 +654,6 @@ a {
   flex-wrap: wrap;
   gap: 1vw;
   flex-wrap: wrap;
-
 
 }
 

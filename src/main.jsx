@@ -11,6 +11,7 @@ import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from './pages/ContributionRanks.jsx';
+import CursorEffects from "./components/CursorEffects.jsx";
 
 const App = () => {
   const location = useLocation();
@@ -18,6 +19,8 @@ const App = () => {
 
   return (
     <>
+  
+         <CursorEffects /> 
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
 
       <Routes>
@@ -39,3 +42,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </Router>
 );
+

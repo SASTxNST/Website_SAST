@@ -7,7 +7,12 @@ html, body {
   max-width: 100%;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  cursor: url("/spaceshuttle.png") 5 5, auto;
 }
+
+
+
+
 
 .header {
   position:fixed;
@@ -1021,3 +1026,4 @@ a {
     transform: scale(0.5);
   }
 }
+

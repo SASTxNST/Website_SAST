@@ -647,16 +647,9 @@ a {
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-<<<<<<< eventsfix
-  padding: 10px;
-  gap: 1vh;
-
-
-
-=======
   padding: 5px;
   gap: 2vh;
->>>>>>> main
+
 }
 
 .alignerevent img {

@@ -10,7 +10,7 @@ import img2 from "../Landing_media//frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
 import useLenis from '../utils/lenis'
- import { FaYoutube, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 
 const Landing = () => {
@@ -243,7 +243,7 @@ const Landing = () => {
         <form className="w-full h-60 m5">
           <div className="news flex justify-evenly ">
             <div className="flex flex-col gap-8">
-              <div className="text-4xl font-bold w-150 ">
+              <div className="text-4xl font-bold w-150">
                 SUBSCRIBE TO OUR SAST NEWSLETTER
               </div>
               <a href="./SAST Landing/newsletter.html">

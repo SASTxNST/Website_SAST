@@ -240,47 +240,51 @@ const Landing = () => {
         <br />
         <br />
 
-        <form className="w-full h-60 m5">
-          <div className="news flex justify-evenly ">
-            <div className="flex flex-col gap-8">
-              <div className="text-4xl font-bold w-150">
+        <form className="w-full md:h-60 m-5" style={{
+          padding : "20px",
+        }}>
+          <div className="news flex flex-col md:flex-row gap-10 justify-evenly">
+            <div className="flex flex-col gap-8" style={{
+              margin : "10px",
+            }} >
+              <div className="text-4xl font-bold md:w-150 w-fit md:text-start text-center">
                 SUBSCRIBE TO OUR SAST NEWSLETTER
               </div>
               <a href="./SAST Landing/newsletter.html">
-                <div className="h-10 w-50 border border-[#00a1ff] text-s font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
+                <div className="md:h-10 md:w-50 h-10 border border-[#00a1ff] text-s font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
                   READ NOW
                 </div>
               </a>
             </div>
 
-            <div className="h-50 w-200  flex flex-col justify-center gap-8 p-4">
-              <h3 className="text-l font-lighter">
+            <div className="md:h-50 md:w-200 w-80 flex flex-col justify-center gap-8 p-4">
+              <h3 className="text-l font-lighter text-center">
                 SUBSCRIBE AND NEVER MISS OUT ON WHAT WE’RE UP TO.
               </h3>
               <input
-                className="h-10 w-166 text-xl border-b-2 border-[#00a1ff] font-bold"
+                className="h-10  text-xl border-b-2 border-[#00a1ff] font-bold"
                 type="email"
                 placeholder="EMAIL ADDRESS"
                 name="email"
                 required
               />
-              <div className="gap-5 w-full flex jus-between">
+              <div className="gap-5 flex md:flex-row flex-col flex-wrap justify-between">
                 <input
-                  className="h-10 w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
+                  className="h-10 md:w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
                   type="text"
                   placeholder="FIRST NAME"
                   name="firstname"
                   required
                 />
                 <input
-                  className="h-10 w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
+                  className="h-10 md:w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
                   type="text"
                   placeholder="LAST NAME"
                   name="lastname"
                   required
                 />
                 <input
-                  className="border border-[#00a1ff] h-10 w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80"
+                  className="md:h-10 md:w-50 h-10 border border-[#00a1ff] text-s font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500"
                   type="submit"
                   value="SUBSCRIBE"
                   name="submit"

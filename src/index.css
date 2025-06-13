@@ -657,7 +657,7 @@ a {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1vw;
+  gap: 4vw;
   flex-wrap: wrap;
 
 }
@@ -672,8 +672,8 @@ a {
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
-  padding: 5px;
-  gap: 2vh;
+  padding: 10px;
+  gap: 1vh;
 
 
 

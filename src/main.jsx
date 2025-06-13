@@ -11,18 +11,19 @@ import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from './pages/ContributionRanks.jsx';
-import CursorEffects from "./components/CursorEffects.jsx";
-
+import CursorEffects from './components/CursorEffects.jsx';
+import DiamondCursor from "./components/DiamondCursor.jsx";
 const App = () => {
   const location = useLocation();
   const hideNavbarRoutes = ['/merch', '/contributions'];
 
   return (
     <>
-  
-         <CursorEffects /> 
-      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+      <CursorEffects /> 
+      <DiamondCursor />
+ 
 
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/newsletter" element={<Newsletter />} />
@@ -42,4 +43,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </Router>
 );
-

@@ -7,7 +7,7 @@ html, body {
   max-width: 100%;
   box-sizing: border-box;
   scroll-behavior: smooth;
-  cursor: url("/spaceshuttle.png") 5 5, auto;
+    cursor: none; /* Hide default cursor */
 }
 
 
@@ -1024,6 +1024,33 @@ a {
   100% {
     opacity: 0;
     transform: scale(0.5);
+  }
+}
+
+.cursor-trail {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  /* 👇 OFFSET to position slightly behind cursor */
+  transform: translate(-70%, -50%);
+  animation: sparkleFade 1s ease-out forwards;
+  box-shadow:
+    0 0 4px white,
+    0 0 6px rgba(255, 255, 255, 0.5);
+  opacity: 0.9;
+}
+@keyframes sparkleFade {
+  0% {
+    opacity: 0.9;
+    transform: translate(-70%, -50%) scale(1); /* same as default + scale */
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-70%, -50%) scale(0.3); /* keep offset + shrink */
   }
 }
 

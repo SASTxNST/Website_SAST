@@ -301,8 +301,8 @@ const Landing = () => {
         <hr className="opacity-18" />
 
         <section className="space-section">
-          <h1 className="space-heading">
-            <span>SPACE IS CLOSER</span>
+          <h1 className="space-heading text-[4rem] font-black text-center text-white/10 m-0 transition ease-in-out duration-200">
+            <span className="md:text-[120px]">SPACE IS CLOSER</span>
             <br />
             THAN YOU THINK
           </h1>

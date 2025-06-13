@@ -572,18 +572,12 @@ a {
 }
 
 .space-section .space-heading {
-  font-size: 4rem;
-  font-weight: 900;
-  text-align: center;
   color: rgba(255, 255, 255, 0.1);
   margin: 0;
   transition: 200ms ease-in-out;
 }
 
 .space-section .space-heading:hover {
-  font-size: 4rem;
-  font-weight: 900;
-  text-align: center;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
@@ -591,7 +585,6 @@ a {
 .space-section .space-heading span {
   color: white;
   opacity: 0.4;
-  font-size: 120px;
 }
 
 .space-section .cta-button {

@@ -255,8 +255,8 @@ const Landing = () => {
         </div>
       </a>
     </div>
-{/*adjusted the email addres and first name and last name columns to adjust with the width of the mobile*/}
-    <div className="flex flex -col justify-center gap-8 p-4 w-80 md:w-[500px]">
+{/*adjusted the email addres and first name and last name columns to adjust with the width of the*/}
+    <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
       <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
         SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
       </h3>

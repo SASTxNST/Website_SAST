@@ -1,0 +1,97 @@
+/* Center the loader on the page */
+.landing-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(10, 10, 30, 0.96);
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  border: 10px solid rgba(255, 255, 255, 0.15);
+  border-top: 10px solid #00a1ff;
+  border-radius: 50%;
+  animation: landing-spin 1.2s linear infinite;
+  margin-bottom: 32px;
+  box-shadow: 0 0 40px #00a1ff44;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes landing-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-text {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 16px #00a1ff99, 0 0 2px #fff;
+  font-family: "Segoe UI", "Arial", sans-serif;
+  margin-top: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Animated fading stars in the loader background */
+.loader-stars-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.loader-star {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.7;
+  box-shadow: 0 0 12px 2px #00a1ff55;
+  animation: loader-star-fade 2.8s ease-in-out infinite;
+}
+
+@keyframes loader-star-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}

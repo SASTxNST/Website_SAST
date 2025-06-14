@@ -243,65 +243,63 @@ const Landing = () => {
         <br />
         <br />
 
-        <form className="w-full m-5">
-          <div className="news flex flex-col md:flex-row justify-evenly gap-8">
-            <div className="flex flex-col gap-8">
-              <div className="text-2xl md:text-4xl font-bold max-w-[150px] md:max-w-none">
-                SUBSCRIBE TO OUR SAST NEWSLETTER
-              </div>
-              <a href="./SAST Landing/newsletter.html">
-                <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
-                  READ NOW
-                </div>
-              </a>
-            </div>
+<form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
+  <div className="news flex flex-col md:flex-row justify-evenly gap-8">
+    <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
+      <div className="text-2xl md:text-4xl font-bold md:w-150 w-fit md:text-start text-center">
+        SUBSCRIBE TO OUR SAST NEWSLETTER
+      </div>
+      <a href="./SAST Landing/newsletter.html">
+        <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
+          READ NOW
+        </div>
+      </a>
+    </div>
 
-            <div className="flex flex-col justify-center gap-8 p-4 max-w-[500px]">
-              <h3 className="text-sm md:text-base font-lighter">
-                SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
-              </h3>
-              <input
-                className="h-10 w-full text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-                type="email"
-                placeholder="EMAIL ADDRESS"
-                name="email"
-                required
-              />
-              <div className="gap-5 w-full flex flex-col md:flex-row justify-between">
-                <input
-                  className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-                  type="text"
-                  placeholder="FIRST NAME"
-                  name="firstname"
-                  required
-                />
-                <input
-                  className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-                  type="text"
-                  placeholder="LAST NAME"
-                  name="lastname"
-                  required
-                />
-                <input
-                  className="border border-[#00a1ff] h-10 w-full md:w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80 cursor-pointer"
-                  type="submit"
-                  value="SUBSCRIBE"
-                  name="submit"
-                />
-              </div>
-              <p className="text-xs font-lighter">
-                You must be 13 years or older to opt-in to SAST emails.
-              </p>
-            </div>
-          </div>
-        </form>
+    <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
+      <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
+        SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
+      </h3>
+
+      <input
+        className="h-10 w-full text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+        type="email"
+        placeholder="EMAIL ADDRESS"
+        name="email"
+        required
+      />
+
+      <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
+        <input
+          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          type="text"
+          placeholder="FIRST NAME"
+          name="firstname"
+          required
+        />
+        <input
+          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          type="text"
+          placeholder="LAST NAME"
+          name="lastname"
+          required
+        />
+        <input
+          className="border border-[#00a1ff] h-10 w-full md:w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80 cursor-pointer"
+          type="submit"
+          value="SUBMIT"
+        />
+      </div>
+    </div>
+  </div>
+</form>
 
         <br />
         <hr className="opacity-18" />
 
         <section className="space-section">
-          <h1 className="space-heading">
-            <span>SPACE IS CLOSER</span>
+          <h1 className="space-heading text-[4rem] font-black text-center text-white/10 m-0 transition ease-in-out duration-200">
+            <span className="md:text-[120px]">SPACE IS CLOSER</span>
             <br />
             THAN YOU THINK
           </h1>

@@ -1228,3 +1228,27 @@ a {
 }
 
 
+.animate-ping-slow {
+  animation: ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.timeline_sast
+{
+   width: 100%;
+  margin-top: 25rem; /* mt-32 = 32 * 0.25rem */
+  padding-left: 1rem; /* px-4 = 1rem */
+  padding-right: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10rem; /* pb-40 = 40 * 0.25rem */
+}
+
+

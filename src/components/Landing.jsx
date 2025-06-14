@@ -6,9 +6,10 @@ import videosource3 from "../Landing_media/DeskSat_scrub.mp4";
 import videosource4 from "../Landing_media/Modules_scrub.mp4";
 import videosource5 from "../Landing_media/spacerealastro.mov";
 import img1 from "../Landing_media/All-possible-through-our-state-of-the-art-space-service-2160x2170-4-2160x1660.webp";
-import img2 from "../Landing_media//frequent_lines.webp";
+import img2 from "../Landing_media/frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
+
 import useLenis from '../utils/lenis'
 import { FaYoutube, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
@@ -19,7 +20,7 @@ const Landing = () => {
     const menuToggle = document.querySelector(".menu-toggle");
     const navLinks = document.querySelector(".nav-links");
 
-    if (menuToggle) {
+    if (menuToggle && navLinks) {
       menuToggle.addEventListener("click", () => {
         navLinks.classList.toggle("active");
       });
@@ -61,10 +62,14 @@ const Landing = () => {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (menuToggle) menuToggle.removeEventListener("click", () => {});
+      if (menuToggle && navLinks) {
+        menuToggle.removeEventListener("click", () => {
+          navLinks.classList.toggle("active");
+        });
+      }
       if (hoverVideo) {
-        hoverVideo.removeEventListener("mouseenter", () => {});
-        hoverVideo.removeEventListener("mouseleave", () => {});
+        hoverVideo.removeEventListener("mouseenter", () => hoverVideo.play());
+        hoverVideo.removeEventListener("mouseleave", () => hoverVideo.pause());
       }
     };
   }, []);
@@ -74,12 +79,12 @@ const Landing = () => {
       <main>
         <section className="hero">
           <div className="black_space">
-            <video autoPlay loop muted>
+            <video autoPlay loop muted playsInline>
               <source src={videosource5} type="video/mp4" />
             </video>
           </div>
           <div className="container">
-            <p className="subtitle pclassName">
+            <p className="subtitle p_classname">
               Pioneering Space <br /> and Beyond
             </p>
             <h1 className="main-heading">
@@ -104,7 +109,7 @@ const Landing = () => {
         <section className="text-section" id="scrollText">
           <p className="space-text opacity-80 hover:opacity-100">
             Space exploration and technology have traditionally been exclusive
-            to Governments,large organizations and elite institutions, but SAST
+            to Governments, large organizations and elite institutions, but SAST
             is dedicated to breaking these barriers and making the cosmos
             accessible to all..
           </p>
@@ -156,7 +161,7 @@ const Landing = () => {
         <hr className="vbar opacity-20" />
         <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
-            <video autoPlay muted loop playsInline id="bgVideo">
+            <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource2} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -177,7 +182,7 @@ const Landing = () => {
 
         <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
-            <video autoPlay muted loop playsInline id="bgVideo">
+            <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource3} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -195,14 +200,14 @@ const Landing = () => {
 
         <section className="hero-section min-h-[70vh] py-20">
           <div className="video-container">
-            <video autoPlay muted loop playsInline id="bgVideo">
+            <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource4} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
           <div className="content">
             <p className="subtitle">Cutting-edge avionics</p>
-            <h1 className="title">SATELITTES</h1>
+            <h1 className="title">SATELLITES</h1>
             <a href="#" className="cta-button" id="discoverBtn">
               COMING SOON...
               <span className="arrow">→</span>
@@ -211,7 +216,6 @@ const Landing = () => {
         </section>
         <hr className="vbar opacity-20" />
 
-        {/* ADD VIDEO LINK HERE */}
         <section className="youtube-video-section h-[600px] px-4 bg-black text-white text-center flex flex-col justify-center items-center">
           <div className="w-full max-w-4xl flex justify-center items-center">
             <div
@@ -234,68 +238,61 @@ const Landing = () => {
           className="w-full h-120 bg-cover bg-center bg-no-repeat bg-fixed"
           style={{ backgroundImage: `url(${helmet_png})` }}
         ></div>
-        <main></main>
 
         <hr className="opacity-15" />
         <br />
         <br />
 
-        <form className="w-full md:h-60 m-5" style={{
-          padding : "20px",
-        }}>
-          <div className="news flex flex-col md:flex-row gap-10 justify-evenly">
-            <div className="flex flex-col gap-8" style={{
-              margin : "10px",
-            }} >
-              <div className="text-4xl font-bold md:w-150 w-fit md:text-start text-center">
-                SUBSCRIBE TO OUR SAST NEWSLETTER
-              </div>
-              <a href="./SAST Landing/newsletter.html">
-                <div className="md:h-10 md:w-50 h-10 border border-[#00a1ff] text-s font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
-                  READ NOW
-                </div>
-              </a>
-            </div>
+<form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
+  <div className="news flex flex-col md:flex-row justify-evenly gap-8">
+    <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
+      <div className="text-2xl md:text-4xl font-bold md:w-150 w-fit md:text-start text-center">
+        SUBSCRIBE TO OUR SAST NEWSLETTER
+      </div>
+      <a href="./SAST Landing/newsletter.html">
+        <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
+          READ NOW
+        </div>
+      </a>
+    </div>
 
-            <div className="md:h-50 md:w-200 w-80 flex flex-col justify-center gap-8 p-4">
-              <h3 className="text-l font-lighter text-center">
-                SUBSCRIBE AND NEVER MISS OUT ON WHAT WE’RE UP TO.
-              </h3>
-              <input
-                className="h-10  text-xl border-b-2 border-[#00a1ff] font-bold"
-                type="email"
-                placeholder="EMAIL ADDRESS"
-                name="email"
-                required
-              />
-              <div className="gap-5 flex md:flex-row flex-col flex-wrap justify-between">
-                <input
-                  className="h-10 md:w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
-                  type="text"
-                  placeholder="FIRST NAME"
-                  name="firstname"
-                  required
-                />
-                <input
-                  className="h-10 md:w-90 text-xl border-b-2 border-[#00a1ff] font-bold"
-                  type="text"
-                  placeholder="LAST NAME"
-                  name="lastname"
-                  required
-                />
-                <input
-                  className="md:h-10 md:w-50 h-10 border border-[#00a1ff] text-s font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500"
-                  type="submit"
-                  value="SUBSCRIBE"
-                  name="submit"
-                />
-              </div>
-              <p className="text-xs font-lighter">
-                You must be 13 years or older to opt-in to SAST emails.
-              </p>
-            </div>
-          </div>
-        </form>
+    <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
+      <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
+        SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
+      </h3>
+
+      <input
+        className="h-10 w-full text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+        type="email"
+        placeholder="EMAIL ADDRESS"
+        name="email"
+        required
+      />
+
+      <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
+        <input
+          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          type="text"
+          placeholder="FIRST NAME"
+          name="firstname"
+          required
+        />
+        <input
+          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          type="text"
+          placeholder="LAST NAME"
+          name="lastname"
+          required
+        />
+        <input
+          className="border border-[#00a1ff] h-10 w-full md:w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80 cursor-pointer"
+          type="submit"
+          value="SUBMIT"
+        />
+      </div>
+    </div>
+  </div>
+</form>
 
         <br />
         <hr className="opacity-18" />
@@ -309,6 +306,7 @@ const Landing = () => {
           <a
             href="https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/posts/?feedView=all"
             target="_blank"
+            rel="noopener noreferrer"
             className="cta-button"
           >
             Get in touch
@@ -317,65 +315,25 @@ const Landing = () => {
       </main>
 
 <footer className="bg-transparent text-white">
-  <div
-    className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/15"
-  >
+  <div className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 border border-white/15">
     {/* Logo + Socials */}
     <div
       className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/15 pt-4 md:pt-0"
       style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
     >
       <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
-        <img
-          className="w-full h-full object-cover opacity-70"
-          src={logo}
-          alt="Logo"
-        />
+        <img className="w-full h-full object-cover opacity-70" src={logo} alt="SAST Logo" />
       </div>
 
-      <div
-        className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9"
-      >
-        <a
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-red-600 transition"
-          aria-label="YouTube"
-        >
-          <FaYoutube />
-        </a>
-        <a
-          href="https://www.instagram.com/sast.rishihood/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-pink-600 transition"
-          aria-label="Instagram"
-        >
-          <FaInstagram />
-        </a>
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-blue-600 transition"
-          aria-label="LinkedIn"
-        >
-          <FaLinkedinIn />
-        </a>
-        <a
-          href="https://x.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-sky-400 transition"
-          aria-label="X"
-        >
-          <FaTwitter />
-        </a>
+      <div className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9">
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white text-2xl hover:text-red-600 transition" aria-label="YouTube"><FaYoutube /></a>
+        <a href="https://www.instagram.com/sast.rishihood/" target="_blank" rel="noopener noreferrer" className="text-white text-2xl hover:text-pink-600 transition" aria-label="Instagram"><FaInstagram /></a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white text-2xl hover:text-blue-600 transition" aria-label="LinkedIn"><FaLinkedinIn /></a>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white text-2xl hover:text-sky-400 transition" aria-label="X"><FaTwitter /></a>
       </div>
     </div>
 
-    {/* Sections - completely hidden below xl */}
+    {/* Section Columns */}
     <div className="hidden xl:flex flex-wrap w-full h-full justify-center items-center text-center">
       {[
         {
@@ -388,23 +346,11 @@ const Landing = () => {
         },
         {
           title: "CAPABILITIES",
-          items: [
-            "Protecting Satellites",
-            "Facilitating Launches",
-            "Education",
-            "Experience a Launch",
-            "Life in SAST",
-          ],
+          items: ["Protecting Satellites", "Facilitating Launches", "Education", "Experience a Launch", "Life in SAST"],
         },
         {
           title: "HOW TO JOIN",
-          items: [
-            "What to Expect",
-            "For Families",
-            "Live Chat",
-            "Training",
-            "Life in SAST",
-          ],
+          items: ["What to Expect", "For Families", "Live Chat", "Training", "Life in SAST"],
         },
       ].map(({ title, items }, idx) => (
         <div
@@ -429,7 +375,7 @@ const Landing = () => {
     </div>
   </div>
 
-  {/* Bottom Bar */}
+  {/* Bottom Footer Bar */}
   <div className="h-20 w-full flex flex-wrap justify-evenly items-center gap-2 px-6 bg-transparent">
     {[
       "SAST",
@@ -448,8 +394,6 @@ const Landing = () => {
     ))}
   </div>
 </footer>
-
-
 
     </>
   );

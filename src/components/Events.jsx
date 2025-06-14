@@ -163,42 +163,43 @@ const Events = () => {
 
       <div className="relative z-10 bg-black/80 min-h-screen pb-40">
        <section className="eventssec flex flex-col items-center mt-28 px-2">
+
+
   {/* Filter Bar */}
-  <div
-    className="relative h-18 w-full max-w-[90vw] sm:w-[600px] rounded-3xl flex justify-start sm:justify-between items-center overflow-x-auto no-scrollbar sm:overflow-visible"
-    style={{
-      marginTop: "12%",
-      backgroundColor: "rgba(255,255,255,0.08)",
-      paddingLeft: "40px",
-      paddingRight: "40px",
-      boxShadow: "0 0 12px 4px rgba(59, 130, 246, 0.5)",
-      gap: "16px",
-    }}
-  >
-    <div
-      className="h-20 absolute transition-all duration-500 ease-in-out bg-blue-500/30 backdrop-blur-sm shadow-lg hidden sm:block"
+ <div
+  className="relative w-full max-w-[90vw] sm:w-[600px] flex items-center justify-start rounded-md sm:justify-between overflow-x-auto sm:overflow-visible no-scrollbar px-4 sm:px-10 gap-4"
+  style={{
+    marginTop: "12%",
+    backgroundColor: "rgba(255,255,255,0.08)",
+    boxShadow: "0 0 12px 4px rgba(59, 130, 246, 0.5)",
+    height: "36px",
+  }}
+>
+  {filterTypes.map((type, index) => (
+    <button
+      key={type}
+      onClick={() => filterEvents(type)}
+      className={`flex items-center justify-center text-center rounded-md px-3 py-1 text-sm sm:px-4 sm:py-2 cursor-pointer z-10 whitespace-nowrap transition-all duration-300 ${
+        filterType === type
+          ? "text-white font-semibold"
+          : "text-white/80 hover:text-white"
+      }`}
       style={{
-        left: getLeftPosition(),
-        width: `${getWidth()}px`,
+        marginLeft: index === 0 ? "8px" : 0,          // extra space for "All Events"
+        marginRight: index === filterTypes.length - 1 ? "8px" : 0, // extra space for "Future Events"
+        background: "transparent",
+        outline: "none",
       }}
-    />
-    {filterTypes.map((type) => (
-      <button
-        key={type}
-        onClick={() => filterEvents(type)}
-        className={`rounded-xl px-4 py-2 cursor-pointer z-10 whitespace-nowrap transition-all duration-300 ${
-          filterType === type
-            ? "text-white font-semibold"
-            : "text-white/80 hover:text-white"
-        }`}
-      >
-        {type === "all" && "All Events"}
-        {type === "past" && "Past Events"}
-        {type === "ongoing" && "Ongoing Events"}
-        {type === "future" && "Future Events"}
-      </button>
-    ))}
-  </div>
+    >
+      {type === "all" && "All Events"}
+      {type === "past" && "Past Events"}
+      {type === "ongoing" && "Ongoing Events"}
+      {type === "future" && "Future Events"}
+    </button>
+  ))}
+</div>
+
+
 
   {/* Events Grid */}
   <div className="events grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 px-4 w-full max-w-7xl">
@@ -311,36 +312,37 @@ const Events = () => {
             </motion.div>
 
             {/* Mobile & Tablet Timeline Item */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.12 }}
-              viewport={{ once: true, amount: 0.2 }}
-              className="block lg:hidden relative flex items-start gap-4 px-4 mb-12"
-            >
-              {/* Timeline Line and Dot */}
-              <div className="relative">
-                <motion.div
-                  className="w-[2px] h-full bg-gradient-to-b from-sky-400 via-blue-400 to-sky-200"
-                  initial={{ height: 0 }}
-                  whileInView={{ height: "100%" }}
-                  transition={{ duration: 1.2 }}
-                  viewport={{ once: true }}
-                />
-                {/* Dot */}
-                <div className="absolute -left-[7px] top-1">
-                  <div className="w-4 h-4 bg-sky-400 rounded-full blur-[1px] animate-pulse-slow absolute inset-0" />
-                  <div className="w-4 h-4 bg-blue-500 rounded-full relative z-10 shadow-md shadow-blue-500/30" />
-                </div>
-              </div>
+        <motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: index * 0.12 }}
+  viewport={{ once: true, amount: 0.2 }}
+  className="block lg:hidden relative flex items-start gap-6 px-4 mb-12 sm:mb-16" // Updated spacing
+>
+  {/* Timeline Line and Dot */}
+  <div className="relative">
+    <motion.div
+      className="w-[2px] h-full bg-gradient-to-b from-sky-400 via-blue-400 to-sky-200"
+      initial={{ height: 0 }}
+      whileInView={{ height: "100%" }}
+      transition={{ duration: 1.2 }}
+      viewport={{ once: true }}
+    />
+    <div className="absolute -left-[7px] top-1">
+      <div className="w-4 h-4 bg-sky-400 rounded-full blur-[1px] animate-pulse-slow absolute inset-0" />
+      <div className="w-4 h-4 bg-blue-500 rounded-full relative z-10 shadow-md shadow-blue-500/30" />
+    </div>
+  </div>
 
-              {/* Event Card */}
-              <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-5 shadow-md w-full transition hover:scale-[1.015]">
-                <p className="text-sm text-blue-200">{event.date}</p>
-                <h3 className="text-xl font-semibold mb-1">{event.title}</h3>
-                <p className="text-gray-300">{event.description}</p>
-              </div>
-            </motion.div>
+  {/* Event Card */}
+  <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 shadow-md w-full transition hover:scale-[1.015]">
+    <p className="text-base text-blue-200 font-medium mb-2">{event.date}</p>
+    <h3 className="text-2xl font-bold text-white mb-2">{event.title}</h3>
+    <p className="text-gray-300 text-base leading-relaxed">{event.description}</p>
+  </div>
+</motion.div>
+
+
           </div>
         );
       })}

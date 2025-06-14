@@ -242,7 +242,7 @@ const Landing = () => {
         <hr className="opacity-15" />
         <br />
         <br />
-
+{/*optimizing this for mobile users*/}
 <form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
   <div className="news flex flex-col md:flex-row justify-evenly gap-8">
     <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
@@ -250,15 +250,15 @@ const Landing = () => {
         SUBSCRIBE TO OUR SAST NEWSLETTER
       </div>
       <a href="./SAST Landing/newsletter.html">
-        <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
+        <div className="h-15 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
           READ NOW
         </div>
       </a>
     </div>
 
-    <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
+    <div className="flex flex -col justify-center gap-8 p-4 w-80 md:w-[500px]">
       <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
-        SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
+        SUBSCRIBE TO OUR NEWSLETTER AND NEVER MISS OUT ON WHAT WE'RE UP TO.
       </h3>
 
       <input

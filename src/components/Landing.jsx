@@ -262,7 +262,7 @@ const Landing = () => {
       </h3>
 
       <input
-        className="h-10 w-full text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+        className="h-10 w-50 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
         type="email"
         placeholder="EMAIL ADDRESS"
         name="email"
@@ -271,14 +271,14 @@ const Landing = () => {
 
       <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
         <input
-          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
           type="text"
           placeholder="FIRST NAME"
           name="firstname"
           required
         />
         <input
-          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
           type="text"
           placeholder="LAST NAME"
           name="lastname"

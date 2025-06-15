@@ -16,20 +16,22 @@ import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
 
-import ContributionRanks from './pages/ContributionRanks.jsx';
-import CursorEffects from './components/CursorEffects.jsx';
+import ContributionRanks from "./pages/ContributionRanks.jsx";
+import CursorEffects from "./components/CursorEffects.jsx";
 import DiamondCursor from "./components/DiamondCursor.jsx";
 import AstronomyNews from "./components/AstronomyNews.jsx";
+import SatelliteTracker from "./components/tracking/SatelliteTracker.jsx";
+import { Ion } from "cesium";
 
+Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
 const App = () => {
   const location = useLocation();
   const hideNavbarRoutes = ["/merch", "/contributions"];
 
   return (
     <>
-      <CursorEffects /> 
+      <CursorEffects />
       <DiamondCursor />
- 
 
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
@@ -42,6 +44,7 @@ const App = () => {
         <Route path="/merch" element={<Store />} />
         <Route path="/contributions" element={<ContributionRanks />} />
         <Route path="/news" element={<AstronomyNews />} />
+        <Route path="/track" element={<SatelliteTracker />} />
       </Routes>
     </>
   );

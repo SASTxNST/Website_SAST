@@ -1,5 +1,34 @@
+// Utility to get and set cache in localStorage
+function getTLECache() {
+  try {
+    return JSON.parse(localStorage.getItem("tleCache") || "{}") || {};
+  } catch {
+    return {};
+  }
+}
+
+function setTLECache(cache) {
+  localStorage.setItem("tleCache", JSON.stringify(cache));
+}
+
 // Fetch TLE group and store in memory (no localStorage cache for large groups)
 export async function fetchTLEGroup(group) {
+  let cache = getTLECache();
+  const now = Date.now();
+  const groupCache = cache[group] || { lastFetched: 0, count: 0, data: [] };
+  const lastFetchedDay = new Date(groupCache.lastFetched).toDateString();
+  const today = new Date(now).toDateString();
+
+  // Reset count if new day
+  if (lastFetchedDay !== today) {
+    groupCache.count = 0;
+  }
+
+  if (groupCache.count >= 2 && lastFetchedDay === today) {
+    // Strict: only fetch twice per day
+    return groupCache.data || [];
+  }
+
   try {
     const res = await fetch(
       `https://celestrak.org/NORAD/elements/gp.php?GROUP=${group}&FORMAT=tle`
@@ -20,13 +49,17 @@ export async function fetchTLEGroup(group) {
       const id = tle1.split(/\s+/)[1]; // NORAD ID
       if (!id) continue;
 
-      // Do NOT cache in localStorage for large groups
       satellites.push({ id, name, category: group, tle1, tle2 });
     }
-
+    // Save to cache
+    groupCache.lastFetched = now;
+    groupCache.count = (groupCache.count || 0) + 1;
+    groupCache.data = satellites;
+    cache[group] = groupCache;
+    setTLECache(cache);
     return satellites;
   } catch (err) {
     console.error("Failed to fetch TLE group:", group, err);
-    return [];
+    return groupCache.data || [];
   }
 }

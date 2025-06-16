@@ -21,13 +21,29 @@ import LandingLoader from "./LandingLoader";
 
 const Landing = () => {
   useLenis();
-  const [loading, setLoading] = useState(true);
-  const [assetsLoaded, setAssetsLoaded] = useState({ video: false, img1: false, img2: false });
+  const [loading, setLoading] = useState(() => {
+    const isDirectNavigation = !document.referrer.includes(
+      window.location.host
+    );
+    const hasSeenLoader = sessionStorage.getItem("currentPageLoaded");
+
+    return isDirectNavigation || !hasSeenLoader;
+  });
+  const [assetsLoaded, setAssetsLoaded] = useState({
+    video: false,
+    img1: false,
+    img2: false,
+  });
 
   useEffect(() => {
-    let timeout = setTimeout(() => setLoading(false), 3000);
+    let timeout = setTimeout(() => {
+      setLoading(false);
+      sessionStorage.setItem("currentPageLoaded", "true");
+    }, 3000);
+
     if (assetsLoaded.video && assetsLoaded.img1 && assetsLoaded.img2) {
       setLoading(false);
+      sessionStorage.setItem("currentPageLoaded", "true");
       clearTimeout(timeout);
     }
     return () => clearTimeout(timeout);
@@ -99,7 +115,15 @@ const Landing = () => {
       <main>
         <section className="hero">
           <div className="black_space">
-            <video autoPlay loop muted playsInline onCanPlayThrough={() => setAssetsLoaded(a => ({ ...a, video: true }))}>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              onCanPlayThrough={() =>
+                setAssetsLoaded((a) => ({ ...a, video: true }))
+              }
+            >
               <source src={videosource5} type="video/mp4" />
             </video>
           </div>
@@ -142,9 +166,14 @@ const Landing = () => {
                 src={img1}
                 alt="Space Service Image"
                 className="scroll-image"
-                onLoad={() => setAssetsLoaded(a => ({ ...a, img1: true }))}
+                onLoad={() => setAssetsLoaded((a) => ({ ...a, img1: true }))}
               />
-              <img src={img2} alt="Rotating Lines" className="rotate" onLoad={() => setAssetsLoaded(a => ({ ...a, img2: true }))} />
+              <img
+                src={img2}
+                alt="Rotating Lines"
+                className="rotate"
+                onLoad={() => setAssetsLoaded((a) => ({ ...a, img2: true }))}
+              />
             </div>
           </div>
         </section>

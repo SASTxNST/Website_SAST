@@ -322,7 +322,7 @@ const Landing = () => {
       style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
     >
       <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
-        <img className="w-16 h-16 object-cover opacity-70" src={logo} alt="SAST Logo" />
+        <img className="w-35 h-35 object-cover opacity-70" src={logo} alt="SAST Logo" />
       </div>
 
       <div className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9">

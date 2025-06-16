@@ -77,6 +77,9 @@ const Navbar = () => {
               <li>
                 <a href="/news">Astronomy News</a>
               </li>
+              <li>
+                <a href="/track">Track</a>
+              </li>
               <Link to="/login">Login</Link>
 
             </ul>

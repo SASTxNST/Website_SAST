@@ -1,4 +1,14 @@
 import React from "react";
+import {
+  Maximize,
+  Minimize,
+  RotateCcw,
+  Home,
+  Eye,
+  EyeOff,
+  CheckSquare,
+  MinusSquare,
+} from "lucide-react";
 
 const SideBar = ({
   CATEGORIES,
@@ -11,7 +21,15 @@ const SideBar = ({
   handleSelect,
   visibleOrbits,
   toggleOrbit,
-  orbitPaths, // <-- Accept orbitPaths as a prop
+  orbitPaths,
+  isFullscreen,
+  onFullscreenToggle,
+  onReset,
+  onHome,
+  onToggleAllOrbits,
+  orbitsVisible,
+  onSelectAll,
+  onDeselectAll,
 }) => {
   return (
     <div
@@ -28,6 +46,48 @@ const SideBar = ({
         zIndex: 1000,
       }}
     >
+      {/* Top control buttons */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          padding: "12px 16px 0 0",
+          gap: 8,
+        }}
+      >
+        <button onClick={onHome} title="Reset Camera" style={btnStyle}>
+          <Home size={22} />
+        </button>
+        <button
+          onClick={onToggleAllOrbits}
+          title={orbitsVisible ? "Hide All Orbits" : "Show All Orbits"}
+          style={btnStyle}
+        >
+          {orbitsVisible ? <EyeOff size={22} /> : <Eye size={22} />}
+        </button>
+        <button onClick={onSelectAll} title="Select All" style={btnStyle}>
+          <CheckSquare size={22} />
+        </button>
+        <button onClick={onDeselectAll} title="Deselect All" style={btnStyle}>
+          <MinusSquare size={22} />
+        </button>
+        <button
+          onClick={onReset}
+          title="Reset (Remove all entities)"
+          style={btnStyle}
+        >
+          <RotateCcw size={22} />
+        </button>
+        <button
+          onClick={onFullscreenToggle}
+          title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+          style={btnStyle}
+        >
+          {isFullscreen ? <Minimize size={22} /> : <Maximize size={22} />}
+        </button>
+      </div>
+
       <h3 style={{ marginBottom: 8 }}>Categories</h3>
       {CATEGORIES.map((cat) => (
         <button
@@ -120,6 +180,18 @@ const SideBar = ({
       ))}
     </div>
   );
+};
+
+const btnStyle = {
+  background: "#222",
+  border: "none",
+  borderRadius: 6,
+  padding: 8,
+  cursor: "pointer",
+  color: "#fff",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+  display: "flex",
+  alignItems: "center",
 };
 
 export default SideBar;

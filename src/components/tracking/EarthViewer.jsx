@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Viewer, Entity } from "resium";
+import React, { useEffect, useState, useMemo, useRef } from "react";
+import { Viewer, Entity, ImageryLayer } from "resium";
 import { Color, Cartesian3 } from "cesium";
 import propagateObjects from "../../utils/satellite/propagateObjects";
 import SideBar from "./SideBar";
 import combinedTLE from "../../utils/satellite/combinedTLE";
 import * as Cesium from "cesium";
+import {
+  enterFullscreen,
+  exitFullscreen,
+} from "../../utils/satellite/screenUtils";
 // --- CONFIG ---
 const interpolationDegree = 7;
-const pointPixelSize = 2;
 
 // --- MAIN COMPONENT ---
 const EarthViewer = ({ loading, setLoading }) => {
@@ -19,9 +22,19 @@ const EarthViewer = ({ loading, setLoading }) => {
   const [orbitPaths, setOrbitPaths] = useState({});
   const [visibleOrbits, setVisibleOrbits] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [orbitsVisible, setOrbitsVisible] = useState(true);
   // Add a state to force re-render for animation
   const [tick, setTick] = useState(0);
-
+  const viewerRef = useRef();
+  const handleFullscreenToggle = () => {
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+    setIsFullscreen((prev) => !prev);
+  };
   // --- Prepare Cesium helpers ---
   const helperFunctions = useMemo(
     () => ({
@@ -31,6 +44,44 @@ const EarthViewer = ({ loading, setLoading }) => {
     }),
     []
   );
+
+  // Reset handler: remove all entities from the screen
+  const handleReset = () => {
+    setSelectedSats([]);
+    setVisibleOrbits([]);
+    setOrbitPaths({});
+    setSelectedCategories([]);
+    setSearchTerm("");
+  };
+
+  // Home/Reset Camera handler
+  const handleHome = () => {
+    const camera = viewerRef.current?.cesiumElement?.camera;
+    if (camera) {
+      camera.flyHome(1.0);
+    }
+  };
+
+  // Toggle all orbits handler
+  const handleToggleAllOrbits = () => {
+    if (orbitsVisible) {
+      setVisibleOrbits([]);
+    } else {
+      setVisibleOrbits([...selectedSats]);
+    }
+    setOrbitsVisible(!orbitsVisible);
+  };
+
+  // Select all handler
+  const handleSelectAll = () => {
+    setSelectedSats(filteredSatellites.map((sat) => sat.id));
+  };
+
+  // Deselect all handler
+  const handleDeselectAll = () => {
+    setSelectedSats([]);
+    setVisibleOrbits([]);
+  };
 
   // --- On mount: propagate all satellites and categories ---
   useEffect(() => {
@@ -160,18 +211,27 @@ const EarthViewer = ({ loading, setLoading }) => {
     for (const id of selectedSats) {
       const sat = allSatellites.find((s) => s.id === id);
       if (!sat) continue;
-      const posRaw = sat.position.getValue(now);
+      // Animate satellite along its orbit using SampledPositionProperty and current time
+      let posRaw = null;
+      if (sat.position && typeof sat.position.getValue === "function") {
+        posRaw = sat.position.getValue(now);
+      }
       if (posRaw) {
-        // Add a small height offset (e.g., +50km)
-        result[id] = new Cesium.Cartesian3(
-          posRaw.x,
-          posRaw.y,
-          posRaw.z + 50000
-        );
+        result[id] = new Cesium.Cartesian3(posRaw.x, posRaw.y, posRaw.z);
       }
     }
     return result;
   }, [allSatellites, selectedSats, tick]);
+
+  // Imagery provider state
+  const [imageryProvider, setImageryProvider] = useState(null);
+
+  useEffect(() => {
+    Cesium.Ion.defaultAccessToken = Cesium.Ion.defaultAccessToken;
+    Cesium.IonImageryProvider.fromAssetId(3845).then((provider) => {
+      setImageryProvider(provider);
+    });
+  }, []);
 
   // --- Render ---
   return (
@@ -189,9 +249,18 @@ const EarthViewer = ({ loading, setLoading }) => {
           visibleOrbits={visibleOrbits}
           toggleOrbit={toggleOrbit}
           orbitPaths={orbitPaths}
+          isFullscreen={isFullscreen}
+          onFullscreenToggle={handleFullscreenToggle}
+          onReset={handleReset}
+          onHome={handleHome}
+          onToggleAllOrbits={handleToggleAllOrbits}
+          orbitsVisible={orbitsVisible}
+          onSelectAll={handleSelectAll}
+          onDeselectAll={handleDeselectAll}
         />
         <div style={{ flex: 1, height: "100vh" }}>
           <Viewer
+            ref={viewerRef}
             full
             sceneMode={3}
             baseLayerPicker={false}
@@ -201,6 +270,10 @@ const EarthViewer = ({ loading, setLoading }) => {
             infoBox={false}
             selectionIndicator={false}
           >
+            {/* Use lower-lag imagery layer */}
+            {imageryProvider && (
+              <ImageryLayer imageryProvider={imageryProvider} />
+            )}
             {/* Satellite visualizations as spheres */}
             {selectedSats.map((id) => {
               const pos = satellitePositions[id];

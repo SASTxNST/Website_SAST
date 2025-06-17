@@ -85,59 +85,63 @@ const EarthViewer = ({ loading, setLoading }) => {
 
   // --- On mount: propagate all satellites and categories ---
   useEffect(() => {
-    const startDate = new Date();
-    const hiddenByDefault = ["Other", "Debris"];
-    const { propagatedCategories, initialObjectCategories } = (() => {
-      let seenSats = [];
-      const propagatedCategories = [];
-      const initialObjectCategories = [];
-      combinedTLE.forEach((category) => {
-        const { newSeen, data } = propagateObjects(
-          seenSats,
-          category.data,
-          startDate,
-          interpolationDegree,
-          helperFunctions
-        );
-        seenSats = newSeen;
-        if (data.length > 0) {
-          const extraData = {
-            name: category.name,
-            color: category.color,
-            visible: !hiddenByDefault.includes(category.name),
-          };
-          initialObjectCategories.push({
-            objectsCount: data.length,
-            ...extraData,
-          });
-          propagatedCategories.push({
-            data,
-            ...extraData,
-          });
-        }
-      });
-      return { propagatedCategories, initialObjectCategories };
-    })();
+    if (setLoading) setLoading(true); // Show loader immediately
+    const timer = setTimeout(() => {
+      const startDate = new Date();
+      const hiddenByDefault = ["Other", "Debris"];
+      const { propagatedCategories, initialObjectCategories } = (() => {
+        let seenSats = [];
+        const propagatedCategories = [];
+        const initialObjectCategories = [];
+        combinedTLE.forEach((category) => {
+          const { newSeen, data } = propagateObjects(
+            seenSats,
+            category.data,
+            startDate,
+            interpolationDegree,
+            helperFunctions
+          );
+          seenSats = newSeen;
+          if (data.length > 0) {
+            const extraData = {
+              name: category.name,
+              color: category.color,
+              visible: !hiddenByDefault.includes(category.name),
+            };
+            initialObjectCategories.push({
+              objectsCount: data.length,
+              ...extraData,
+            });
+            propagatedCategories.push({
+              data,
+              ...extraData,
+            });
+          }
+        });
+        return { propagatedCategories, initialObjectCategories };
+      })();
 
-    // Flatten all satellites for easy access
-    const allSats = [];
-    propagatedCategories.forEach((cat) => {
-      cat.data.forEach((sat, i) => {
-        allSats.push({
-          ...sat,
-          id: `${cat.name}-${sat.satnum}-${i}`,
-          category: cat.name,
-          color: cat.color,
+      // Flatten all satellites for easy access
+      const allSats = [];
+      propagatedCategories.forEach((cat) => {
+        cat.data.forEach((sat, i) => {
+          allSats.push({
+            ...sat,
+            id: `${cat.name}-${sat.satnum}-${i}`,
+            category: cat.name,
+            color: cat.color,
+          });
         });
       });
-    });
 
-    setObjectCategories(initialObjectCategories);
-    setAllSatellites(allSats);
-    setSelectedCategories(
-      initialObjectCategories.filter((c) => c.visible).map((c) => c.name)
-    );
-    if (setLoading) setLoading(false); // Data is ready, stop loading
+      setObjectCategories(initialObjectCategories);
+      setAllSatellites(allSats);
+      setSelectedCategories(
+        initialObjectCategories.filter((c) => c.visible).map((c) => c.name)
+      );
+      if (setLoading) setLoading(false); // Data is ready, stop loading
+    }, 0);
+    return () => clearTimeout(timer);
   }, [setLoading, helperFunctions]);
 
   // --- Filter satellites by selected categories and search ---
@@ -204,20 +208,49 @@ const EarthViewer = ({ loading, setLoading }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Memoize satellite positions for smooth animation and no flicker
+  // Memoize orbit paths for smooth animation and no flicker, even for single satellites
+  const memoizedOrbitPaths = useMemo(() => {
+    const result = {};
+    for (const id of selectedSats) {
+      const sat = allSatellites.find((s) => s.id === id);
+      if (!sat || !sat.position) continue;
+      const times = sat.position._property?._times || [];
+      const positions = [];
+      for (let i = 0; i < times.length; i++) {
+        const pos = new Cartesian3();
+        sat.position.getValue(times[i], pos);
+        if (i === 0) {
+          const carto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(pos);
+          const height = carto ? carto.height : null;
+          console.log(`ORBIT: ${sat.name} JD: ${times[0]}, height (meters):`, height, pos);
+        }
+        positions.push(Cartesian3.clone(pos));
+      }
+      if (positions.length > 1) positions.push(Cartesian3.clone(positions[0]));
+      result[id] = positions;
+    }
+    return result;
+  }, [allSatellites, selectedSats]);
+
+  // Memoize satellite positions for perfect sync with orbit (first time sample)
   const satellitePositions = useMemo(() => {
-    const now = Cesium.JulianDate.now();
     const result = {};
     for (const id of selectedSats) {
       const sat = allSatellites.find((s) => s.id === id);
       if (!sat) continue;
-      // Animate satellite along its orbit using SampledPositionProperty and current time
+      // Use the first time sample for perfect sync with orbit
+      const times = sat.position?._property?._times;
       let posRaw = null;
-      if (sat.position && typeof sat.position.getValue === "function") {
-        posRaw = sat.position.getValue(now);
+      let jd = null;
+      if (times && times.length > 0) {
+        posRaw = sat.position.getValue(times[0]);
+        jd = times[0];
       }
       if (posRaw) {
-        result[id] = new Cesium.Cartesian3(posRaw.x, posRaw.y, posRaw.z);
+        const carto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(posRaw);
+        const height = carto ? carto.height : null;
+        console.log(`SATELLITE: ${sat.name} JD: ${jd}, height (meters):`, height, posRaw);
+        result[id] = posRaw;
       }
     }
     return result;
@@ -293,19 +326,21 @@ const EarthViewer = ({ loading, setLoading }) => {
               );
             })}
             {/* Orbit polylines */}
-            {visibleOrbits.map((id) =>
-              orbitPaths[id] ? (
+            {visibleOrbits.map((id) => {
+              const sat = allSatellites.find((s) => s.id === id);
+              if (!sat || !orbitPaths[id]) return null;
+              return (
                 <Entity
                   key={`orbit-${id}`}
                   polyline={{
                     positions: orbitPaths[id],
                     width: 2,
-                    material: Cesium.Color.YELLOW.withAlpha(0.7),
+                    material: sat.color || Cesium.Color.YELLOW.withAlpha(0.7),
                     clampToGround: false,
                   }}
                 />
-              ) : null
-            )}
+              );
+            })}
           </Viewer>
         </div>
       </div>

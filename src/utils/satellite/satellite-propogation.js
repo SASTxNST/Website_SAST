@@ -92,7 +92,7 @@ const isPropagatedObjectValid = (object) => {
 };
 
 const getFormattedCoordinates = (position) => {
-  const km = 1000; // need to multiply each coordinate by 1000 to get meters
+  const km = 1000;
   const precision = 5;
 
   return {

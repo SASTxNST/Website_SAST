@@ -18,6 +18,7 @@ import {
 
 // --- CONFIG ---
 const interpolationDegree = 7;
+const HEIGHT_EXAGGERATION_FACTOR = 10;
 
 // --- MAIN COMPONENT ---
 const EarthViewer = ({ loading, setLoading }) => {
@@ -31,6 +32,7 @@ const EarthViewer = ({ loading, setLoading }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [orbitsVisible, setOrbitsVisible] = useState(true);
   const [hoveredSatId, setHoveredSatId] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
   const viewerRef = useRef();
 
   // --- Filter satellites by selected categories and search ---
@@ -52,6 +54,39 @@ const EarthViewer = ({ loading, setLoading }) => {
     []
   );
 
+  // Function to create exaggerated position property
+  const createExaggeratedPosition = useCallback((originalPosition) => {
+    if (!originalPosition || !originalPosition._property)
+      return originalPosition;
+
+    const times = originalPosition._property._times || [];
+    const exaggeratedPosition = new Cesium.SampledPositionProperty();
+
+    for (let i = 0; i < times.length; i++) {
+      const time = times[i];
+      const originalPos = new Cartesian3();
+      originalPosition.getValue(time, originalPos);
+
+      // Convert to cartographic to get lat/lon/height
+      const carto = Cesium.Cartographic.fromCartesian(originalPos);
+      if (carto) {
+        // Exaggerate the height
+        const exaggeratedHeight = carto.height * HEIGHT_EXAGGERATION_FACTOR;
+
+        // Convert back to Cartesian3 with exaggerated height
+        const exaggeratedPos = Cesium.Cartesian3.fromRadians(
+          carto.longitude,
+          carto.latitude,
+          exaggeratedHeight
+        );
+
+        exaggeratedPosition.addSample(time, exaggeratedPos);
+      }
+    }
+
+    return exaggeratedPosition;
+  }, []);
+
   // Memoize all event handlers to prevent unnecessary rerenders in children
   const handleFullscreenToggle = useCallback(() => {
     if (isFullscreen) {
@@ -69,13 +104,57 @@ const EarthViewer = ({ loading, setLoading }) => {
     setSearchTerm("");
   }, []);
 
+  // Prompt for user geolocation on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setUserLocation({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          });
+        },
+        (err) => {
+          setUserLocation(null);
+        }
+      );
+    }
+  }, []);
+
+  // If userLocation is set, fly camera there immediately
+  useEffect(() => {
+    if (!userLocation) return;
+    const viewer = viewerRef.current?.cesiumElement;
+    if (viewer && userLocation.lat && userLocation.lon) {
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(
+          userLocation.lon,
+          userLocation.lat,
+          20000000 // 2,000km above ground
+        ),
+        duration: 2,
+      });
+    }
+  }, [userLocation]);
+
   // Home/Reset Camera handler
   const handleHome = useCallback(() => {
     const camera = viewerRef.current?.cesiumElement?.camera;
     if (camera) {
-      camera.flyHome(1.0);
+      if (userLocation && userLocation.lat && userLocation.lon) {
+        camera.flyTo({
+          destination: Cesium.Cartesian3.fromDegrees(
+            userLocation.lon,
+            userLocation.lat,
+            20000000
+          ),
+          duration: 1.5,
+        });
+      } else {
+        camera.flyHome(1.0);
+      }
     }
-  }, []);
+  }, [userLocation]);
 
   // Toggle all orbits handler
   const handleToggleAllOrbits = useCallback(() => {
@@ -100,7 +179,7 @@ const EarthViewer = ({ loading, setLoading }) => {
 
   // --- On mount: propagate all satellites and categories ---
   useEffect(() => {
-    if (setLoading) setLoading(true); // Show loader immediately
+    if (setLoading) setLoading(true);
     const timer = setTimeout(() => {
       const startDate = new Date();
       const hiddenByDefault = ["Other", "Debris"];
@@ -136,7 +215,7 @@ const EarthViewer = ({ loading, setLoading }) => {
         return { propagatedCategories, initialObjectCategories };
       })();
 
-      // Flatten all satellites for easy access
+      // Flatten all satellites for easy access and apply height exaggeration
       const allSats = [];
       propagatedCategories.forEach((cat) => {
         cat.data.forEach((sat, i) => {
@@ -145,26 +224,22 @@ const EarthViewer = ({ loading, setLoading }) => {
             id: `${cat.name}-${sat.satnum}-${i}`,
             category: cat.name,
             color: cat.color,
+            position: createExaggeratedPosition(sat.position),
           });
         });
       });
 
       setObjectCategories(initialObjectCategories);
       setAllSatellites(allSats);
-      setSelectedCategories(
-        initialObjectCategories.filter((c) => c.visible).map((c) => c.name)
-      );
-      if (setLoading) setLoading(false); // Data is ready, stop loading
+      setSelectedCategories([]);
+      if (setLoading) setLoading(false);
     }, 0);
     return () => clearTimeout(timer);
-  }, [setLoading, helperFunctions]);
+  }, [setLoading, helperFunctions, createExaggeratedPosition]);
 
   // Memoize orbit paths for smooth animation and no flicker, even for single satellites
   const memoizedOrbitPaths = useMemo(() => {
     const result = {};
-    // Get current Cesium clock time
-    const viewer = viewerRef.current?.cesiumElement;
-    const currentTime = viewer ? viewer.clock.currentTime : null;
     for (const id of selectedSats) {
       const sat = allSatellites.find((s) => s.id === id);
       if (!sat || !sat.position) continue;
@@ -174,26 +249,6 @@ const EarthViewer = ({ loading, setLoading }) => {
         const pos = new Cartesian3();
         sat.position.getValue(times[i], pos);
         positions.push(Cartesian3.clone(pos));
-      }
-      // Insert the satellite's current position at the correct place in the orbit
-      if (currentTime && typeof sat.position.getValue === "function") {
-        const currentPos = sat.position.getValue(currentTime);
-        if (currentPos) {
-          // Find the closest time index
-          let insertIdx = 0;
-          let minDiff = Number.POSITIVE_INFINITY;
-          for (let i = 0; i < times.length; i++) {
-            const diff = Math.abs(
-              Cesium.JulianDate.secondsDifference(times[i], currentTime)
-            );
-            if (diff < minDiff) {
-              minDiff = diff;
-              insertIdx = i;
-            }
-          }
-          // Insert or replace at the closest index
-          positions[insertIdx] = Cartesian3.clone(currentPos);
-        }
       }
       if (positions.length > 1) positions.push(Cartesian3.clone(positions[0]));
       result[id] = positions;
@@ -278,9 +333,6 @@ const EarthViewer = ({ loading, setLoading }) => {
     viewer.clock.multiplier = 1;
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
     viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
-
-    console.log("✅ Set clock to shared range start:", maxStart.toString());
-    console.log("🛰️ Shared range end:", minEnd.toString());
   }, [allSatellites, selectedSats]);
 
   // --- Render ---
@@ -319,6 +371,14 @@ const EarthViewer = ({ loading, setLoading }) => {
             navigationHelpButton={false}
             infoBox={false}
             selectionIndicator={false}
+            onMount={(viewer) => {
+              // Disable default double-click zoom
+              if (viewer && viewer.screenSpaceEventHandler) {
+                viewer.screenSpaceEventHandler.removeInputAction(
+                  Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+                );
+              }
+            }}
           >
             {/* Use lower-lag imagery layer */}
             {imageryProvider && (
@@ -328,21 +388,11 @@ const EarthViewer = ({ loading, setLoading }) => {
             {selectedSats.map((id) => {
               const sat = allSatellites.find((s) => s.id === id);
               if (!sat || !sat.position) {
-                console.warn(`Satellite ${id} not found or missing position`);
                 return null;
               }
               if (typeof sat.position.getValue !== "function") {
-                console.warn(
-                  `Satellite ${id} position.getValue is not a function`
-                );
                 return null;
               }
-
-              // Debug: Log satellite info
-              console.log(
-                `Rendering satellite: ${sat.name}, ID: ${id}, Color:`,
-                sat.color
-              );
 
               return (
                 <Entity
@@ -357,20 +407,20 @@ const EarthViewer = ({ loading, setLoading }) => {
                   }}
                   label={{
                     text: sat.name || `Satellite ${id}`,
-                    font: "16px Arial, sans-serif", // Slightly larger font
-                    fillColor: Cesium.Color.WHITE, // Always white for visibility
-                    outlineColor: Cesium.Color.BLACK, // Add outline for better contrast
+                    font: "16px Arial, sans-serif",
+                    fillColor: Cesium.Color.WHITE,
+                    outlineColor: Cesium.Color.BLACK,
                     outlineWidth: 2,
                     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
                     showBackground: true,
                     backgroundColor: Cesium.Color.BLACK.withAlpha(0.8),
-                    backgroundPadding: new Cesium.Cartesian2(8, 4), // Add padding
-                    pixelOffset: new Cesium.Cartesian2(0, -50), // Move label further up
-                    scale: 1.2, // Make slightly larger
-                    show: true, // Explicitly set to true
+                    backgroundPadding: new Cesium.Cartesian2(8, 4),
+                    pixelOffset: new Cesium.Cartesian2(0, -50),
+                    scale: 1.2,
+                    show: true,
                     distanceDisplayCondition:
-                      new Cesium.DistanceDisplayCondition(0, 2e7), // Increase max distance
-                    disableDepthTestDistance: Number.POSITIVE_INFINITY, // Always show on top
+                      new Cesium.DistanceDisplayCondition(0, 2e7),
+                    disableDepthTestDistance: Number.POSITIVE_INFINITY,
                     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                   }}

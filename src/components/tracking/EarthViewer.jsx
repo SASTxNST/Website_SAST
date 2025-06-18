@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  useCallback,
+} from "react";
 import { Viewer, Entity, ImageryLayer } from "resium";
 import { Color, Cartesian3 } from "cesium";
 import propagateObjects from "../../utils/satellite/propagateObjects";
@@ -9,6 +15,7 @@ import {
   enterFullscreen,
   exitFullscreen,
 } from "../../utils/satellite/screenUtils";
+
 // --- CONFIG ---
 const interpolationDegree = 7;
 
@@ -19,22 +26,22 @@ const EarthViewer = ({ loading, setLoading }) => {
   const [allSatellites, setAllSatellites] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSats, setSelectedSats] = useState([]);
-  const [orbitPaths, setOrbitPaths] = useState({});
   const [visibleOrbits, setVisibleOrbits] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [orbitsVisible, setOrbitsVisible] = useState(true);
-  // Add a state to force re-render for animation
-  const [tick, setTick] = useState(0);
+  const [hoveredSatId, setHoveredSatId] = useState(null);
   const viewerRef = useRef();
-  const handleFullscreenToggle = () => {
-    if (isFullscreen) {
-      exitFullscreen();
-    } else {
-      enterFullscreen();
-    }
-    setIsFullscreen((prev) => !prev);
-  };
+
+  // --- Filter satellites by selected categories and search ---
+  const filteredSatellites = useMemo(() => {
+    return allSatellites.filter(
+      (sat) =>
+        selectedCategories.includes(sat.category) &&
+        sat.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [allSatellites, selectedCategories, searchTerm]);
+
   // --- Prepare Cesium helpers ---
   const helperFunctions = useMemo(
     () => ({
@@ -45,43 +52,51 @@ const EarthViewer = ({ loading, setLoading }) => {
     []
   );
 
-  // Reset handler: remove all entities from the screen
-  const handleReset = () => {
+  // Memoize all event handlers to prevent unnecessary rerenders in children
+  const handleFullscreenToggle = useCallback(() => {
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+    setIsFullscreen((prev) => !prev);
+  }, [isFullscreen]);
+
+  const handleReset = useCallback(() => {
     setSelectedSats([]);
     setVisibleOrbits([]);
-    setOrbitPaths({});
     setSelectedCategories([]);
     setSearchTerm("");
-  };
+  }, []);
 
   // Home/Reset Camera handler
-  const handleHome = () => {
+  const handleHome = useCallback(() => {
     const camera = viewerRef.current?.cesiumElement?.camera;
     if (camera) {
       camera.flyHome(1.0);
     }
-  };
+  }, []);
 
   // Toggle all orbits handler
-  const handleToggleAllOrbits = () => {
+  const handleToggleAllOrbits = useCallback(() => {
     if (orbitsVisible) {
       setVisibleOrbits([]);
     } else {
       setVisibleOrbits([...selectedSats]);
     }
     setOrbitsVisible(!orbitsVisible);
-  };
+  }, [orbitsVisible, selectedSats]);
 
   // Select all handler
-  const handleSelectAll = () => {
+  const handleSelectAll = useCallback(() => {
     setSelectedSats(filteredSatellites.map((sat) => sat.id));
-  };
+  }, [filteredSatellites]);
 
   // Deselect all handler
-  const handleDeselectAll = () => {
+  const handleDeselectAll = useCallback(() => {
     setSelectedSats([]);
     setVisibleOrbits([]);
-  };
+  }, []);
 
   // --- On mount: propagate all satellites and categories ---
   useEffect(() => {
@@ -144,73 +159,12 @@ const EarthViewer = ({ loading, setLoading }) => {
     return () => clearTimeout(timer);
   }, [setLoading, helperFunctions]);
 
-  // --- Filter satellites by selected categories and search ---
-  const filteredSatellites = useMemo(() => {
-    return allSatellites.filter(
-      (sat) =>
-        selectedCategories.includes(sat.category) &&
-        sat.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [allSatellites, selectedCategories, searchTerm]);
-
-  // --- Orbit path calculation for selected satellites ---
-  useEffect(() => {
-    // Only calculate for selected satellites
-    const newOrbits = {};
-    for (const sat of allSatellites) {
-      if (selectedSats.includes(sat.id) && sat.position) {
-        // Extract all positions from SampledPositionProperty
-        const times = sat.position._property?._times || [];
-        const positions = [];
-        for (let i = 0; i < times.length; i++) {
-          const pos = new Cartesian3();
-          sat.position.getValue(times[i], pos);
-          positions.push(Cartesian3.clone(pos));
-        }
-        // Close the orbit
-        if (positions.length > 1)
-          positions.push(Cartesian3.clone(positions[0]));
-        newOrbits[sat.id] = positions;
-      }
-    }
-    setOrbitPaths(newOrbits);
-  }, [selectedSats, allSatellites]);
-
-  // --- Category selection logic ---
-  const toggleCategory = (cat) => {
-    setSelectedCategories((prev) =>
-      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
-    );
-  };
-
-  // --- Satellite selection logic ---
-  const handleSelect = (satId) => {
-    setSelectedSats((prev) =>
-      prev.includes(satId)
-        ? prev.filter((id) => id !== satId)
-        : [...prev, satId]
-    );
-    setVisibleOrbits((prev) => prev.filter((id) => id !== satId)); // Hide orbit if deselected
-  };
-
-  // --- Orbit toggle logic ---
-  const toggleOrbit = (satId) => {
-    setVisibleOrbits((prev) =>
-      prev.includes(satId)
-        ? prev.filter((id) => id !== satId)
-        : [...prev, satId]
-    );
-  };
-
-  // Animate satellites by updating tick every second
-  useEffect(() => {
-    const interval = setInterval(() => setTick((t) => t + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   // Memoize orbit paths for smooth animation and no flicker, even for single satellites
   const memoizedOrbitPaths = useMemo(() => {
     const result = {};
+    // Get current Cesium clock time
+    const viewer = viewerRef.current?.cesiumElement;
+    const currentTime = viewer ? viewer.clock.currentTime : null;
     for (const id of selectedSats) {
       const sat = allSatellites.find((s) => s.id === id);
       if (!sat || !sat.position) continue;
@@ -219,12 +173,27 @@ const EarthViewer = ({ loading, setLoading }) => {
       for (let i = 0; i < times.length; i++) {
         const pos = new Cartesian3();
         sat.position.getValue(times[i], pos);
-        if (i === 0) {
-          const carto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(pos);
-          const height = carto ? carto.height : null;
-          console.log(`ORBIT: ${sat.name} JD: ${times[0]}, height (meters):`, height, pos);
-        }
         positions.push(Cartesian3.clone(pos));
+      }
+      // Insert the satellite's current position at the correct place in the orbit
+      if (currentTime && typeof sat.position.getValue === "function") {
+        const currentPos = sat.position.getValue(currentTime);
+        if (currentPos) {
+          // Find the closest time index
+          let insertIdx = 0;
+          let minDiff = Number.POSITIVE_INFINITY;
+          for (let i = 0; i < times.length; i++) {
+            const diff = Math.abs(
+              Cesium.JulianDate.secondsDifference(times[i], currentTime)
+            );
+            if (diff < minDiff) {
+              minDiff = diff;
+              insertIdx = i;
+            }
+          }
+          // Insert or replace at the closest index
+          positions[insertIdx] = Cartesian3.clone(currentPos);
+        }
       }
       if (positions.length > 1) positions.push(Cartesian3.clone(positions[0]));
       result[id] = positions;
@@ -232,29 +201,31 @@ const EarthViewer = ({ loading, setLoading }) => {
     return result;
   }, [allSatellites, selectedSats]);
 
-  // Memoize satellite positions for perfect sync with orbit (first time sample)
-  const satellitePositions = useMemo(() => {
-    const result = {};
-    for (const id of selectedSats) {
-      const sat = allSatellites.find((s) => s.id === id);
-      if (!sat) continue;
-      // Use the first time sample for perfect sync with orbit
-      const times = sat.position?._property?._times;
-      let posRaw = null;
-      let jd = null;
-      if (times && times.length > 0) {
-        posRaw = sat.position.getValue(times[0]);
-        jd = times[0];
-      }
-      if (posRaw) {
-        const carto = Cesium.Ellipsoid.WGS84.cartesianToCartographic(posRaw);
-        const height = carto ? carto.height : null;
-        console.log(`SATELLITE: ${sat.name} JD: ${jd}, height (meters):`, height, posRaw);
-        result[id] = posRaw;
-      }
-    }
-    return result;
-  }, [allSatellites, selectedSats, tick]);
+  // --- Category selection logic ---
+  const toggleCategory = useCallback((cat) => {
+    setSelectedCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  }, []);
+
+  // --- Satellite selection logic ---
+  const handleSelect = useCallback((satId) => {
+    setSelectedSats((prev) =>
+      prev.includes(satId)
+        ? prev.filter((id) => id !== satId)
+        : [...prev, satId]
+    );
+    setVisibleOrbits((prev) => prev.filter((id) => id !== satId));
+  }, []);
+
+  // --- Orbit toggle logic ---
+  const toggleOrbit = useCallback((satId) => {
+    setVisibleOrbits((prev) =>
+      prev.includes(satId)
+        ? prev.filter((id) => id !== satId)
+        : [...prev, satId]
+    );
+  }, []);
 
   // Imagery provider state
   const [imageryProvider, setImageryProvider] = useState(null);
@@ -265,6 +236,52 @@ const EarthViewer = ({ loading, setLoading }) => {
       setImageryProvider(provider);
     });
   }, []);
+
+  // --- Set Cesium clock to first sample time of selected satellite ---
+  useEffect(() => {
+    const viewer = viewerRef.current?.cesiumElement;
+    if (!viewer || allSatellites.length === 0 || selectedSats.length === 0)
+      return;
+
+    let maxStart = null;
+    let minEnd = null;
+
+    for (const id of selectedSats) {
+      const sat = allSatellites.find((s) => s.id === id);
+      const times = sat?.position?._property?._times;
+      if (!times || times.length === 0) continue;
+
+      const start = times[0];
+      const end = times[times.length - 1];
+
+      if (!maxStart || Cesium.JulianDate.greaterThan(start, maxStart)) {
+        maxStart = start;
+      }
+      if (!minEnd || Cesium.JulianDate.lessThan(end, minEnd)) {
+        minEnd = end;
+      }
+    }
+
+    if (
+      !maxStart ||
+      !minEnd ||
+      Cesium.JulianDate.greaterThan(maxStart, minEnd)
+    ) {
+      console.warn(
+        "No overlapping sample time range across selected satellites."
+      );
+      return;
+    }
+
+    viewer.clock.currentTime = maxStart.clone();
+    viewer.clock.shouldAnimate = true;
+    viewer.clock.multiplier = 1;
+    viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+    viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+
+    console.log("✅ Set clock to shared range start:", maxStart.toString());
+    console.log("🛰️ Shared range end:", minEnd.toString());
+  }, [allSatellites, selectedSats]);
 
   // --- Render ---
   return (
@@ -281,7 +298,7 @@ const EarthViewer = ({ loading, setLoading }) => {
           handleSelect={handleSelect}
           visibleOrbits={visibleOrbits}
           toggleOrbit={toggleOrbit}
-          orbitPaths={orbitPaths}
+          orbitPaths={memoizedOrbitPaths}
           isFullscreen={isFullscreen}
           onFullscreenToggle={handleFullscreenToggle}
           onReset={handleReset}
@@ -307,20 +324,55 @@ const EarthViewer = ({ loading, setLoading }) => {
             {imageryProvider && (
               <ImageryLayer imageryProvider={imageryProvider} />
             )}
-            {/* Satellite visualizations as spheres */}
+            {/* Satellite visualizations as spheres with labels */}
             {selectedSats.map((id) => {
-              const pos = satellitePositions[id];
               const sat = allSatellites.find((s) => s.id === id);
-              if (!sat || !pos) return null;
+              if (!sat || !sat.position) {
+                console.warn(`Satellite ${id} not found or missing position`);
+                return null;
+              }
+              if (typeof sat.position.getValue !== "function") {
+                console.warn(
+                  `Satellite ${id} position.getValue is not a function`
+                );
+                return null;
+              }
+
+              // Debug: Log satellite info
+              console.log(
+                `Rendering satellite: ${sat.name}, ID: ${id}, Color:`,
+                sat.color
+              );
+
               return (
                 <Entity
                   key={id}
                   name={sat.name}
-                  position={pos}
+                  position={sat.position}
                   ellipsoid={{
                     radii: new Cesium.Cartesian3(100000, 100000, 100000),
                     material: sat.color || Cesium.Color.CYAN,
                     outline: false,
+                    clampToGround: false,
+                  }}
+                  label={{
+                    text: sat.name || `Satellite ${id}`,
+                    font: "16px Arial, sans-serif", // Slightly larger font
+                    fillColor: Cesium.Color.WHITE, // Always white for visibility
+                    outlineColor: Cesium.Color.BLACK, // Add outline for better contrast
+                    outlineWidth: 2,
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    showBackground: true,
+                    backgroundColor: Cesium.Color.BLACK.withAlpha(0.8),
+                    backgroundPadding: new Cesium.Cartesian2(8, 4), // Add padding
+                    pixelOffset: new Cesium.Cartesian2(0, -50), // Move label further up
+                    scale: 1.2, // Make slightly larger
+                    show: true, // Explicitly set to true
+                    distanceDisplayCondition:
+                      new Cesium.DistanceDisplayCondition(0, 2e7), // Increase max distance
+                    disableDepthTestDistance: Number.POSITIVE_INFINITY, // Always show on top
+                    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                   }}
                 />
               );
@@ -328,12 +380,12 @@ const EarthViewer = ({ loading, setLoading }) => {
             {/* Orbit polylines */}
             {visibleOrbits.map((id) => {
               const sat = allSatellites.find((s) => s.id === id);
-              if (!sat || !orbitPaths[id]) return null;
+              if (!sat || !memoizedOrbitPaths[id]) return null;
               return (
                 <Entity
                   key={`orbit-${id}`}
                   polyline={{
-                    positions: orbitPaths[id],
+                    positions: memoizedOrbitPaths[id],
                     width: 2,
                     material: sat.color || Cesium.Color.YELLOW.withAlpha(0.7),
                     clampToGround: false,

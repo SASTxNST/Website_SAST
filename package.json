@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.0.7",
     "cesium": "^1.130.0",
     "framer-motion": "^12.12.2",
@@ -18,6 +19,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.2.0",
     "resium": "^1.19.0-beta.1",
     "satellite.js": "^6.0.0",

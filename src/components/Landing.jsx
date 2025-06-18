@@ -242,7 +242,7 @@ const Landing = () => {
         <hr className="opacity-15" />
         <br />
         <br />
-
+{/*optimizing this for mobile users*/}
 <form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
   <div className="news flex flex-col md:flex-row justify-evenly gap-8">
     <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
@@ -255,14 +255,14 @@ const Landing = () => {
         </div>
       </a>
     </div>
-
+{/*adjusted the email addres and first name and last name columns to adjust with the width of the*/}
     <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
       <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
         SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
       </h3>
 
       <input
-        className="h-10 w-full text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+        className="h-10 w-50 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
         type="email"
         placeholder="EMAIL ADDRESS"
         name="email"
@@ -271,14 +271,14 @@ const Landing = () => {
 
       <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
         <input
-          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
           type="text"
           placeholder="FIRST NAME"
           name="firstname"
           required
         />
         <input
-          className="h-10 w-full md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
           type="text"
           placeholder="LAST NAME"
           name="lastname"
@@ -322,7 +322,7 @@ const Landing = () => {
       style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
     >
       <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
-        <img className="w-full h-full object-cover opacity-70" src={logo} alt="SAST Logo" />
+        <img className="w-35 h-35 object-cover opacity-70" src={logo} alt="SAST Logo" />
       </div>
 
       <div className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9">

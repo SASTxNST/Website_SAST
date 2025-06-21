@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Maximize,
   Minimize,
@@ -34,35 +35,40 @@ const SideBar = ({
   onDeselectAll,
 }) => {
   const [collapsed, setCollapsed] = useState(false);
+
   return (
     <div
       style={{
         width: collapsed ? 40 : 300,
         height: "100vh",
         overflowY: "auto",
-        background: "#111",
+        background: "rgba(20, 20, 30, 0.95)",
         color: "white",
         padding: 10,
         position: "fixed",
         left: 0,
         top: 0,
         zIndex: 1000,
-        transition: "width 0.2s",
+        transition: "width 0.3s ease",
+        fontFamily: "'Orbitron', sans-serif",
+        borderRight: "1px solid rgba(255,255,255,0.08)",
       }}
     >
+      {/* Collapse / Expand Button */}
       <button
         onClick={() => setCollapsed((c) => !c)}
-        title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        title={collapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         style={{
-          ...btnStyle,
           position: "absolute",
-          left: collapsed ? 2 : 270,
-          top: 10,
-          zIndex: 1100,
-          background: "#222",
-          width: 28,
-          height: 28,
-          padding: 0,
+          left: collapsed ? 4 : 270,
+          top: 12,
+          background: "#1a1a2f",
+          width: 26,
+          height: 26,
+          borderRadius: 6,
+          border: "none",
+          color: "#8ab4f8",
+          cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -70,114 +76,116 @@ const SideBar = ({
       >
         {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
       </button>
+
       {!collapsed && (
         <>
-          {/* Top control buttons */}
+          {/* Control Buttons */}
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              padding: "12px 16px 0 0",
-              gap: 8,
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "8px",
+              marginTop: 40,
+              marginBottom: 20,
             }}
           >
-            <button onClick={onHome} title="Reset Camera" style={btnStyle}>
-              <Home size={22} />
-            </button>
-            <button
-              onClick={onToggleAllOrbits}
-              title={orbitsVisible ? "Hide All Orbits" : "Show All Orbits"}
-              style={btnStyle}
-            >
-              {orbitsVisible ? <EyeOff size={22} /> : <Eye size={22} />}
-            </button>
-            <button onClick={onSelectAll} title="Select All" style={btnStyle}>
-              <CheckSquare size={22} />
-            </button>
-            <button
-              onClick={onDeselectAll}
-              title="Deselect All"
-              style={btnStyle}
-            >
-              <MinusSquare size={22} />
-            </button>
-            <button
-              onClick={onReset}
-              title="Reset (Remove all entities)"
-              style={btnStyle}
-            >
-              <RotateCcw size={22} />
-            </button>
-            <button
-              onClick={onFullscreenToggle}
-              title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-              style={btnStyle}
-            >
-              {isFullscreen ? <Minimize size={22} /> : <Maximize size={22} />}
-            </button>
+            <SidebarButton icon={<Home size={20} />} onClick={onHome} title="Home" />
+            <SidebarButton icon={orbitsVisible ? <EyeOff size={20} /> : <Eye size={20} />} onClick={onToggleAllOrbits} title="Toggle Orbits" />
+            <SidebarButton icon={<CheckSquare size={20} />} onClick={onSelectAll} title="Select All" />
+            <SidebarButton icon={<MinusSquare size={20} />} onClick={onDeselectAll} title="Deselect All" />
+            <SidebarButton icon={<RotateCcw size={20} />} onClick={onReset} title="Reset" />
+            <SidebarButton icon={isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />} onClick={onFullscreenToggle} title="Fullscreen" />
           </div>
 
-          <h3 style={{ marginBottom: 8 }}>Categories</h3>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => toggleCategory(cat)}
+          {/* Return to Home Page Button */}
+          <div style={{ textAlign: "center", marginBottom: 20 }}>
+            <Link
+              to="/"
               style={{
-                width: "100%",
-                marginBottom: 6,
-                padding: "6px 10px",
-                background: selectedCategories.includes(cat)
-                  ? "#2b3d55"
-                  : "#222",
-                color: "#fff",
-                border: "1px solid #333",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "8px 16px",
+                background: "#1a1a2f",
+                color: "#8ab4f8",
+                border: "1px solid #2e3b4e",
                 borderRadius: 6,
-                textAlign: "left",
+                textDecoration: "none",
+                fontSize: "14px",
+                transition: "background 0.3s",
               }}
             >
-              {cat}
-            </button>
-          ))}
+              <Home size={18} />
+              Return to Home
+            </Link>
+          </div>
 
+          {/* Category Filter */}
+          <h1 style={{ fontSize: "16px", marginBottom: 6 }}>Categories</h1>
+          <div style={{ marginBottom: 16 }}>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => toggleCategory(cat)}
+                style={{
+                  width: "100%",
+                  marginBottom: 6,
+                  padding: "6px 10px",
+                  background: selectedCategories.includes(cat)
+                    ? "#2b3d55"
+                    : "#1a1a2f",
+                  color: "#fff",
+                  border: "1px solid #2e3b4e",
+                  borderRadius: 6,
+                  textAlign: "left",
+                  transition: "background 0.2s",
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Search */}
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search satellites..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: "100%",
-              marginTop: 12,
-              marginBottom: 8,
-              padding: 6,
-              borderRadius: 4,
-              border: "none",
+              padding: 8,
+              borderRadius: 6,
+              border: "1px solid #2e3b4e",
+              background: "#101822",
+              color: "#fff",
+              marginBottom: 12,
             }}
           />
 
+          {/* Satellite List */}
           {filteredSatellites.length === 0 && (
-            <div style={{ color: "#aaa", fontSize: 13, marginTop: 10 }}>
+            <div style={{ color: "#aaa", fontSize: 13 }}>
               No satellites match your filters.
             </div>
           )}
 
           {filteredSatellites.map((sat) => (
-            <div key={sat.id} style={{ marginBottom: 6 }}>
+            <div key={sat.id} style={{ marginBottom: 8 }}>
               <button
                 onClick={() => handleSelect(sat.id)}
                 style={{
-                  display: "block",
                   width: "100%",
                   padding: "6px 10px",
                   borderRadius: 6,
                   border: selectedSats.includes(sat.id)
                     ? "2px solid #4af"
-                    : "1px solid #333",
+                    : "1px solid #2e3b4e",
                   background: selectedSats.includes(sat.id)
                     ? "#223a5f"
-                    : "#222",
+                    : "#1a1a2f",
                   color: "#fff",
-                  cursor: "pointer",
                   textAlign: "left",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -189,18 +197,18 @@ const SideBar = ({
               {selectedSats.includes(sat.id) && (
                 <button
                   onClick={() => toggleOrbit(sat.id)}
-                  disabled={!orbitPaths[sat.id]} // <-- Disable if orbit not ready
+                  disabled={!orbitPaths[sat.id]}
                   style={{
                     width: "100%",
-                    marginTop: 2,
-                    padding: "4px 10px",
+                    marginTop: 3,
+                    padding: "4px 8px",
                     borderRadius: 4,
-                    border: "1px solid #555",
+                    border: "1px solid #333",
                     background: visibleOrbits.includes(sat.id)
                       ? "#2d5a2d"
                       : !orbitPaths[sat.id]
                       ? "#444"
-                      : "#333",
+                      : "#252d3a",
                     color: "#fff",
                     cursor: orbitPaths[sat.id] ? "pointer" : "not-allowed",
                     fontSize: "11px",
@@ -218,16 +226,26 @@ const SideBar = ({
   );
 };
 
-const btnStyle = {
-  background: "#222",
-  border: "none",
-  borderRadius: 6,
-  padding: 8,
-  cursor: "pointer",
-  color: "#fff",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-  display: "flex",
-  alignItems: "center",
-};
+// Button component for top icon buttons
+const SidebarButton = ({ icon, onClick, title }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    style={{
+      background: "#1a1a2f",
+      border: "1px solid #2e3b4e",
+      borderRadius: 6,
+      padding: 6,
+      color: "#8ab4f8",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transition: "background 0.2s",
+    }}
+  >
+    {icon}
+  </button>
+);
 
 export default SideBar;

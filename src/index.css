@@ -1349,3 +1349,9 @@ a {
   color: #8ab4f8;
   box-shadow: 0 0 6px rgba(138, 180, 248, 0.3) inset;
 }
+
+
+/* Hide the navbar when EarthViewer is active */
+.hide-navbar .header {
+  display: none !important;
+}

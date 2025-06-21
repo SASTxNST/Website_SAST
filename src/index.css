@@ -31,13 +31,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(200px);
-  border-radius: 2px;
-  box-shadow: 1px 1px 10px 0px rgba(250, 250, 250, 0.3);
-  /* Subtle shadow */
+  background: rgba(10, 10, 25, 0.95); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px; 
+  box-shadow: 0 0 12px rgba(138, 180, 248, 0.1), 0 0 6px rgba(138, 180, 248, 0.1) inset;
+  padding: 0.75rem 1.25rem; 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
 }
+
 
 .main-nav ul {
   display: flex;
@@ -54,16 +56,33 @@ body {
 }
 
 .contact-button {
-  padding: 0.75rem 1.5rem;
-  border: 1px solid var(--color-text-secondary);
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  padding: 0.9rem 2rem;
+  background: rgba(25, 25, 45, 0.92); 
+  color: #e0e0ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 500; 
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 4px; 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    0 0 8px rgba(138, 180, 248, 0.05) inset;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contact-button:hover {
-  background-color: var(--color-text);
-  color: var(--color-background);
+  background: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.2) inset;
 }
+
 
 @media (max-width: 768px) {
   .main-nav {
@@ -779,7 +798,7 @@ a {
 
 .main-nav .nav-links {
   display: flex;
-  gap: 7rem;
+  gap: 9rem;
 }
 
 
@@ -813,7 +832,6 @@ a {
   padding: 2rem 0;
   z-index: 100;
   transition: transform 0.5s ease-in-out;
-  /* Add smooth transition */
 }
 
 /* Hidden state */
@@ -821,7 +839,6 @@ a {
   transform: translateY(-200%);
 }
 
-/* AstronomyNews styles moved from inline <style> */
 .astronomy-news-container {
   min-height: 100vh;
   padding: 6rem 2rem 2rem;
@@ -839,7 +856,7 @@ a {
   position: relative;
   width: 100%;
   padding: 1rem 2rem;
-  background: rgba(10, 20, 40, 0.3); /* deep space blue glow */
+  background: rgba(10, 20, 40, 0.3); 
   border: 1px solid rgba(138, 180, 248, 0.15);
   border-radius: 12px;
   backdrop-filter: blur(10px);
@@ -851,7 +868,7 @@ a {
   font-size: 3rem;
   font-family: 'Orbitron', sans-serif;
   font-weight: 800;
-  color: #8ab4f8; /* SAST's signature neon blue */
+  color: #8ab4f8; 
   margin: 0;
   text-align: center;
   letter-spacing: 0.03em;
@@ -882,17 +899,16 @@ a {
   box-shadow: 0 4px 10px rgba(138, 180, 248, 0.08);
 }
 
-/* Icon style */
+
 .refresh-icon {
   transition: transform 0.4s ease;
 }
 
-/* Rotate icon only when button has .loading class */
+
 .refresh-button.loading .refresh-icon {
   animation: spin 1s linear infinite;
 }
 
-/* Optional: prevent hover animation when loading */
 .refresh-button.loading:hover {
   transform: translateY(-50%);
   box-shadow: 0 4px 10px rgba(138, 180, 248, 0.1);
@@ -1172,11 +1188,11 @@ a {
 @keyframes sparkleFade {
   0% {
     opacity: 0.9;
-    transform: translate(-70%, -50%) scale(1); /* same as default + scale */
+    transform: translate(-70%, -50%) scale(1); 
   }
   100% {
     opacity: 0;
-    transform: translate(-70%, -50%) scale(0.3); /* keep offset + shrink */
+    transform: translate(-70%, -50%) scale(0.3); 
   }
 }
 
@@ -1224,13 +1240,15 @@ a {
     right: 0;
     height: 100vh;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: rgba(10, 10, 25, 0.95); /* same as dropdown */
+    backdrop-filter: blur(10px); /* frosted effect */
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
   }
 
   .main-nav.active {
@@ -1242,18 +1260,31 @@ a {
     flex-direction: column;
     gap: 2rem;
     text-align: center;
+    padding: 2vh 2vw;
   }
 
   .nav-links li a {
     font-size: 1.25rem;
     font-weight: 500;
-    color: white;
+    font-family: 'Roboto Mono', monospace; 
+    color: #e0e0e0;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+
+  .nav-links li a:hover {
+    background: rgba(138, 180, 248, 0.08);
+    color: #8ab4f8;
+    box-shadow: 0 0 8px rgba(138, 180, 248, 0.3) inset;
   }
 
   .contact-button {
     display: none;
   }
 }
+
 
 .learn_more
 {
@@ -1292,6 +1323,7 @@ a {
 .dropdown {
   position: relative;
   display: block;
+  z-index: 10;
 }
 
 .dropdown-link {
@@ -1308,46 +1340,73 @@ a {
 }
 
 .dropdown-content {
+  display: none;
   opacity: 0;
   visibility: hidden;
-  display: block;
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: rgba(10, 10, 25, 0.95);
-  border-radius: 10px;
-  padding: 1vh 0;
+  margin-top: 4vh;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 6px;
+  padding: 1rem 0;
   z-index: 999;
-  min-width: 180px;
-
+  min-width: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 180, 248, 0.08) inset;
 }
 
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
+  display: block;
   opacity: 1;
   visibility: visible;
-  display: block;
+} */
+
+
+.dropdown-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4vh;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 6px;
+  padding: 1rem 0;
+  z-index: 999;
+  min-width: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 180, 248, 0.08) inset;
 }
 
-.dropdown-content li {
-  list-style: none;
-  margin: 0;
+
+.dropdown-content.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  display: block;
+
 }
 
 .dropdown-content li a {
   display: block;
-  padding: 10px 18px;
-  color: #e0e0e0;
+  padding: 12px 20px;
+  color: #d0d0ff;
   text-decoration: none;
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Orbitron', sans-serif;
   font-size: 15px;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Hover glow effect */
 .dropdown-content li a:hover {
-  background: rgba(138, 180, 248, 0.1);
+  background: rgba(138, 180, 248, 0.08);
   color: #8ab4f8;
-  box-shadow: 0 0 6px rgba(138, 180, 248, 0.3) inset;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.25) inset;
 }
 
 

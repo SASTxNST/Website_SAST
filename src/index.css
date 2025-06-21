@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Znamenny+Musical+Notation&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Noto+Znamenny+Musical+Notation&display=swap');
 html,
 body {
   margin: 0;
@@ -9,11 +11,10 @@ body {
   box-sizing: border-box;
   scroll-behavior: smooth;
     cursor: none; /* Hide default cursor */
+        font-family: "Noto Znamenny Musical Notation", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
-
-
-
-
 
 .header {
   position: fixed;
@@ -30,13 +31,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(200px);
-  border-radius: 2px;
-  box-shadow: 1px 1px 10px 0px rgba(250, 250, 250, 0.3);
-  /* Subtle shadow */
+  background: rgba(10, 10, 25, 0.95); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px; 
+  box-shadow: 0 0 12px rgba(138, 180, 248, 0.1), 0 0 6px rgba(138, 180, 248, 0.1) inset;
+  padding: 0.75rem 1.25rem; 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
 }
+
 
 .main-nav ul {
   display: flex;
@@ -53,16 +56,33 @@ body {
 }
 
 .contact-button {
-  padding: 0.75rem 1.5rem;
-  border: 1px solid var(--color-text-secondary);
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  padding: 0.9rem 2rem;
+  background: rgba(25, 25, 45, 0.92); 
+  color: #e0e0ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 500; 
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 4px; 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    0 0 8px rgba(138, 180, 248, 0.05) inset;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contact-button:hover {
-  background-color: var(--color-text);
-  color: var(--color-background);
+  background: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.2) inset;
 }
+
 
 @media (max-width: 768px) {
   .main-nav {
@@ -778,8 +798,9 @@ a {
 
 .main-nav .nav-links {
   display: flex;
-  gap: 3rem;
+  gap: 9rem;
 }
+
 
 @media (max-width: 768px) {
   .nav-links {
@@ -811,7 +832,6 @@ a {
   padding: 2rem 0;
   z-index: 100;
   transition: transform 0.5s ease-in-out;
-  /* Add smooth transition */
 }
 
 /* Hidden state */
@@ -819,7 +839,6 @@ a {
   transform: translateY(-200%);
 }
 
-/* AstronomyNews styles moved from inline <style> */
 .astronomy-news-container {
   min-height: 100vh;
   padding: 6rem 2rem 2rem;
@@ -832,51 +851,79 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   position: relative;
   width: 100%;
+  padding: 1rem 2rem;
+  background: rgba(10, 20, 40, 0.3); 
+  border: 1px solid rgba(138, 180, 248, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(138, 180, 248, 0.1);
+  z-index: 10;
 }
 
 .astronomy-title {
   font-size: 3rem;
-  font-weight: 700;
-  color: var(--color-text, #ffffff);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  color: #8ab4f8; 
   margin: 0;
   text-align: center;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 6px rgba(138, 180, 248, 0.4);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .refresh-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
   position: absolute;
-  right: 0;
+  right: 2%;
   top: 50%;
   transform: translateY(-50%);
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: var(--color-text, #ffffff);
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 0.4rem 1.5rem;
+  background: rgba(0, 20, 40, 0.3);
+  border: 1px solid rgba(138, 180, 248, 0.15);
+  border-radius: 10px;
+  color: #8ab4f8;
+  font-size: 0.95rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(138, 180, 248, 0.08);
 }
 
-.refresh-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-50%) translateY(-2px);
+
+.refresh-icon {
+  transition: transform 0.4s ease;
 }
 
-.refresh-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+
+.refresh-button.loading .refresh-icon {
+  animation: spin 1s linear infinite;
 }
 
-.refresh-button.loading {
-  pointer-events: none;
+.refresh-button.loading:hover {
+  transform: translateY(-50%);
+  box-shadow: 0 4px 10px rgba(138, 180, 248, 0.1);
 }
+
+/* Spin animation keyframes */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 .loading-container {
   display: flex;
@@ -963,24 +1010,27 @@ a {
 }
 
 .news-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgba(10, 20, 40, 0.4);
+  border: 1px solid rgba(138, 180, 248, 0.12);
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 480px;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 20px rgba(138, 180, 248, 0.06);
 }
+
 
 .news-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(138, 180, 248, 0.2);
+  border-color: rgba(138, 180, 248, 0.25);
+  background: rgba(20, 40, 60, 0.5);
 }
+
 
 .news-image-container {
   width: 100%;
@@ -1138,11 +1188,11 @@ a {
 @keyframes sparkleFade {
   0% {
     opacity: 0.9;
-    transform: translate(-70%, -50%) scale(1); /* same as default + scale */
+    transform: translate(-70%, -50%) scale(1); 
   }
   100% {
     opacity: 0;
-    transform: translate(-70%, -50%) scale(0.3); /* keep offset + shrink */
+    transform: translate(-70%, -50%) scale(0.3); 
   }
 }
 
@@ -1190,13 +1240,15 @@ a {
     right: 0;
     height: 100vh;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: rgba(10, 10, 25, 0.95); /* same as dropdown */
+    backdrop-filter: blur(10px); /* frosted effect */
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
   }
 
   .main-nav.active {
@@ -1208,18 +1260,31 @@ a {
     flex-direction: column;
     gap: 2rem;
     text-align: center;
+    padding: 2vh 2vw;
   }
 
   .nav-links li a {
     font-size: 1.25rem;
     font-weight: 500;
-    color: white;
+    font-family: 'Roboto Mono', monospace; 
+    color: #e0e0e0;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+  }
+
+  .nav-links li a:hover {
+    background: rgba(138, 180, 248, 0.08);
+    color: #8ab4f8;
+    box-shadow: 0 0 8px rgba(138, 180, 248, 0.3) inset;
   }
 
   .contact-button {
     display: none;
   }
 }
+
 
 .learn_more
 {
@@ -1242,13 +1307,110 @@ a {
 .timeline_sast
 {
    width: 100%;
-  margin-top: 25rem; /* mt-32 = 32 * 0.25rem */
-  padding-left: 1rem; /* px-4 = 1rem */
+  margin-top: 25rem; 
+  padding-left: 1rem;
   padding-right: 1rem;
   color: white;
   display: flex;
   justify-content: center;
-  padding-bottom: 10rem; /* pb-40 = 40 * 0.25rem */
+  padding-bottom: 10rem; 
 }
 
 
+
+/* DROPDOWN */
+
+.dropdown {
+  position: relative;
+  display: block;
+  z-index: 10;
+}
+
+.dropdown-link {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  text-decoration: none;
+  padding: 1.2vh 2vw;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #8ab4f8;
+}
+
+.dropdown-content {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4vh;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 6px;
+  padding: 1rem 0;
+  z-index: 999;
+  min-width: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 180, 248, 0.08) inset;
+}
+
+/* .dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+} */
+
+
+.dropdown-content {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4vh;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 6px;
+  padding: 1rem 0;
+  z-index: 999;
+  min-width: 220px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(138, 180, 248, 0.08) inset;
+}
+
+
+.dropdown-content.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  display: block;
+
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 12px 20px;
+  color: #d0d0ff;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content li a:hover {
+  background: rgba(138, 180, 248, 0.08);
+  color: #8ab4f8;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.25) inset;
+}
+
+
+/* Hide the navbar when EarthViewer is active */
+.hide-navbar .header {
+  display: none !important;
+}

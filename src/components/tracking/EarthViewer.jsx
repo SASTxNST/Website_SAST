@@ -120,6 +120,15 @@ const EarthViewer = ({ loading, setLoading }) => {
       );
     }
   }, []);
+useEffect(() => {
+  // Hide the navbar when EarthViewer mounts
+  document.body.classList.add("hide-navbar");
+
+  // Show the navbar again when EarthViewer unmounts
+  return () => {
+    document.body.classList.remove("hide-navbar");
+  };
+}, []);
 
   // If userLocation is set, fly camera there immediately
   useEffect(() => {

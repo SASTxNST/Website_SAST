@@ -80,13 +80,23 @@ export default function AstronomyNews() {
       <div className="astronomy-news-container">
         <header className="astronomy-header">
           <h1 className="astronomy-title">Astronomy News</h1>
-          <button
-            className={`refresh-button ${loading ? "loading" : ""}`}
-            onClick={handleRefresh}
-            disabled={loading}
-          >
-            {loading ? "Loading..." : "Refresh"}
-          </button>
+         <button
+  className={`refresh-button ${loading ? "loading" : ""}`}
+  onClick={handleRefresh}
+  disabled={loading}
+>
+  <svg
+    className="refresh-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 13.65-6.65z" />
+  </svg>
+  {loading ? "Loading..." : "Refresh"}
+</button>
+
         </header>
 
         {loading && (

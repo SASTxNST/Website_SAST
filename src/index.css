@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 html,
 body {
   margin: 0;
@@ -778,8 +779,9 @@ a {
 
 .main-nav .nav-links {
   display: flex;
-  gap: 3rem;
+  gap: 7rem;
 }
+
 
 @media (max-width: 768px) {
   .nav-links {
@@ -1242,13 +1244,76 @@ a {
 .timeline_sast
 {
    width: 100%;
-  margin-top: 25rem; /* mt-32 = 32 * 0.25rem */
-  padding-left: 1rem; /* px-4 = 1rem */
+  margin-top: 25rem; 
+  padding-left: 1rem;
   padding-right: 1rem;
   color: white;
   display: flex;
   justify-content: center;
-  padding-bottom: 10rem; /* pb-40 = 40 * 0.25rem */
+  padding-bottom: 10rem; 
 }
 
 
+
+/* DROPDOWN */
+
+.dropdown {
+  position: relative;
+  display: block;
+}
+
+.dropdown-link {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  text-decoration: none;
+  padding: 1.2vh 2vw;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #8ab4f8;
+}
+
+.dropdown-content {
+  opacity: 0;
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(10, 10, 25, 0.95);
+  border-radius: 10px;
+  padding: 1vh 0;
+  z-index: 999;
+  min-width: 180px;
+
+}
+
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+.dropdown-content li {
+  list-style: none;
+  margin: 0;
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 10px 18px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Hover glow effect */
+.dropdown-content li a:hover {
+  background: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.3) inset;
+}

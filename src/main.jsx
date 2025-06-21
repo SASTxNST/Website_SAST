@@ -8,13 +8,14 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Landing from "./components/Landing.jsx";
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./components/Navbar.jsx"; 
 import Newsletter from "./components/Newsletter.jsx";
 import Events from "./components/Events.jsx";
 import Projects from "./components/Projects.jsx";
 import Team from "./components/Team.jsx";
 import Login from "./components/Login.jsx";
 import Store from "./components/Store.jsx";
+
 
 import ContributionRanks from "./pages/ContributionRanks.jsx";
 import CursorEffects from "./components/CursorEffects.jsx";
@@ -32,7 +33,6 @@ const App = () => {
     <>
       <CursorEffects />
       <DiamondCursor />
-
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Landing />} />

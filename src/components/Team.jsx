@@ -14,9 +14,10 @@ const Team = () => {
   return (
     <>
     
-    <div className="w-full h-full">
-        <img className="h-full w-full object-cover opacity-20 fixed -z-10" src={wood_png}/>
-      </div> 
+<div className="fixed inset-0 -z-10">
+  <img className="w-full h-full object-cover opacity-20" src={wood_png} />
+</div>
+
 
 
       <section className="w-full h-450 flex flex-col justify-center items-center gap-15">

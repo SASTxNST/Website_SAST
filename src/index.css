@@ -2,6 +2,7 @@
 
 html,
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -130,6 +131,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   min-height: 100vh;
+   overflow-y: auto;
 }
 
 .cubeset {

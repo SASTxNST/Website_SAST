@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Znamenny+Musical+Notation&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Noto+Znamenny+Musical+Notation&display=swap');
 html,
 body {
   margin: 0;
@@ -9,11 +11,10 @@ body {
   box-sizing: border-box;
   scroll-behavior: smooth;
     cursor: none; /* Hide default cursor */
+        font-family: "Noto Znamenny Musical Notation", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
-
-
-
-
 
 .header {
   position: fixed;
@@ -778,8 +779,9 @@ a {
 
 .main-nav .nav-links {
   display: flex;
-  gap: 3rem;
+  gap: 7rem;
 }
+
 
 @media (max-width: 768px) {
   .nav-links {
@@ -832,51 +834,80 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   position: relative;
   width: 100%;
+  padding: 1rem 2rem;
+  background: rgba(10, 20, 40, 0.3); /* deep space blue glow */
+  border: 1px solid rgba(138, 180, 248, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(138, 180, 248, 0.1);
+  z-index: 10;
 }
 
 .astronomy-title {
   font-size: 3rem;
-  font-weight: 700;
-  color: var(--color-text, #ffffff);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  color: #8ab4f8; /* SAST's signature neon blue */
   margin: 0;
   text-align: center;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 6px rgba(138, 180, 248, 0.4);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .refresh-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
   position: absolute;
-  right: 0;
+  right: 2%;
   top: 50%;
   transform: translateY(-50%);
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: var(--color-text, #ffffff);
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 0.4rem 1.5rem;
+  background: rgba(0, 20, 40, 0.3);
+  border: 1px solid rgba(138, 180, 248, 0.15);
+  border-radius: 10px;
+  color: #8ab4f8;
+  font-size: 0.95rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(138, 180, 248, 0.08);
 }
 
-.refresh-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-50%) translateY(-2px);
+/* Icon style */
+.refresh-icon {
+  transition: transform 0.4s ease;
 }
 
-.refresh-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+/* Rotate icon only when button has .loading class */
+.refresh-button.loading .refresh-icon {
+  animation: spin 1s linear infinite;
 }
 
-.refresh-button.loading {
-  pointer-events: none;
+/* Optional: prevent hover animation when loading */
+.refresh-button.loading:hover {
+  transform: translateY(-50%);
+  box-shadow: 0 4px 10px rgba(138, 180, 248, 0.1);
 }
+
+/* Spin animation keyframes */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 .loading-container {
   display: flex;
@@ -963,24 +994,27 @@ a {
 }
 
 .news-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: rgba(10, 20, 40, 0.4);
+  border: 1px solid rgba(138, 180, 248, 0.12);
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 480px;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 20px rgba(138, 180, 248, 0.06);
 }
+
 
 .news-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(138, 180, 248, 0.2);
+  border-color: rgba(138, 180, 248, 0.25);
+  background: rgba(20, 40, 60, 0.5);
 }
+
 
 .news-image-container {
   width: 100%;
@@ -1242,13 +1276,76 @@ a {
 .timeline_sast
 {
    width: 100%;
-  margin-top: 25rem; /* mt-32 = 32 * 0.25rem */
-  padding-left: 1rem; /* px-4 = 1rem */
+  margin-top: 25rem; 
+  padding-left: 1rem;
   padding-right: 1rem;
   color: white;
   display: flex;
   justify-content: center;
-  padding-bottom: 10rem; /* pb-40 = 40 * 0.25rem */
+  padding-bottom: 10rem; 
 }
 
 
+
+/* DROPDOWN */
+
+.dropdown {
+  position: relative;
+  display: block;
+}
+
+.dropdown-link {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  text-decoration: none;
+  padding: 1.2vh 2vw;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #8ab4f8;
+}
+
+.dropdown-content {
+  opacity: 0;
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(10, 10, 25, 0.95);
+  border-radius: 10px;
+  padding: 1vh 0;
+  z-index: 999;
+  min-width: 180px;
+
+}
+
+.dropdown:hover .dropdown-content {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+.dropdown-content li {
+  list-style: none;
+  margin: 0;
+}
+
+.dropdown-content li a {
+  display: block;
+  padding: 10px 18px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Hover glow effect */
+.dropdown-content li a:hover {
+  background: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+  box-shadow: 0 0 6px rgba(138, 180, 248, 0.3) inset;
+}

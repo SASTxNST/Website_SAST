@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
-
+import NotifierSat from "./NotifierSat";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +50,10 @@ const Navbar = () => {
           </a>
 
           {isMobile && (
-            <button className={`hamburger-menu ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+            <button
+              className={`hamburger-menu ${menuOpen ? "open" : ""}`}
+              onClick={toggleMenu}
+            >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
@@ -67,10 +70,15 @@ const Navbar = () => {
               </li>
               {/* <li><a href="#products">Products</a></li> */}
 
-              <li><a href="/events">Events</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li><a href="/team">Team</a></li>
-
+              <li>
+                <a href="/events">Events</a>
+              </li>
+              <li>
+                <a href="/projects">Projects</a>
+              </li>
+              <li>
+                <a href="/team">Team</a>
+              </li>
 
               {/* <li><Link to="/contributions">Contribute</Link></li> */}
               {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
@@ -80,8 +88,8 @@ const Navbar = () => {
               <li>
                 <a href="/track">Track</a>
               </li>
-              <Link to="/login">Login</Link>
 
+              <Link to="/login">Login</Link>
             </ul>
           </nav>
 

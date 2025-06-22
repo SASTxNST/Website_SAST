@@ -21,6 +21,8 @@ import CursorEffects from "./components/CursorEffects.jsx";
 import DiamondCursor from "./components/DiamondCursor.jsx";
 import AstronomyNews from "./components/AstronomyNews.jsx";
 import SatelliteTracker from "./components/tracking/SatelliteTracker.jsx";
+import NotifierSat from "./components/NotifierSat.jsx";
+
 import { Ion } from "cesium";
 
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
@@ -32,7 +34,7 @@ const App = () => {
     <>
       <CursorEffects />
       <DiamondCursor />
-
+      <NotifierSat />
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Landing />} />

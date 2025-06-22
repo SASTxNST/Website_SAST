@@ -1,6 +1,8 @@
 import * as satellite from "satellite.js";
 
 self.onmessage = function (e) {
+  const start = Date.now();
+  console.log(start);
   const { satellites, userLocation, radiusKm, numHours, timeStepMinutes } =
     e.data;
   const passes = [];
@@ -51,6 +53,5 @@ self.onmessage = function (e) {
       }
     }
   });
-
   self.postMessage(passes);
 };

@@ -1,117 +1,28 @@
-import React, { useEffect, useState } from "react";
-import Worker from "../workers/predictor.worker.js?worker";
-import combinedTLE from "../utils/satellite/combinedTLE";
+import React, { useState, useEffect } from "react";
 import { Satellite } from "lucide-react";
-
-const DETECTION_RADIUS_KM = 1000;
-const NUM_HOURS_TO_PREDICT = 24;
-const TIME_STEP_MINUTES = 1;
+import { useSatelliteMonitor } from "../hooks/useSatelliteMonitor";
 
 function NotifierSat() {
-  const [userLocation, setUserLocation] = useState(null);
-  const [notification, setNotification] = useState(null);
+  const { notification, clearNotification } = useSatelliteMonitor();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if ("Notification" in window) {
-      Notification.requestPermission();
+    if (notification) {
+      setIsVisible(true);
+      // Auto-hide after 5 seconds
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(() => clearNotification(), 300);
+      }, 5000);
+
+      return () => clearTimeout(timer);
     }
-  }, []);
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      console.error("Geolocation not supported.");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          altitude: position.coords.altitude || 0,
-        });
-      },
-      (err) => {
-        console.error("Location error:", err);
-      }
-    );
-  }, []);
-
-  const showNotification = (pass) => {
-    setNotification(pass);
-    setIsVisible(true);
-
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-      setIsVisible(false);
-      setTimeout(() => setNotification(null), 300); // Wait for slide-out animation
-    }, 5000);
-  };
+  }, [notification, clearNotification]);
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(() => setNotification(null), 300);
+    setTimeout(() => clearNotification(), 300);
   };
-
-  useEffect(() => {
-    if (!userLocation) return;
-
-    const parseTleArrays = (rawTleArray) => {
-      const sats = [];
-      for (let i = 0; i < rawTleArray.length; i += 3) {
-        if (i + 2 < rawTleArray.length) {
-          sats.push({
-            name: rawTleArray[i],
-            line1: rawTleArray[i + 1],
-            line2: rawTleArray[i + 2],
-          });
-        }
-      }
-      return sats;
-    };
-
-    const allParsedSats = combinedTLE
-      .flatMap((group) => parseTleArrays(group.data))
-      .reduce((acc, sat) => {
-        if (!acc.has(sat.line1)) acc.set(sat.line1, sat);
-        return acc;
-      }, new Map());
-
-    const satArray = Array.from(allParsedSats.values());
-
-    const worker = new Worker();
-
-    worker.postMessage({
-      satellites: satArray,
-      userLocation,
-      radiusKm: DETECTION_RADIUS_KM,
-      numHours: NUM_HOURS_TO_PREDICT,
-      timeStepMinutes: TIME_STEP_MINUTES,
-    });
-
-    worker.onmessage = (e) => {
-      if (e.data.length > 0) {
-        const pass = e.data[0];
-        // Update the time to current time when notification is triggered
-        const updatedPass = {
-          ...pass,
-          time: new Date().toLocaleString(),
-        };
-        showNotification(updatedPass);
-
-        if (Notification.permission === "granted") {
-          new Notification(`🛰️ ${pass.satelliteName} is passing overhead!`, {
-            icon: "🛰️",
-            body: `Elevation: ${pass.elevation}, Distance: ${pass.distance}`,
-          });
-        }
-      }
-      worker.terminate();
-    };
-
-    return () => worker.terminate();
-  }, [userLocation]);
 
   return (
     <>
@@ -331,15 +242,10 @@ function NotifierSat() {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes pulse {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.5;
-          }
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
         }
       `}</style>
     </>

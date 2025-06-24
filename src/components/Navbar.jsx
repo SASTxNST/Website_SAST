@@ -60,7 +60,7 @@ const Navbar = () => {
             </button>
           )}
 
-          <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
+          <nav className={`main-nav ${menuOpen ? "active" : "hidden"}`}>
             <ul className="nav-links">
               <li>
                 <a href="/">Home</a>

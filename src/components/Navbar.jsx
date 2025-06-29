@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
-import NotifierSat from "./NotifierSat";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

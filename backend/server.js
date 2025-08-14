@@ -8,6 +8,15 @@ const User = require('./models/user');
 const app = express();
 const PORT = process.env.SERVER_PORT;
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public')));
+
+app.get('/', (res,req) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+})
+
 // ✅ DB & Start server
 (async () => {
   try {

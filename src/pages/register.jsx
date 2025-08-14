@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { Eye, EyeOff } from "lucide-react"; // for show/hide password icons
+import { Eye, EyeOff } from "lucide-react";
+import { showToast } from "../main.jsx"; // import global toast
 
 export default function Register() {
   const [method, setMethod] = useState("email");
@@ -18,23 +19,37 @@ export default function Register() {
     confirmPassword: "",
   });
 
+  // Send OTP
   const handleSendOtp = () => {
-    console.log(`Sending OTP to ${method === "email" ? email : "phone"}`);
+    if (!email) {
+      showToast("Please enter your email!", "error");
+      return;
+    }
+    console.log(`Sending OTP to ${email}`);
+    showToast(`OTP sent to ${email}`);
     setStep(2);
   };
 
+  // Verify OTP
   const handleVerifyOtp = () => {
+    if (!otp) {
+      showToast("Please enter the OTP!", "error");
+      return;
+    }
     console.log("Verifying OTP", otp);
+    showToast("OTP verified successfully!");
     setStep(3);
   };
 
+  // Register user
   const handleRegister = () => {
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
+      showToast("Passwords do not match!", "error");
       return;
     }
     const payload = { ...formData, email };
     console.log("Registering user:", payload);
+    showToast("Registered successfully!");
   };
 
   return (
@@ -42,6 +57,7 @@ export default function Register() {
       <Navbar />
       <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-300">
         <div className="w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+
           {/* Switch between Email / Phone */}
           <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
             <button
@@ -58,7 +74,9 @@ export default function Register() {
               Email
             </button>
             <button
-              onClick={() => alert("Phone registration is not implemented yet.")}
+              onClick={() =>
+                showToast("Phone registration is not implemented yet.", "error")
+              }
               className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
                 method === "phone"
                   ? "bg-purple-600 text-white"
@@ -72,6 +90,7 @@ export default function Register() {
           {/* EMAIL REGISTRATION FLOW */}
           {method === "email" && (
             <>
+              {/* Step 1: Enter Email */}
               {step === 1 && (
                 <div>
                   <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
@@ -93,6 +112,7 @@ export default function Register() {
                 </div>
               )}
 
+              {/* Step 2: Verify OTP */}
               {step === 2 && (
                 <div>
                   <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
@@ -114,6 +134,7 @@ export default function Register() {
                 </div>
               )}
 
+              {/* Step 3: Complete Profile */}
               {step === 3 && (
                 <div>
                   <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">

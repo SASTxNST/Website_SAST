@@ -8,7 +8,7 @@ const User = sequelize.define('User', {
   email: {type: DataTypes.STRING,allowNull: false,unique: true,validate: { isEmail: true },},
   password: { type: DataTypes.STRING, allowNull: false },
   gender: { type: DataTypes.STRING, allowNull: true },
-  dob: { type: DataTypes.DATEONLY, allowNull: true },
+  dob: { type: DataTypes.DATEONLY, allowNull: true }, 
   addresses: {type: DataTypes.JSON,allowNull: false,defaultValue: [],},
   avatar: { type: DataTypes.STRING, allowNull: true },
 

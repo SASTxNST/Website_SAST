@@ -39,18 +39,18 @@ export default function Register() {
 
   const handleSendOtp = () => {
     if (!email) {
-      showToast("Please enter your email!", "error");
-      return;
+        showToast("Please enter your email!", "error");
+        return;
     }
     if (!isValidEmail(email)) {
-      showToast("Please enter a valid email!", "error");
-      return;
+        showToast("Please enter a valid email!", "error");
+        return;
     }
 
     console.log(`Sending OTP to ${email}`);
     showToast(`OTP sent to ${email}`);
     setStep(2);
-    setResendTimer(60); // 1 min timer for resend
+    setResendTimer(60);
   };
 
   const handleResendOtp = () => {
@@ -73,7 +73,7 @@ export default function Register() {
 
   const handleRegister = async () => {
     if (formData.password !== formData.confirmPassword) {
-      showToast("Passwords do not match!", "error");
+      showToast("Passwords do not match!", "error"); 
       return;
     }
     if (!email) {
@@ -165,8 +165,9 @@ export default function Register() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
+                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50"
                     onClick={handleSendOtp}
+                    disabled={!isValidEmail(email)}
                   >
                     Send OTP
                   </button>

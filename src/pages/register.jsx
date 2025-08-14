@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import { showToast } from "../main.jsx"; // import global toast
+import { showToast } from "../main.jsx";
+import { BASE_URL } from "../api";
 
 export default function Register() {
   const [method, setMethod] = useState("email");
@@ -10,27 +12,55 @@ export default function Register() {
   const [otp, setOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    profileImg: null,
     password: "",
     confirmPassword: "",
   });
 
-  // Send OTP
+  // Timer effect for resend OTP
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
+
+  // Email validation
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const handleSendOtp = () => {
     if (!email) {
       showToast("Please enter your email!", "error");
       return;
     }
+    if (!isValidEmail(email)) {
+      showToast("Please enter a valid email!", "error");
+      return;
+    }
+
     console.log(`Sending OTP to ${email}`);
     showToast(`OTP sent to ${email}`);
     setStep(2);
+    setResendTimer(60); // 1 min timer for resend
   };
 
-  // Verify OTP
+  const handleResendOtp = () => {
+    if (resendTimer > 0) return; // prevent resending before timer ends
+
+    console.log(`Resending OTP to ${email}`);
+    showToast(`OTP resent to ${email}`);
+    setResendTimer(60);
+  };
+
   const handleVerifyOtp = () => {
     if (!otp) {
       showToast("Please enter the OTP!", "error");
@@ -41,15 +71,47 @@ export default function Register() {
     setStep(3);
   };
 
-  // Register user
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (formData.password !== formData.confirmPassword) {
       showToast("Passwords do not match!", "error");
       return;
     }
-    const payload = { ...formData, email };
-    console.log("Registering user:", payload);
-    showToast("Registered successfully!");
+    if (!email) {
+      showToast("Email is required!", "error");
+      return;
+    }
+
+    try {
+      const payload = {
+        email,
+        password: formData.password,
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        phone: "",
+      };
+
+      const res = await fetch(`${BASE_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (result.user) {
+        showToast("Registered successfully!", "success");
+        localStorage.setItem("token", result.token);
+        console.log(result.user);
+        navigate("/login");
+      }
+      else {
+        showToast(result.message || "Registration failed!", "error");
+      }
+    } 
+    catch (err) {
+      console.error(err);
+      showToast("Server error. Try again.", "error");
+    }
   };
 
   return (
@@ -57,7 +119,6 @@ export default function Register() {
       <Navbar />
       <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-300">
         <div className="w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-
           {/* Switch between Email / Phone */}
           <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
             <button
@@ -126,10 +187,23 @@ export default function Register() {
                     onChange={(e) => setOtp(e.target.value)}
                   />
                   <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
+                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 mb-2"
                     onClick={handleVerifyOtp}
                   >
                     Verify OTP
+                  </button>
+                  <button
+                    className={`w-full py-2 rounded-lg font-semibold ${
+                      resendTimer > 0
+                        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                        : "bg-purple-600 text-white hover:bg-purple-700"
+                    }`}
+                    disabled={resendTimer > 0}
+                    onClick={handleResendOtp}
+                  >
+                    {resendTimer > 0
+                      ? `Resend OTP in ${resendTimer}s`
+                      : "Resend OTP"}
                   </button>
                 </div>
               )}
@@ -160,18 +234,6 @@ export default function Register() {
                     value={formData.lastName}
                     onChange={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
-                    }
-                  />
-
-                  {/* Profile Image */}
-                  <input
-                    type="file"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 dark:bg-gray-800 dark:text-gray-100"
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        profileImg: e.target.files[0],
-                      })
                     }
                   />
 
@@ -238,7 +300,7 @@ export default function Register() {
           <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
             Already have an account?{" "}
             <a
-              href="/login"
+              onClick={() => navigate("/login")}
               className="text-purple-600 hover:underline dark:text-purple-400"
             >
               Login

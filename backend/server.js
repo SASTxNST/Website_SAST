@@ -14,10 +14,11 @@ const PORT = process.env.SERVER_PORT;
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-  credentials: true, // if using cookies
+  credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+// Parse JSON and URL-encoded bodies
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

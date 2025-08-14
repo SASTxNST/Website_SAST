@@ -13,7 +13,7 @@ import Newsletter from "./components/Newsletter.jsx";
 import Events from "./components/Events.jsx";
 import Projects from "./components/Projects.jsx";
 import Team from "./components/Team.jsx";
-import Login from "./components/Login.jsx";
+import Login from "./pages/login.jsx";
 import Store from "./components/Store.jsx";
 
 import ContributionRanks from "./pages/ContributionRanks.jsx";
@@ -22,6 +22,7 @@ import DiamondCursor from "./components/DiamondCursor.jsx";
 import AstronomyNews from "./components/AstronomyNews.jsx";
 import SatelliteTracker from "./components/tracking/SatelliteTracker.jsx";
 import NotifierSat from "./components/NotifierSat.jsx";
+import Register from "./pages/register.jsx";
 
 import { Ion } from "cesium";
 
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/contributions" element={<ContributionRanks />} />
         <Route path="/news" element={<AstronomyNews />} />
         <Route path="/track" element={<SatelliteTracker />} />
+        <Route path="/Register" element={<Register />} />
       </Routes>
     </>
   );

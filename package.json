@@ -23,7 +23,8 @@
     "react-router-dom": "^7.2.0",
     "resium": "^1.19.0-beta.1",
     "satellite.js": "^6.0.0",
-    "vite-plugin-cesium": "^1.2.23"
+    "vite-plugin-cesium": "^1.2.23",
+    "z": "^1.0.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

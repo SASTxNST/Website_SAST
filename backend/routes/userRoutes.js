@@ -11,15 +11,6 @@ const {
   deleteUserAccount,
 } = require('../controllers/userController');
 
-// OTP Related imports (optional)
-// const {
-//     generateOtp,
-//     sendOtpEmail,
-//     validateEmail,
-//     sentOtpPhone,
-//     validatePhone
-// } = require('../utils/otpService')
-
 // Public Routes
 router.post("/register", registerUser);
 router.post('/login', loginUser);

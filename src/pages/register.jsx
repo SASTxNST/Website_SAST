@@ -6,113 +6,157 @@ import { showToast } from "../main.jsx";
 import { BASE_URL } from "../api";
 
 export default function Register() {
-  const [method, setMethod] = useState("email");
-  const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
-  const navigate = useNavigate();
+    const [method, setMethod] = useState("email");
+    const [step, setStep] = useState(1);
+    const [email, setEmail] = useState("");
+    const [otp, setOtp] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [resendTimer, setResendTimer] = useState(0);
+    const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-  });
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        password: "",
+        confirmPassword: "",
+    });
 
-  // Timer effect for resend OTP
-  useEffect(() => {
-    let timer;
-    if (resendTimer > 0) {
-      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
-    }
-    return () => clearTimeout(timer);
-  }, [resendTimer]);
+    // Timer effect for resend OTP
+    useEffect(() => {
+        let timer;
+        if (resendTimer > 0) {
+        timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+        }
+        return () => clearTimeout(timer);
+    }, [resendTimer]);
 
-  // Email validation
-  const isValidEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+    // Email validation
+    const isValidEmail = (email) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
 
-  const handleSendOtp = () => {
-    if (!email) {
-        showToast("Please enter your email!", "error");
-        return;
-    }
-    if (!isValidEmail(email)) {
-        showToast("Please enter a valid email!", "error");
-        return;
-    }
+    // Handle sending OTP
+    const handleSendOtp = async () => {
+        const cleanEmail = email.trim();
 
-    console.log(`Sending OTP to ${email}`);
-    showToast(`OTP sent to ${email}`);
-    setStep(2);
-    setResendTimer(60);
-  };
+        if (!cleanEmail) {
+            showToast("Please enter your email!", "error");
+            return;
+        }
 
-  const handleResendOtp = () => {
-    if (resendTimer > 0) return; // prevent resending before timer ends
+        if (!isValidEmail(cleanEmail)) {
+            showToast("Please enter a valid email!", "error");
+            return;
+        }
 
-    console.log(`Resending OTP to ${email}`);
-    showToast(`OTP resent to ${email}`);
-    setResendTimer(60);
-  };
+        try {
+            const res = await fetch(`${BASE_URL}/otp/email/generate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: cleanEmail }),
+            });
 
-  const handleVerifyOtp = () => {
-    if (!otp) {
-      showToast("Please enter the OTP!", "error");
-      return;
-    }
-    console.log("Verifying OTP", otp);
-    showToast("OTP verified successfully!");
-    setStep(3);
-  };
+            const data = await res.json();
 
-  const handleRegister = async () => {
-    if (formData.password !== formData.confirmPassword) {
-      showToast("Passwords do not match!", "error"); 
-      return;
-    }
-    if (!email) {
-      showToast("Email is required!", "error");
-      return;
-    }
+            if (res.ok) {
+                showToast(data.message || `OTP sent to ${cleanEmail}`, "success");
+                setStep(2);
+                setResendTimer(60);
+            } 
+            else {
+                showToast(data.message || "Failed to send OTP", "error");
+            }
+        } 
+        catch (err) {
+            console.error(err);
+            showToast("Server error. Try again.", "error");
+        }
+    };
 
-    try {
-      const payload = {
-        email,
-        password: formData.password,
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        phone: "",
-      };
 
-      const res = await fetch(`${BASE_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+    // Handle resending OTP
+    const handleResendOtp = () => {
+        if (resendTimer > 0) return;
+        handleSendOtp();
+    };
 
-      const result = await res.json();
+  
+    // Handle OTP verification
+    const handleVerifyOtp = async () => {
+        if (!otp) {
+            showToast("Please enter the OTP!", "error");
+            return;
+        }
 
-      if (result.user) {
-        showToast("Registered successfully!", "success");
-        localStorage.setItem("token", result.token);
-        console.log(result.user);
-        navigate("/login");
-      }
-      else {
-        showToast(result.message || "Registration failed!", "error");
-      }
-    } 
-    catch (err) {
-      console.error(err);
-      showToast("Server error. Try again.", "error");
-    }
-  };
+        try {
+            const res = await fetch(`${BASE_URL}/otp/email/validate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email.trim(), otp: otp.trim()}),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                showToast(data.message || "OTP verified successfully!", "success");
+                setStep(3);
+            } 
+            else {
+                showToast(data.message || "Invalid OTP", "error");
+            }
+        } 
+        catch (err) {
+            console.error(err);
+            showToast("Server error. Try again.", "error");
+        }
+    };
+
+    // Handle registration
+    const handleRegister = async () => {
+        if (formData.password !== formData.confirmPassword) {
+            showToast("Passwords do not match!", "error"); 
+            return;
+        }
+
+        if (!email) {
+            showToast("Email is required!", "error");
+            return;
+        }
+
+        try {
+            const payload = {
+                email,
+                password: formData.password,
+                firstName: formData.firstName.trim(),
+                lastName: formData.lastName.trim(),
+                phone: "",
+            };
+
+            const res = await fetch(`${BASE_URL}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            const result = await res.json();
+
+            if (result.user) {
+                showToast("Registered successfully!", "success");
+                localStorage.setItem("token", result.token);
+                console.log(result.user);
+                navigate("/login");
+            }
+            else {
+                showToast(result.message || "Registration failed!", "error");
+            }
+        } 
+        catch (err) {
+            console.error(err);
+            showToast("Server error. Try again.", "error");
+        }
+    };
 
   return (
     <>

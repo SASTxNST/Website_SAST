@@ -6,6 +6,7 @@ const sequelize = require('./config/database');
 
 // Import routes
 const userRoutes = require('./routes/userRoutes');
+const otpRoutes = require('./routes/otpRoutes');
 
 const app = express();
 const PORT = process.env.SERVER_PORT;
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/otp', otpRoutes);
 
 // Test route
 app.get('/', (req, res) => {
@@ -50,8 +52,7 @@ process.on('uncaughtException', (err) => {
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running at http://localhost:${PORT}`);
     });
-  } 
-  catch (err) {
+  } catch (err) {
     console.error('❌ Failed to start server:', err);
     process.exit(1);
   }

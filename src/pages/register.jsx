@@ -250,6 +250,15 @@ export default function Register() {
                       ? `Resend OTP in ${resendTimer}s`
                       : "Resend OTP"}
                   </button>
+                  <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
+                    Want to Change your Email?{" "}
+                    <a
+                      onClick={() => setStep(1)}
+                      className="text-purple-600 hover:underline dark:text-purple-400"
+                    >
+                      Click Here
+                    </a>
+                  </p>
                 </div>
               )}
 

@@ -13,7 +13,6 @@ import ContributionRanks from "./pages/ContributionRanks.jsx";
 import CursorEffects from "./components/CursorEffects.jsx";
 import DiamondCursor from "./components/DiamondCursor.jsx";
 import AstronomyNews from "./components/AstronomyNews.jsx";
-import SatelliteTracker from "./components/tracking/SatelliteTracker.jsx";
 import NotifierSat from "./components/NotifierSat.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";

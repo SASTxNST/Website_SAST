@@ -224,6 +224,9 @@ export default function Register() {
                   <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
                     Verify OTP
                   </h2>
+                  <p className="text-center">
+                    Your Email is <span className="text-blue-500">{email}</span>
+                  </p>
                   <input
                     type="text"
                     className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
@@ -254,9 +257,9 @@ export default function Register() {
                     Want to Change your Email?{" "}
                     <a
                       onClick={() => setStep(1)}
-                      className="text-purple-600 hover:underline dark:text-purple-400"
+                      className="text-purple-600 dark:text-purple-400 "
                     >
-                      Click Here
+                      <span className="hover:text-blue-500 hover:underline">Click Here</span>
                     </a>
                   </p>
                 </div>
@@ -357,7 +360,7 @@ export default function Register() {
               onClick={() => navigate("/login")}
               className="text-purple-600 hover:underline dark:text-purple-400"
             >
-              Login
+              <span className="hover:text-blue-500 hover:underline">Login</span>
             </a>
           </p>
         </div>

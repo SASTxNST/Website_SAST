@@ -26,7 +26,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Toaster
       position="top-center"
       toastOptions={{
-        style: { background: "#333", color: "#fff" },
+        style: {
+          background: "#333",
+          color: "#fff",
+          textAlign: "center",
+          justifyContent: "center",
+        },
         success: { duration: 1500 },
         error: { duration: 2500 },
       }}

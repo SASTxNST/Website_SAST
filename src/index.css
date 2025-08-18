@@ -1235,24 +1235,6 @@ a {
 #root{
   min-height: 100vh;
 }
-/* .login-body{
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.login-wrapper .login-box .login-form{
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  row-gap: 5px;
-}
-
-.login-form input{
-  border: 1px solid white;
-  border-radius: 5px;
-} */
 
 /* Full page center */
 .login-body {

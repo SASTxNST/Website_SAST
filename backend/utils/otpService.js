@@ -38,13 +38,23 @@ exports.sendOtpEmail = async (email, otp) => {
     const mailOptions = {
         from: process.env.OTP_EMAIL_USER,
         to: email,
-        subject: 'Your OTP Code',
-        text: `Your OTP is: ${otp}. It expires in 1 minute.`
+        subject: 'SAST Secure Access Code',
+        text: `Greetings from SAST Mission Control,
+
+Your One-Time Passcode (OTP) for secure access is: ${otp}
+
+Please enter this code within 1 minute to complete your authentication.
+
+If you did not request this code, please ignore this message.
+
+— SAST Security Team
+Exploring beyond limits, securing every step.`
     };
 
     await transporter.sendMail(mailOptions);
     console.log(`OTP ${otp} sent to email ${email}`);
 };
+
 
 // Send OTP via phone (stub)
 exports.sendOtpPhone = async (phone, otp) => {

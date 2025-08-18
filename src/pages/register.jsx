@@ -61,7 +61,7 @@ export default function Register() {
             const data = await res.json();
 
             if (res.ok) {
-                showToast(data.message || `OTP sent to ${cleanEmail}`, "success");
+                showToast(`OTP sent to ${cleanEmail}`, "success");
                 setStep(2);
                 setResendTimer(60);
             } 

@@ -35,55 +35,32 @@ const checkEmailExistsHandler = async (req, res) => {
 // ✅ Register User
 const registerUser = async (req, res) => {
   try {
-    const {
-      email,
-      password,
-      name,
-      phone = null,
-      gender = null,
-      dob = null,
-      addresses = [],
-    } = req.body;
+    const { email, password, name, phone, gender, dob, addresses } = req.body;
 
-    // Required fields check
-    if (!email || !password || !name) {
-      return res.status(400).json({ message: 'Name, Email and Password are required' });
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Invalid email format' });
-    }
-
-    // Check if user exists
+    // Check if email already exists
     const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) return res.status(400).json({ message: 'User already exists' });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create new user
     const newUser = await User.create({
       email,
       password: hashedPassword,
       name,
-      phone,
+      phone: phone && phone.trim() !== "" ? phone.trim() : null, // ✅ null if empty
       gender,
       dob,
       addresses,
     });
 
-    const token = generateToken(newUser);
-
-    return res.status(201).json({ user: newUser, token });
-  } 
-  catch (err) {
-    if (err.name === 'SequelizeValidationError') {
-      const messages = err.errors.map(e => e.message);
-      return res.status(400).json({ errors: messages });
-    }
-    console.error('Register User Error:', err);
-    return res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(201).json({ message: "User registered successfully", user: newUser });
+  } catch (error) {
+    console.error("Register Error:", error);
+    res.status(500).json({ message: "Error registering user", error });
   }
 };
 

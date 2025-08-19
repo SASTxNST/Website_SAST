@@ -14,6 +14,7 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [resendTimer, setResendTimer] = useState(0);
     const [loader, setLoader] = useState(false);
+    const [sendOTP, setSendOTP] = useState(false);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -40,48 +41,91 @@ export default function Register() {
 
     // Handle sending OTP
     const handleSendOtp = async () => {
-        const cleanEmail = email.trim();
+      const cleanEmail = email.trim();
 
-        if (!cleanEmail) {
-            showToast("Please enter your email!", "error");
-            return;
-        }
+      if (!cleanEmail) {
+        showToast("Please enter your email!", "error");
+        return;
+      }
+      
+      if (!isValidEmail(cleanEmail)) {
+        showToast("Please enter a valid email!", "error");
+        return;
+      }
 
-        if (!isValidEmail(cleanEmail)) {
-            showToast("Please enter a valid email!", "error");
-            return;
-        }
+      try {
+        setLoader(true);
+        const res = await fetch(`${BASE_URL}/otp/email/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: cleanEmail }),
+        });
 
-        try {
-            setLoader(true);
-            const res = await fetch(`${BASE_URL}/otp/email/generate`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: cleanEmail }),
-            });
+        const data = await res.json();
 
-            const data = await res.json();
-
-            if (res.ok) {
-                showToast(`OTP sent to ${cleanEmail}`, "success");
-                setStep(2);
-                setResendTimer(60);
-            } 
-            else {
-                showToast(data.message || "Failed to send OTP", "error");
-            }
+        if (res.ok) {
+          showToast(`OTP sent to ${cleanEmail}`, "success");
+          setSendOTP(true);
+          setStep(2);
+          setResendTimer(60);
         } 
-        catch (err) {
-            console.error(err);
-            showToast("Server error. Try again.", "error");
+        else {
+          showToast(data.message || "Failed to send OTP", "error");
         }
+      } 
+      catch (err) {
+        console.error(err);
+        showToast("Server error. Try again.", "error");
+      } 
+      finally {
+        setLoader(false);
+      }
     };
 
 
     // Handle resending OTP
-    const handleResendOtp = () => {
-        if (resendTimer > 0) return;
-        handleSendOtp();
+    const handleResendOtp = async () => {
+      if (!sendOTP) {
+        showToast("Please request OTP first!", "error");
+        return;
+      }
+
+      if (resendTimer > 0) {
+        showToast(`Please wait ${resendTimer}s before resending OTP`, "error");
+        return;
+      }
+
+      if (!isValidEmail(email.trim())) {
+        showToast("Please enter a valid email!", "error");
+        return;
+      }
+
+      try {
+        setLoader(true);
+        const res = await fetch(`${BASE_URL}/otp/email/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim() }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showToast(`OTP resent to ${email.trim()}`, "success");
+          setResendTimer(60);
+          setSendOTP(true); // keep track that OTP was sent
+        } 
+        else {
+          showToast(data.message || "Failed to resend OTP", "error");
+        }
+      } 
+      catch (err) {
+        console.error(err);
+        showToast("Server error. Try again.", "error");
+      } 
+      finally {
+        setLoader(false);
+      }
     };
 
   
@@ -254,18 +298,23 @@ export default function Register() {
                   </button>
                   <button
                     className={`w-full py-2 rounded-lg font-semibold ${
-                      resendTimer > 0
+                      resendTimer > 0 || loader
                         ? "bg-gray-400 text-gray-200 cursor-not-allowed"
                         : "bg-purple-600 text-white hover:bg-purple-700"
                     }`}
-                    disabled={resendTimer > 0}
+                    disabled={loader || resendTimer > 0}
                     onClick={handleResendOtp}
                   >
-                    {
-                      resendTimer > 0
-                        ? `Resend OTP in ${resendTimer}s`
-                        : "Resend OTP"
-                    }
+                    {loader ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        Resending OTP...
+                      </span>
+                    ) : resendTimer > 0 ? (
+                      `Resend OTP in ${resendTimer}s`
+                    ) : (
+                      "Resend OTP"
+                    )}
                   </button>
                   <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
                     Want to Change your Email?{" "}

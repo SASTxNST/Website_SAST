@@ -12,7 +12,7 @@ const {
   deleteUserAccount,
 } = require('../controllers/userController');
 
-// Public Routes
+// Public Routes. 
 router.post("/check-email", checkEmailExistsHandler);
 router.post("/register", registerUser);
 router.post('/login', loginUser);

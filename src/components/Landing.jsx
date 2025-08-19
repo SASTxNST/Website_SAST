@@ -10,9 +10,13 @@ import img2 from "../Landing_media/frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
 
-import useLenis from '../utils/lenis'
-import { FaYoutube, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-
+import useLenis from "../utils/lenis";
+import {
+  FaYoutube,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 
 const Landing = () => {
   useLenis();
@@ -242,57 +246,57 @@ const Landing = () => {
         <hr className="opacity-15" />
         <br />
         <br />
-{/*optimizing this for mobile users*/}
-<form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
-  <div className="news flex flex-col md:flex-row justify-evenly gap-8">
-    <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
-      <div className="text-2xl md:text-4xl font-bold md:w-150 w-fit md:text-start text-center">
-        SUBSCRIBE TO OUR SAST NEWSLETTER
-      </div>
-      <a href="./SAST Landing/newsletter.html">
-        <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
-          READ NOW
-        </div>
-      </a>
-    </div>
-{/*adjusted the email addres and first name and last name columns to adjust with the width of the*/}
-    <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
-      <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
-        SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
-      </h3>
+        {/*optimizing this for mobile users*/}
+        <form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
+          <div className="news flex flex-col md:flex-row justify-evenly gap-8">
+            <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
+              <div className="text-2xl md:text-4xl font-bold md:w-150 w-fit md:text-start text-center">
+                SUBSCRIBE TO OUR SAST NEWSLETTER
+              </div>
+              <a href="./SAST Landing/newsletter.html">
+                <div className="h-10 w-50 border border-[#00a1ff] text-sm font-bold flex justify-center items-center opacity-80 rounded hover:bg-[#00a1ff] transition duration-500">
+                  READ NOW
+                </div>
+              </a>
+            </div>
+            {/*adjusted the email addres and first name and last name columns to adjust with the width of the*/}
+            <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
+              <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
+                SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.
+              </h3>
 
-      <input
-        className="h-10 w-50 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-        type="email"
-        placeholder="EMAIL ADDRESS"
-        name="email"
-        required
-      />
+              <input
+                className="h-10 w-50 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+                type="email"
+                placeholder="EMAIL ADDRESS"
+                name="email"
+                required
+              />
 
-      <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
-        <input
-          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-          type="text"
-          placeholder="FIRST NAME"
-          name="firstname"
-          required
-        />
-        <input
-          className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
-          type="text"
-          placeholder="LAST NAME"
-          name="lastname"
-          required
-        />
-        <input
-          className="border border-[#00a1ff] h-10 w-full md:w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80 cursor-pointer"
-          type="submit"
-          value="SUBMIT"
-        />
-      </div>
-    </div>
-  </div>
-</form>
+              <div className="gap-5 w-full flex flex-col md:flex-row justify-between flex-wrap">
+                <input
+                  className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+                  type="text"
+                  placeholder="FIRST NAME"
+                  name="firstname"
+                  required
+                />
+                <input
+                  className="h-10 w-50 md:w-90 text-sm md:text-base border-b-2 border-[#00a1ff] font-bold bg-transparent"
+                  type="text"
+                  placeholder="LAST NAME"
+                  name="lastname"
+                  required
+                />
+                <input
+                  className="border border-[#00a1ff] h-10 w-full md:w-32 hover:bg-[#00a1ff] transition duration-500 rounded font-bold opacity-80 cursor-pointer"
+                  type="submit"
+                  value="SUBMIT"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
 
         <br />
         <hr className="opacity-18" />
@@ -313,142 +317,146 @@ const Landing = () => {
           </a>
         </section>
       </main>
-<footer className="bg-transparent text-white">
-  <div
-    className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/15"
-  >
-    {/* Logo + Socials */}
-    <div
-      className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/15 pt-4 md:pt-0"
-      style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
-    >
-      <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
-        <img
-          className="w-full h-full object-cover opacity-70"
-          src={logo}
-          alt="Logo"
-        />
-      </div>
+      <footer className="bg-transparent text-white">
+        <div className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/15">
+          {/* Logo + Socials */}
+          <div
+            className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/15 pt-4 md:pt-0"
+            style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
+          >
+            <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
+              <img
+                className="w-full h-full object-cover opacity-70"
+                src={logo}
+                alt="Logo"
+              />
+            </div>
 
-      <div
-        className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9"
-      >
-        <a
-          href="https://youtube.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-red-600 transition"
-          aria-label="YouTube"
-        >
-          <FaYoutube />
-        </a>
-        <a
-          href="https://www.instagram.com/sast.rishihood/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-pink-600 transition"
-          aria-label="Instagram"
-        >
-          <FaInstagram />
-        </a>
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-blue-600 transition"
-          aria-label="LinkedIn"
-        >
-          <FaLinkedinIn />
-        </a>
-        <a
-          href="https://x.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white text-2xl hover:text-sky-400 transition"
-          aria-label="X"
-        >
-          <FaTwitter />
-        </a>
-      </div>
-    </div>
+            <div className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9">
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-2xl hover:text-red-600 transition"
+                aria-label="YouTube"
+              >
+                <FaYoutube />
+              </a>
+              <a
+                href="https://www.instagram.com/sast.rishihood/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-2xl hover:text-pink-600 transition"
+                aria-label="Instagram"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-2xl hover:text-blue-600 transition"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedinIn />
+              </a>
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white text-2xl hover:text-sky-400 transition"
+                aria-label="X"
+              >
+                <FaTwitter />
+              </a>
+            </div>
+          </div>
 
-    {/* Sections - completely hidden below xl */}
-    <div className="hidden xl:flex flex-wrap w-full h-full justify-center items-center text-center">
-      {[
-        {
-          title: "ABOUT",
-          items: ["Mission", "SAST Locations", "History", "FAQs", "News & Events"],
-        },
-        {
-          title: "CAREERS",
-          items: ["Career Finder", "Benefits", "Education", "Training", "Life in SAST"],
-        },
-        {
-          title: "CAPABILITIES",
-          items: [
-            "Protecting Satellites",
-            "Facilitating Launches",
-            "Education",
-            "Experience a Launch",
-            "Life in SAST",
-          ],
-        },
-        {
-          title: "HOW TO JOIN",
-          items: [
-            "What to Expect",
-            "For Families",
-            "Live Chat",
-            "Training",
-            "Life in SAST",
-          ],
-        },
-      ].map(({ title, items }, idx) => (
-        <div
-          key={title}
-          className={`flex flex-col justify-center items-center gap-8 h-full min-w-[150px] flex-1 px-4 text-white
+          {/* Sections - completely hidden below xl */}
+          <div className="hidden xl:flex flex-wrap w-full h-full justify-center items-center text-center">
+            {[
+              {
+                title: "ABOUT",
+                items: [
+                  "Mission",
+                  "SAST Locations",
+                  "History",
+                  "FAQs",
+                  "News & Events",
+                ],
+              },
+              {
+                title: "CAREERS",
+                items: [
+                  "Career Finder",
+                  "Benefits",
+                  "Education",
+                  "Training",
+                  "Life in SAST",
+                ],
+              },
+              {
+                title: "CAPABILITIES",
+                items: [
+                  "Protecting Satellites",
+                  "Facilitating Launches",
+                  "Education",
+                  "Experience a Launch",
+                  "Life in SAST",
+                ],
+              },
+              {
+                title: "HOW TO JOIN",
+                items: [
+                  "What to Expect",
+                  "For Families",
+                  "Live Chat",
+                  "Training",
+                  "Life in SAST",
+                ],
+              },
+            ].map(({ title, items }, idx) => (
+              <div
+                key={title}
+                className={`flex flex-col justify-center items-center gap-8 h-full min-w-[150px] flex-1 px-4 text-white
             ${idx === 0 ? "mr-4" : ""}
             ${idx !== 3 ? "border-r border-white/15" : ""}
           `}
-          style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
-        >
-          <h2 className="font-bold text-xl">{title}</h2>
-          {items.map((item) => (
-            <h4
-              key={item}
-              className="font-light text-sm cursor-pointer hover:underline whitespace-nowrap text-center"
+                style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
+              >
+                <h2 className="font-bold text-xl">{title}</h2>
+                {items.map((item) => (
+                  <h4
+                    key={item}
+                    className="font-light text-sm cursor-pointer hover:underline whitespace-nowrap text-center"
+                  >
+                    {item}
+                  </h4>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="h-20 w-full flex flex-wrap justify-evenly items-center gap-2 px-6 bg-transparent">
+          {[
+            "SAST",
+            "PRIVACY POLICY",
+            "ACCESSIBILITY",
+            "WATCH VIDEOS",
+            "SITEMAP",
+            "COOKIE SETTINGS",
+          ].map((text) => (
+            <div
+              key={text}
+              className="text-xs font-bold whitespace-nowrap cursor-pointer hover:underline"
             >
-              {item}
-            </h4>
+              {text}
+            </div>
           ))}
         </div>
-      ))}
-    </div>
-  </div>
-
-  {/* Bottom Bar */}
-  <div className="h-20 w-full flex flex-wrap justify-evenly items-center gap-2 px-6 bg-transparent">
-    {[
-      "SAST",
-      "PRIVACY POLICY",
-      "ACCESSIBILITY",
-      "WATCH VIDEOS",
-      "SITEMAP",
-      "COOKIE SETTINGS",
-    ].map((text) => (
-      <div
-        key={text}
-        className="text-xs font-bold whitespace-nowrap cursor-pointer hover:underline"
-      >
-        {text}
-      </div>
-    ))}
-  </div>
-</footer>
-
-
-
-
+      </footer>
     </>
   );
 };

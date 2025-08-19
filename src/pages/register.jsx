@@ -13,6 +13,7 @@ export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [resendTimer, setResendTimer] = useState(0);
+    const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -52,6 +53,7 @@ export default function Register() {
         }
 
         try {
+            setLoader(true);
             const res = await fetch(`${BASE_URL}/otp/email/generate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -156,6 +158,9 @@ export default function Register() {
             console.error(err);
             showToast("Server error. Try again.", "error");
         }
+        finally {
+            setLoader(false);
+        }
     };
 
   return (
@@ -209,11 +214,18 @@ export default function Register() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50"
+                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 flex justify-center items-center gap-2"
                     onClick={handleSendOtp}
-                    disabled={!isValidEmail(email)}
+                    disabled={!isValidEmail(email) || loader}
                   >
-                    Send OTP
+                    {loader ? (
+                      <>
+                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        Sending OTP...
+                      </>
+                    ) : (
+                      "Send OTP"
+                    )}
                   </button>
                 </div>
               )}

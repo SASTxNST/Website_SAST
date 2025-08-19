@@ -3,6 +3,7 @@ const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 
 const {
+  checkEmailExists,
   registerUser,
   loginUser,
   logoutUser,
@@ -12,6 +13,7 @@ const {
 } = require('../controllers/userController');
 
 // Public Routes
+router.post("/check-email", checkEmailExists);
 router.post("/register", registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);

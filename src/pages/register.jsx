@@ -47,7 +47,7 @@ export default function Register() {
         showToast("Please enter your email!", "error");
         return;
       }
-      
+
       if (!isValidEmail(cleanEmail)) {
         showToast("Please enter a valid email!", "error");
         return;
@@ -55,6 +55,22 @@ export default function Register() {
 
       try {
         setLoader(true);
+
+        // 1️⃣ Check if user already exists
+        const checkRes = await fetch(`${BASE_URL}/users/check-email`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: cleanEmail }),
+        });
+
+        const checkData = await checkRes.json();
+
+        if (checkData.exists) {
+          showToast("User already exists!", "error");
+          return;
+        }
+
+        // 2️⃣ Send OTP if user does not exist
         const res = await fetch(`${BASE_URL}/otp/email/generate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -81,7 +97,6 @@ export default function Register() {
         setLoader(false);
       }
     };
-
 
     // Handle resending OTP
     const handleResendOtp = async () => {

@@ -10,6 +10,13 @@ const generateToken = (user) => {
 };
 
 
+// Check Email if already exist or not
+const checkEmailExists = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  return user !== null;
+};
+
+
 // Register User
 const registerUser = async (req, res) => {
   try {
@@ -152,6 +159,7 @@ const deleteUserAccount = async (req, res) => {
 };
 
 module.exports = {
+  checkEmailExists,
   registerUser,
   loginUser,
   logoutUser,

@@ -261,9 +261,11 @@ export default function Register() {
                     disabled={resendTimer > 0}
                     onClick={handleResendOtp}
                   >
-                    {resendTimer > 0
-                      ? `Resend OTP in ${resendTimer}s`
-                      : "Resend OTP"}
+                    {
+                      resendTimer > 0
+                        ? `Resend OTP in ${resendTimer}s`
+                        : "Resend OTP"
+                    }
                   </button>
                   <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
                     Want to Change your Email?{" "}

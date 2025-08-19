@@ -11,10 +11,22 @@ const generateToken = (user) => {
 
 
 // Check Email if already exist or not
-const checkEmailExists = async (email) => {
-  const user = await User.findOne({ where: { email } });
-  return user !== null;
+const checkEmailExistsHandler = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ where: { email } });
+    return res.status(200).json({ exists: !!user });
+  } catch (err) {
+    console.error("Check Email Error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
+
 
 
 // Register User
@@ -159,7 +171,7 @@ const deleteUserAccount = async (req, res) => {
 };
 
 module.exports = {
-  checkEmailExists,
+  checkEmailExistsHandler,
   registerUser,
   loginUser,
   logoutUser,

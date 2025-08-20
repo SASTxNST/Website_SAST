@@ -6,206 +6,213 @@ import { showToast } from "../main.jsx";
 import { BASE_URL } from "../api";
 
 export default function Register() {
-    const [method, setMethod] = useState("email");
-    const [step, setStep] = useState(1);
-    const [email, setEmail] = useState("");
-    const [otp, setOtp] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [resendTimer, setResendTimer] = useState(0);
-    const [loader, setLoader] = useState(false);
-    const [sendOTP, setSendOTP] = useState(false);
-    const navigate = useNavigate();
+  const [method, setMethod] = useState("email");
+  const [step, setStep] = useState(1);
+  const [otp, setOtp] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+  const [loader, setLoader] = useState(false);
+  const [sendOTP, setSendOTP] = useState(false);
+  const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        password: "",
-        confirmPassword: "",
-    });
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    // Timer effect for resend OTP
-    useEffect(() => {
-        let timer;
-        if (resendTimer > 0) {
-        timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
-        }
-        return () => clearTimeout(timer);
-    }, [resendTimer]);
+  // Timer effect for resend OTP
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
 
-    // Email validation
-    const isValidEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
+  // Email validation
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
-    // Handle sending OTP
-    const handleSendOtp = async () => {
-      const cleanEmail = email.trim();
+  // Handle sending OTP
+  const handleSendOtp = async () => {
+    const cleanEmail = formData.email.trim();
 
-      if (!cleanEmail) {
-        showToast("Please enter your email!", "error");
+    if (!cleanEmail) {
+      showToast("Please enter your email!", "error");
+      return;
+    }
+
+    if (!isValidEmail(cleanEmail)) {
+      showToast("Please enter a valid email!", "error");
+      return;
+    }
+
+    try {
+      setLoader(true);
+
+      // 1️⃣ Check if user already exists
+      const checkRes = await fetch(`${BASE_URL}/users/check-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      const checkData = await checkRes.json();
+
+      if (checkData.exists) {
+        showToast("User already exists!", "error");
         return;
       }
-      
-      if (!isValidEmail(cleanEmail)) {
-        showToast("Please enter a valid email!", "error");
-        return;
+
+      // 2️⃣ Send OTP if user does not exist
+      const res = await fetch(`${BASE_URL}/otp/email/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showToast(`OTP sent to ${cleanEmail}`, "success");
+        setSendOTP(true);
+        setStep(2);
+        setResendTimer(60);
+      } else {
+        showToast(data.message || "Failed to send OTP", "error");
       }
+    } catch (err) {
+      console.error(err);
+      showToast("Server error. Try again.", "error");
+    } finally {
+      setLoader(false);
+    }
+  };
 
-      try {
-        setLoader(true);
-        const res = await fetch(`${BASE_URL}/otp/email/generate`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: cleanEmail }),
-        });
+  // Handle resending OTP
+  const handleResendOtp = async () => {
+    if (!sendOTP) {
+      showToast("Please request OTP first!", "error");
+      return;
+    }
 
-        const data = await res.json();
+    if (resendTimer > 0) {
+      showToast(`Please wait ${resendTimer}s before resending OTP`, "error");
+      return;
+    }
 
-        if (res.ok) {
-          showToast(`OTP sent to ${cleanEmail}`, "success");
-          setSendOTP(true);
-          setStep(2);
-          setResendTimer(60);
-        } 
-        else {
-          showToast(data.message || "Failed to send OTP", "error");
-        }
+    if (!isValidEmail(formData.email.trim())) {
+      showToast("Please enter a valid email!", "error");
+      return;
+    }
+
+    try {
+      setLoader(true);
+      const res = await fetch(`${BASE_URL}/otp/email/generate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email.trim() }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showToast(`OTP resent to ${formData.email.trim()}`, "success");
+        setResendTimer(60);
+        setSendOTP(true); // keep track that OTP was sent
+      } else {
+        showToast(data.message || "Failed to resend OTP", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Server error. Try again.", "error");
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  // Handle OTP verification
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      showToast("Please enter the OTP!", "error");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/otp/email/validate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: formData.email.trim(), otp: otp.trim() }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        showToast(data.message || "OTP verified successfully!", "success");
+        setStep(3);
+      } else {
+        showToast(data.message || "Invalid OTP", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Server error. Try again.", "error");
+    }
+  };
+
+  // Handle registration
+  const handleRegister = async () => {
+    if (formData.password !== formData.confirmPassword) {
+      showToast("Passwords do not match!", "error");
+      return;
+    }
+
+    if (!formData.email) {
+      showToast("Email is required!", "error");
+      return;
+    }
+
+    try {
+      const payload = {
+        email: formData.email.trim(),
+        password: formData.password,
+        name: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+        phone: "",
+      };
+
+      console.log("Register Payload:", payload); // 🐞 Debugging
+
+      const res = await fetch(`${BASE_URL}/users/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.user) {
+        showToast("Registered successfully!", "success");
+        localStorage.setItem("token", result.token);
+        console.log(result.user);
+        navigate("/login");
       } 
-      catch (err) {
-        console.error(err);
-        showToast("Server error. Try again.", "error");
-      } 
-      finally {
-        setLoader(false);
+      else {
+        showToast(result.message || "Registration failed!", "error");
       }
-    };
-
-
-    // Handle resending OTP
-    const handleResendOtp = async () => {
-      if (!sendOTP) {
-        showToast("Please request OTP first!", "error");
-        return;
-      }
-
-      if (resendTimer > 0) {
-        showToast(`Please wait ${resendTimer}s before resending OTP`, "error");
-        return;
-      }
-
-      if (!isValidEmail(email.trim())) {
-        showToast("Please enter a valid email!", "error");
-        return;
-      }
-
-      try {
-        setLoader(true);
-        const res = await fetch(`${BASE_URL}/otp/email/generate`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim() }),
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          showToast(`OTP resent to ${email.trim()}`, "success");
-          setResendTimer(60);
-          setSendOTP(true); // keep track that OTP was sent
-        } 
-        else {
-          showToast(data.message || "Failed to resend OTP", "error");
-        }
-      } 
-      catch (err) {
-        console.error(err);
-        showToast("Server error. Try again.", "error");
-      } 
-      finally {
-        setLoader(false);
-      }
-    };
-
-  
-    // Handle OTP verification
-    const handleVerifyOtp = async () => {
-        if (!otp) {
-            showToast("Please enter the OTP!", "error");
-            return;
-        }
-
-        try {
-            const res = await fetch(`${BASE_URL}/otp/email/validate`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: email.trim(), otp: otp.trim()}),
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                showToast(data.message || "OTP verified successfully!", "success");
-                setStep(3);
-            } 
-            else {
-                showToast(data.message || "Invalid OTP", "error");
-            }
-        } 
-        catch (err) {
-            console.error(err);
-            showToast("Server error. Try again.", "error");
-        }
-    };
-
-    // Handle registration
-    const handleRegister = async () => {
-        if (formData.password !== formData.confirmPassword) {
-            showToast("Passwords do not match!", "error"); 
-            return;
-        }
-
-        if (!email) {
-            showToast("Email is required!", "error");
-            return;
-        }
-
-        try {
-            const payload = {
-                email,
-                password: formData.password,
-                firstName: formData.firstName.trim(),
-                lastName: formData.lastName.trim(),
-                phone: "",
-            };
-
-            const res = await fetch(`${BASE_URL}/users/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-
-            const result = await res.json();
-
-            if (result.user) {
-                showToast("Registered successfully!", "success");
-                localStorage.setItem("token", result.token);
-                console.log(result.user);
-                navigate("/login");
-            }
-            else {
-                showToast(result.message || "Registration failed!", "error");
-            }
-        } 
-        catch (err) {
-            console.error(err);
-            showToast("Server error. Try again.", "error");
-        }
-        finally {
-            setLoader(false);
-        }
-    };
+    } 
+    catch (err) {
+      console.error(err);
+      showToast("Server error. Try again.", "error");
+    } 
+    finally {
+      setLoader(false);
+    }
+  };
 
   return (
     <>
@@ -254,13 +261,15 @@ export default function Register() {
                     type="email"
                     className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
                     placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                   />
                   <button
                     className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 flex justify-center items-center gap-2"
                     onClick={handleSendOtp}
-                    disabled={!isValidEmail(email) || loader}
+                    disabled={!isValidEmail(formData.email) || loader}
                   >
                     {loader ? (
                       <>
@@ -281,7 +290,8 @@ export default function Register() {
                     Verify OTP
                   </h2>
                   <p className="text-center">
-                    Your Email is <span className="text-blue-500">{email}</span>
+                    Your Email is{" "}
+                    <span className="text-blue-500">{formData.email}</span>
                   </p>
                   <input
                     type="text"
@@ -322,7 +332,9 @@ export default function Register() {
                       onClick={() => setStep(1)}
                       className="text-purple-600 dark:text-purple-400 "
                     >
-                      <span className="hover:text-blue-500 hover:underline">Click Here</span>
+                      <span className="hover:text-blue-500 hover:underline">
+                        Click Here
+                      </span>
                     </a>
                   </p>
                 </div>

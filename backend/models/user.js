@@ -25,7 +25,6 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: true,
     unique: true,
-    defaultValue: null,
     validate: {
       notEmpty: {
         msg: "Phone number cannot be empty string",

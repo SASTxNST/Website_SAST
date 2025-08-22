@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import "../index.css";
 import videoSource from "../Landing_media/newmaoinsast.mp4";

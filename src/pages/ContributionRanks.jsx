@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import RepoTabs from '../components/RepoTabs';
 import Leaderboard from '../components/Leaderboard';

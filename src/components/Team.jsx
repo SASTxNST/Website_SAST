@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import wood_png from "../Landing_media/woodbg.jpg";
 import team_png from "../Landing_media/teamphoto.webp";

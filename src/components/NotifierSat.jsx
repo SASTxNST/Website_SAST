@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Satellite } from "lucide-react";
 import { useSatelliteMonitor } from "../hooks/useSatelliteMonitor";

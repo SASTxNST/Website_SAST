@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 
 const RepoTabs = ({ repos, selectedRepo, onSelect }) => {

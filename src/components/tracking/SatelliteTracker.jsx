@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import EarthViewer from "./EarthViewer";
 import Loader from "./Loader";

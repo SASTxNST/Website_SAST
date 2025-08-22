@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 

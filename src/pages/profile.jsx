@@ -18,7 +18,6 @@ export default function Profile() {
   });
   const [loading, setLoading] = useState(true);
 
-  // Fetch user profile on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -29,7 +28,6 @@ export default function Profile() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Safe parsing
         const text = await res.text();
         let data;
         try {
@@ -61,7 +59,6 @@ export default function Profile() {
     fetchProfile();
   }, []);
 
-  // Logout function
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -104,16 +101,13 @@ export default function Profile() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
-        <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-          My Profile
-        </h1>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 py-20">
+        <div className="w-full max-w-md p-12 rounded-3xl bg-white/30 dark:bg-gray-900/30 backdrop-blur-lg border border-white/20 dark:border-gray-700 shadow-2xl flex flex-col gap-6">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white text-center">
+            My Profile
+          </h1>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
-            Personal Information
-          </h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div>
               <p className="text-gray-500 dark:text-gray-400">Full Name</p>
               <p className="text-gray-800 dark:text-gray-100">{profile.name}</p>
@@ -130,14 +124,14 @@ export default function Profile() {
 
           <div className="flex justify-between mt-6 gap-4">
             <button
-              className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors flex-1"
+              className="bg-blue-600 text-white py-3 px-4 rounded-xl hover:bg-blue-700 transition-colors flex-1 shadow-md"
               onClick={() => showToast("Edit profile feature coming soon!", "info")}
             >
               Edit Profile
             </button>
 
             <button
-              className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors flex-1"
+              className="bg-red-600 text-white py-3 px-4 rounded-xl hover:bg-red-700 transition-colors flex-1 shadow-md"
               onClick={handleLogout}
             >
               Logout

@@ -89,7 +89,7 @@ const Navbar = () => {
                 <a href="/track">Track</a>
               </li>
 
-              <Link to="/Register">Register</Link>
+              <Link to="/login">Login</Link>
             </ul>
           </nav>
 

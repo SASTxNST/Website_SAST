@@ -24,6 +24,13 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// --- Request Logging Middleware ---
+app.use((req, res, next) => {
+  console.log("➡️ Request received:", req.method, req.url, req.body);
+  next();
+});
+// --- End of Middleware ---
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/otp', otpRoutes);

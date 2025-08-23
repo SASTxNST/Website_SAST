@@ -28,37 +28,35 @@ export default function Login() {
   // Handle Login
   const handleLogin = async () => {
     try {
+      // Validation
       if (method === "email") {
-        if (!isValidEmail(formData.email)) {
+        if (!isValidEmail(formData.email.trim())) {
           showToast("Please enter a valid email!", "error");
           return;
         }
-        if (!formData.password) {
-          showToast("Password is required!", "error");
-          return;
-        }
       } else if (method === "phone") {
-        if (!isValidPhone(formData.phone)) {
-          showToast("Please enter a valid 10-digit phone number!", "error");
-          return;
-        }
-        if (!formData.password) {
-          showToast("Password is required!", "error");
-          return;
-        }
+        showToast("Phone login is not implemented yet.", "error");
+        return;
+      }
+
+      if (!formData.password) {
+        showToast("Password is required!", "error");
+        return;
       }
 
       setLoader(true);
 
-      const payload =
-        method === "email"
-          ? { email: formData.email.trim(), password: formData.password }
-          : { phone: formData.phone.trim(), password: formData.password };
+      // Ensure correct URL
+      const loginUrl = `${BASE_URL.replace(/\/$/, "")}/users/login`;
+      console.log("Login URL:", loginUrl);
 
-      const res = await fetch(`${BASE_URL}/users/login`, {
+      const res = await fetch(loginUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          password: formData.password,
+        }),
       });
 
       const result = await res.json();
@@ -100,10 +98,7 @@ export default function Login() {
               Email
             </button>
             <button
-              onClick={() => 
-                // setMethod("phone")
-                showToast("Phone login is not implemented yet.", "error")
-              }
+              onClick={() => showToast("Phone login is not implemented yet.", "error")}
               className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
                 method === "phone"
                   ? "bg-purple-600 text-white"
@@ -116,32 +111,13 @@ export default function Login() {
 
           {/* Email Login */}
           {method === "email" && (
-            <>
-              <input
-                type="email"
-                className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-            </>
-          )}
-
-          {/* Phone Login */}
-          {method === "phone" && (
-            <>
-              <input
-                type="text"
-                className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-              />
-            </>
+            <input
+              type="email"
+              className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
           )}
 
           {/* Password Input */}
@@ -151,9 +127,7 @@ export default function Login() {
               className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
               placeholder="Password"
               value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             />
             <button
               type="button"
@@ -185,9 +159,7 @@ export default function Login() {
               onClick={() => navigate("/register")}
               className="text-purple-600 hover:underline dark:text-purple-400"
             >
-              <span className="hover:text-blue-500 hover:underline">
-                Register
-              </span>
+              <span className="hover:text-blue-500 hover:underline">Register</span>
             </a>
           </p>
         </div>

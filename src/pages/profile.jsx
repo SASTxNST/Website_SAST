@@ -81,7 +81,7 @@ export default function Profile() {
         localStorage.removeItem("token");
         setLoggedIn(false);
         showToast("Logged out successfully!", "success");
-        navigate("/login");
+        navigate("/");
       } else {
         const text = await res.text();
         let data;

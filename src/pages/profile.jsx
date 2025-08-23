@@ -25,11 +25,22 @@ export default function Profile() {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const res = await fetch(`${BASE_URL}/users/me`, {
+        const res = await fetch(`${BASE_URL}/users/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const data = await res.json();
+        // Safe parsing
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error("Server response is not JSON:", text);
+          showToast("Invalid server response", "error");
+          setLoading(false);
+          return;
+        }
+
         if (res.ok) {
           setProfile({
             name: data.name || "",
@@ -67,7 +78,9 @@ export default function Profile() {
         showToast("Logged out successfully!", "success");
         navigate("/login");
       } else {
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = {}; }
         showToast(data.message || "Logout failed", "error");
       }
     } catch (err) {

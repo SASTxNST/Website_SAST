@@ -26,7 +26,6 @@ export default function Register() {
     confirmPassword: "",
   });
 
-  // Timer effect for resend OTP
   useEffect(() => {
     let timer;
     if (resendTimer > 0) {
@@ -35,13 +34,11 @@ export default function Register() {
     return () => clearTimeout(timer);
   }, [resendTimer]);
 
-  // Email validation
   const isValidEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  // Handle sending OTP
   const handleSendOtp = async () => {
     const cleanEmail = formData.email.trim();
 
@@ -58,7 +55,6 @@ export default function Register() {
     try {
       setLoader(true);
 
-      // 1️⃣ Check if user already exists
       const checkRes = await fetch(`${BASE_URL}/users/check-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +68,6 @@ export default function Register() {
         return;
       }
 
-      // 2️⃣ Send OTP if user does not exist
       const res = await fetch(`${BASE_URL}/otp/email/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,7 +92,6 @@ export default function Register() {
     }
   };
 
-  // Handle resending OTP
   const handleResendOtp = async () => {
     if (!sendOTP) {
       showToast("Please request OTP first!", "error");
@@ -127,7 +121,7 @@ export default function Register() {
       if (res.ok) {
         showToast(`OTP resent to ${formData.email.trim()}`, "success");
         setResendTimer(60);
-        setSendOTP(true); // keep track that OTP was sent
+        setSendOTP(true);
       } else {
         showToast(data.message || "Failed to resend OTP", "error");
       }
@@ -139,7 +133,6 @@ export default function Register() {
     }
   };
 
-  // Handle OTP verification
   const handleVerifyOtp = async () => {
     if (!otp) {
       showToast("Please enter the OTP!", "error");
@@ -167,7 +160,6 @@ export default function Register() {
     }
   };
 
-  // Handle registration
   const handleRegister = async () => {
     if (formData.password !== formData.confirmPassword) {
       showToast("Passwords do not match!", "error");
@@ -187,8 +179,6 @@ export default function Register() {
         phone: "",
       };
 
-      console.log("Register Payload:", payload); // 🐞 Debugging
-
       const res = await fetch(`${BASE_URL}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -200,18 +190,14 @@ export default function Register() {
       if (res.ok && result.user) {
         showToast("Registered successfully!", "success");
         localStorage.setItem("token", result.token);
-        console.log(result.user);
         navigate("/login");
-      } 
-      else {
+      } else {
         showToast(result.message || "Registration failed!", "error");
       }
-    } 
-    catch (err) {
+    } catch (err) {
       console.error(err);
       showToast("Server error. Try again.", "error");
-    } 
-    finally {
+    } finally {
       setLoader(false);
     }
   };
@@ -219,226 +205,169 @@ export default function Register() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-300">
-        <div className="w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          {/* Switch between Email / Phone */}
-          <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 py-20">
+        <div className="w-full max-w-md p-12 rounded-3xl bg-white/30 dark:bg-gray-900/30 backdrop-blur-lg border border-white/20 dark:border-gray-700 shadow-2xl flex flex-col gap-6">
+          <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white text-center">
+            Register
+          </h2>
+
+          {/* Method Toggle */}
+          <div className="flex justify-center gap-4 mb-6">
             <button
-              onClick={() => {
-                setMethod("email");
-                setStep(1);
-              }}
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
+              className={`px-8 py-3 w-24 rounded-xl font-semibold transition-all duration-300 ${
                 method === "email"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
+              onClick={() => { setMethod("email"); setStep(1); }}
             >
               Email
             </button>
             <button
+              className="px-8 py-3 w-24 rounded-xl font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 shadow-md transition-all duration-300"
               onClick={() =>
                 showToast("Phone registration is not implemented yet.", "error")
               }
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
-                method === "phone"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
             >
               Phone
             </button>
           </div>
 
-          {/* EMAIL REGISTRATION FLOW */}
-          {method === "email" && (
-            <>
-              {/* Step 1: Enter Email */}
-              {step === 1 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Register with Email
-                  </h2>
-                  <input
-                    type="email"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 flex justify-center items-center gap-2"
-                    onClick={handleSendOtp}
-                    disabled={!isValidEmail(formData.email) || loader}
-                  >
-                    {loader ? (
-                      <>
-                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        Sending OTP...
-                      </>
-                    ) : (
-                      "Send OTP"
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {/* Step 2: Verify OTP */}
-              {step === 2 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Verify OTP
-                  </h2>
-                  <p className="text-center">
-                    Your Email is{" "}
-                    <span className="text-blue-500">{formData.email}</span>
-                  </p>
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 mb-2"
-                    onClick={handleVerifyOtp}
-                  >
-                    Verify OTP
-                  </button>
-                  <button
-                    className={`w-full py-2 rounded-lg font-semibold ${
-                      resendTimer > 0 || loader
-                        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                        : "bg-purple-600 text-white hover:bg-purple-700"
-                    }`}
-                    disabled={loader || resendTimer > 0}
-                    onClick={handleResendOtp}
-                  >
-                    {loader ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        Resending OTP...
-                      </span>
-                    ) : resendTimer > 0 ? (
-                      `Resend OTP in ${resendTimer}s`
-                    ) : (
-                      "Resend OTP"
-                    )}
-                  </button>
-                  <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
-                    Want to Change your Email?{" "}
-                    <a
-                      onClick={() => setStep(1)}
-                      className="text-purple-600 dark:text-purple-400 "
-                    >
-                      <span className="hover:text-blue-500 hover:underline">
-                        Click Here
-                      </span>
-                    </a>
-                  </p>
-                </div>
-              )}
-
-              {/* Step 3: Complete Profile */}
-              {step === 3 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Complete Your Profile
-                  </h2>
-
-                  {/* First Name */}
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4"
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, firstName: e.target.value })
-                    }
-                  />
-
-                  {/* Last Name */}
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, lastName: e.target.value })
-                    }
-                  />
-
-                  {/* Password */}
-                  <div className="relative mb-4">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-gray-500"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
-                  </div>
-
-                  {/* Confirm Password */}
-                  <div className="relative mb-4">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
-                      placeholder="Confirm Password"
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          confirmPassword: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-gray-500"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff size={20} />
-                      ) : (
-                        <Eye size={20} />
-                      )}
-                    </button>
-                  </div>
-
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
-                    onClick={handleRegister}
-                  >
-                    Register
-                  </button>
-                </div>
-              )}
-            </>
+          {/* Step 1: Email Input */}
+          {method === "email" && step === 1 && (
+            <div className="flex flex-col gap-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+              />
+              <button
+                onClick={handleSendOtp}
+                disabled={!isValidEmail(formData.email) || loader}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                {loader ? "Sending OTP..." : "Send OTP"}
+              </button>
+            </div>
           )}
 
-          <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
+          {/* Step 2: OTP Verification */}
+          {method === "email" && step === 2 && (
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-700 dark:text-gray-300 text-center">
+                OTP sent to <span className="font-semibold">{formData.email}</span>
+              </p>
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+              />
+              <button
+                onClick={handleVerifyOtp}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                Verify OTP
+              </button>
+              <button
+                onClick={handleResendOtp}
+                disabled={loader || resendTimer > 0}
+                className="w-full py-3 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+              >
+                {loader
+                  ? "Resending OTP..."
+                  : resendTimer > 0
+                  ? `Resend OTP in ${resendTimer}s`
+                  : "Resend OTP"}
+              </button>
+              <p className="text-gray-700 dark:text-gray-300 text-center">
+                Want to change your email?{" "}
+                <span className="text-blue-600 dark:text-blue-400 font-semibold cursor-pointer hover:underline" onClick={() => setStep(1)}>
+                  Click Here
+                </span>
+              </p>
+            </div>
+          )}
+
+          {/* Step 3: Complete Profile */}
+          {method === "email" && step === 3 && (
+            <div className="flex flex-col gap-4">
+              <input
+                type="text"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
+                className="px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+                className="px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  className="w-full px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-all duration-300"
+                >
+                  {showPassword ? <EyeOff size={24} /> : <Eye size={24} />}
+                </button>
+              </div>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({ ...formData, confirmPassword: e.target.value })
+                  }
+                  className="w-full px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-all duration-300"
+                >
+                  {showConfirmPassword ? <EyeOff size={24} /> : <Eye size={24} />}
+                </button>
+              </div>
+              <button
+                onClick={handleRegister}
+                className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                Register
+              </button>
+            </div>
+          )}
+
+          <p className="text-gray-700 dark:text-gray-300 text-center">
             Already have an account?{" "}
-            <a
+            <span
               onClick={() => navigate("/login")}
-              className="text-purple-600 hover:underline dark:text-purple-400"
+              className="text-blue-600 dark:text-blue-400 font-semibold cursor-pointer hover:underline"
             >
-              <span className="hover:text-blue-500 hover:underline">Login</span>
-            </a>
+              Login
+            </span>
           </p>
         </div>
       </div>

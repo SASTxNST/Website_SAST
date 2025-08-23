@@ -18,6 +18,7 @@ import NotifierSat from "./components/NotifierSat.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
 import Footer from "./components/footer.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 import { Ion } from "cesium";
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
@@ -31,7 +32,10 @@ const AppContent = () => {
       <CursorEffects />
       <DiamondCursor />
       <NotifierSat />
+      <ScrollToTop />
+
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/newsletter" element={<Newsletter />} />
@@ -44,7 +48,6 @@ const AppContent = () => {
         <Route path="/news" element={<AstronomyNews />} />
         <Route path="/track" element={<SatelliteTracker />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/footer" element={<Footer />} />
       </Routes>
     </>

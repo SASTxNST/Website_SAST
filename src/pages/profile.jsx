@@ -15,6 +15,9 @@ export default function Profile() {
     name: "",
     email: "",
     phone: "",
+    gender: "",
+    dob: "",
+    createdAt: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -44,6 +47,11 @@ export default function Profile() {
             name: data.name || "",
             email: data.email || "",
             phone: data.phone || "",
+            gender: data.gender || "Not set",
+            dob: data.dob || "Not set",
+            createdAt: data.createdAt
+              ? new Date(data.createdAt).toLocaleDateString()
+              : "Not set",
           });
         } else {
           showToast(data.message || "Failed to fetch profile", "error");
@@ -119,6 +127,18 @@ export default function Profile() {
             <div>
               <p className="text-gray-500 dark:text-gray-400">Phone</p>
               <p className="text-gray-800 dark:text-gray-100">{profile.phone || "Not set"}</p>
+            </div>
+            <div>
+              <p className="text-gray-500 dark:text-gray-400">Gender</p>
+              <p className="text-gray-800 dark:text-gray-100">{profile.gender}</p>
+            </div>
+            <div>
+              <p className="text-gray-500 dark:text-gray-400">Date of Birth</p>
+              <p className="text-gray-800 dark:text-gray-100">{profile.dob}</p>
+            </div>
+            <div>
+              <p className="text-gray-500 dark:text-gray-400">Created At</p>
+              <p className="text-gray-800 dark:text-gray-100">{profile.createdAt}</p>
             </div>
           </div>
 

@@ -3,10 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 import logo from "../Landing_media/SAST.png";
+import { useAuth } from "../context/authContext";
+
+
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { loggedIn } = useAuth();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -89,7 +93,13 @@ const Navbar = () => {
                 <a href="/track">Track</a>
               </li>
 
-              <Link to="/login">Login</Link>
+              {
+                loggedIn ? (
+                    <Link to="/login">Login</Link>
+                  ) : (
+                    <Link to="/register">Register</Link>
+                )
+              }
             </ul>
           </nav>
 

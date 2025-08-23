@@ -6,12 +6,14 @@ import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../main.jsx";
 import { BASE_URL } from "../api";
+import { useAuth } from "../context/authContext";
 
 export default function Login() {
   const [method, setMethod] = useState("email"); // email | phone
   const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
+  const { setLoggedIn } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -62,16 +64,20 @@ export default function Login() {
       const result = await res.json();
 
       if (res.ok && result.token) {
+        setLoggedIn(true);
         showToast("Login successful!", "success");
         localStorage.setItem("token", result.token);
         navigate("/");
-      } else {
+      } 
+      else {
         showToast(result.message || "Invalid credentials", "error");
       }
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err);
       showToast("Server error. Try again.", "error");
-    } finally {
+    } 
+    finally {
       setLoader(false);
     }
   };

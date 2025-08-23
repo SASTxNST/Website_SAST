@@ -17,6 +17,7 @@ import SatelliteTracker from "./components/tracking/SatelliteTracker.jsx";
 import NotifierSat from "./components/NotifierSat.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
+import Footer from "./components/footer.jsx";
 
 import { Ion } from "cesium";
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
@@ -44,6 +45,7 @@ const AppContent = () => {
         <Route path="/track" element={<SatelliteTracker />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/footer" element={<Footer />} />
       </Routes>
     </>
   );

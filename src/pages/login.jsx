@@ -9,7 +9,7 @@ import { BASE_URL } from "../api";
 import { useAuth } from "../context/authContext";
 
 export default function Login() {
-  const [method, setMethod] = useState("email"); // email | phone
+  const [method, setMethod] = useState("email");
   const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
@@ -21,16 +21,11 @@ export default function Login() {
     phone: "",
   });
 
-  // Email validation
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  // Phone validation (basic: 10 digits)
   const isValidPhone = (phone) => /^[0-9]{10}$/.test(phone);
 
-  // Handle Login
   const handleLogin = async () => {
     try {
-      // Validation
       if (method === "email") {
         if (!isValidEmail(formData.email.trim())) {
           showToast("Please enter a valid email!", "error");
@@ -48,10 +43,7 @@ export default function Login() {
 
       setLoader(true);
 
-      // Ensure correct URL
       const loginUrl = `${BASE_URL.replace(/\/$/, "")}/users/login`;
-      console.log("Login URL:", loginUrl);
-
       const res = await fetch(loginUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,16 +60,13 @@ export default function Login() {
         showToast("Login successful!", "success");
         localStorage.setItem("token", result.token);
         navigate("/");
-      } 
-      else {
+      } else {
         showToast(result.message || "Invalid credentials", "error");
       }
-    } 
-    catch (err) {
+    } catch (err) {
       console.error(err);
       showToast("Server error. Try again.", "error");
-    } 
-    finally {
+    } finally {
       setLoader(false);
     }
   };
@@ -85,31 +74,29 @@ export default function Login() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-300">
-        <div className="w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-            Login
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 py-20">
+        <div className="w-full max-w-md p-12 rounded-3xl bg-white/30 dark:bg-gray-900/30 backdrop-blur-lg border border-white/20 dark:border-gray-700 shadow-2xl flex flex-col gap-8">
+          <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white text-center">
+            Welcome Back
           </h2>
 
-          {/* Switch between Email / Phone */}
-          <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+          {/* Toggle Buttons */}
+          <div className="flex justify-center gap-4 mb-6">
             <button
-              onClick={() => setMethod("email")}
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
+              className={`px-8 py-3 w-20 rounded-xl font-semibold transition-all duration-300 ${
                 method === "email"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
+              onClick={() => setMethod("email")}
             >
               Email
             </button>
             <button
-              onClick={() => showToast("Phone login is not implemented yet.", "error")}
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
-                method === "phone"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
+              className="px-8 py-3 w-20 rounded-xl font-semibold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 shadow-md transition-all duration-300"
+              onClick={() =>
+                showToast("Phone login is not implemented yet.", "error")
+              }
             >
               Phone
             </button>
@@ -119,54 +106,52 @@ export default function Login() {
           {method === "email" && (
             <input
               type="email"
-              className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
               placeholder="Enter your email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
             />
           )}
-
+          
           {/* Password Input */}
-          <div className="relative mb-4">
+          <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
               placeholder="Password"
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              className="w-full px-5 py-4 rounded-xl border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
             />
             <button
               type="button"
-              className="absolute right-3 top-3 text-gray-500"
               onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-all duration-300"
             >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              {showPassword ? <EyeOff size={24} /> : <Eye size={24} />}
             </button>
           </div>
 
+          {/* Login Button */}
           <button
-            className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 flex justify-center items-center gap-2"
             onClick={handleLogin}
             disabled={loader}
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-lg shadow-lg hover:scale-105 transition-transform duration-300"
           >
-            {loader ? (
-              <>
-                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                Logging in...
-              </>
-            ) : (
-              "Login"
-            )}
+            {loader ? "Logging in..." : "Login"}
           </button>
 
-          <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
+          <p className="text-gray-700 dark:text-gray-300 text-center">
             Don’t have an account?{" "}
-            <a
+            <span
               onClick={() => navigate("/register")}
-              className="text-purple-600 hover:underline dark:text-purple-400"
+              className="text-blue-600 dark:text-blue-400 font-semibold cursor-pointer hover:underline"
             >
-              <span className="hover:text-blue-500 hover:underline">Register</span>
-            </a>
+              Register
+            </span>
           </p>
         </div>
       </div>

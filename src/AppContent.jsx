@@ -19,6 +19,7 @@ import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
 import Footer from "./components/footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import Profile from "./pages/profile.jsx";
 
 import { Ion } from "cesium";
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
@@ -49,6 +50,7 @@ const AppContent = () => {
         <Route path="/track" element={<SatelliteTracker />} />
         <Route path="/register" element={<Register />} />
         <Route path="/footer" element={<Footer />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

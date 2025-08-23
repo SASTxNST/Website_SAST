@@ -3,9 +3,14 @@ import React from 'react'
 
 function Profile() {
   return (
-    <div>
-      Hie !!!
-    </div>
+    <>
+      <div>
+        <div>
+          <h2>Your Profile</h2>
+          <p>Manage your account settings and preferences.</p>
+        </div>
+      </div>
+    </>
   )
 }
 

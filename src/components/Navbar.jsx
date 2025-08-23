@@ -85,7 +85,7 @@ const Navbar = () => {
               </li>
 
               {/* <li><Link to="/contributions">Contribute</Link></li> */}
-              {/* <li className="text-s"><a href="/merch">Shop</a></li> */}
+              {/* <li className="text-s"><a href="/merch">Shop</a></li> */} 
               <li>
                 <a href="/news">Astronomy News</a>
               </li>
@@ -95,9 +95,12 @@ const Navbar = () => {
 
               {
                 loggedIn ? (
+                  <Link to="/profile">Profile</Link> // or a Logout button
+                ) : (
+                  <>
                     <Link to="/login">Login</Link>
-                  ) : (
                     <Link to="/register">Register</Link>
+                  </>
                 )
               }
             </ul>

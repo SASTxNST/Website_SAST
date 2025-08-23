@@ -11,6 +11,7 @@ import img1 from "../Landing_media/All-possible-through-our-state-of-the-art-spa
 import img2 from "../Landing_media/frequent_lines.webp";
 import logo from "../Landing_media/SAST.png";
 import helmet_png from "../Landing_media/helm.jpg";
+import Footer from "./footer";
 
 import useLenis from "../utils/lenis";
 import {
@@ -319,6 +320,7 @@ const Landing = () => {
           </a>
         </section>
       </main>
+      <Footer />
     </>
   );
 };

@@ -13,3 +13,162 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+enum UserRole {
+  MEMBER
+  COORDINATOR
+  ADMIN
+}
+
+model User {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  password        String
+  role            UserRole         @default(MEMBER)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  // One-to-One relationship
+  profile         Profile?
+  
+  // One-to-Many relationships
+  blogPosts       BlogPost[]
+  projectMembers  ProjectMember[]
+  
+  @@index([email])
+  @@index([role])
+}
+
+model Profile {
+  id              String    @id @default(cuid())
+  firstName       String
+  lastName        String
+  phone           String?
+  avatar          String?
+  bio             String?   @db.Text
+  branch          String?   // Engineering branch
+  year            Int?      // Academic year
+  rollNumber      String    @unique
+  linkedin        String?
+  github          String?
+  twitter         String?
+  interests       String[]  // Array of space/tech interests
+  
+  // One-to-One relationship
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([rollNumber])
+}
+
+// ============================================
+// PROJECTS & RESEARCH
+// ============================================
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+}
+
+model Project {
+  id              String          @id @default(cuid())
+  title           String
+  description     String          @db.Text
+  status          ProjectStatus   @default(PLANNING)
+  startDate       DateTime        @default(now())
+  endDate         DateTime?
+  coverImage      String?
+  repositoryUrl   String?
+  documentUrl     String?
+  tags            String[]
+  
+  // One-to-Many relationships
+  members         ProjectMember[]
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  @@index([status])
+}
+
+enum ProjectRole {
+  LEAD
+  MEMBER
+  MENTOR
+}
+
+model ProjectMember {
+  id              String      @id @default(cuid())
+  role            ProjectRole @default(MEMBER)
+  contribution    String?     @db.Text
+  
+  // Foreign Keys
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  projectId       String
+  project         Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  joinedAt        DateTime    @default(now())
+  
+  @@unique([userId, projectId])
+  @@index([userId])
+  @@index([projectId])
+}
+
+// ============================================
+// BLOG & CONTENT
+// ============================================
+
+enum BlogCategory {
+  ASTRONOMY
+  SPACE_TECHNOLOGY
+  ASTROPHYSICS
+  ROCKET_SCIENCE
+  SATELLITE_TECH
+  EVENT_RECAP
+  TUTORIAL
+  NEWS
+  OTHER
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model BlogPost {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  content         String        @db.Text
+  excerpt         String?       @db.Text
+  coverImage      String?
+  category        BlogCategory
+  status          PublishStatus @default(DRAFT)
+  publishedAt     DateTime?
+  views           Int           @default(0)
+  tags            String[]
+  
+  // Foreign Key
+  authorId        String
+  author          User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([slug])
+  @@index([authorId])
+  @@index([status])
+  @@index([publishedAt])
+}

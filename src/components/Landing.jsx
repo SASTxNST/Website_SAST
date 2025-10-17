@@ -158,11 +158,12 @@ const Landing = () => {
         </section>
 
         <hr className="vbar opacity-20" />
-        <section className="hero-section min-h-[70vh] py-20">
+
+        {/* MOBILE-FRIENDLY SATELLITE SECTIONS */}
+        <section className="hero-section min-h-[70vh] py-10 md:py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource2} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
           </div>
           <div className="content">
@@ -177,13 +178,13 @@ const Landing = () => {
             </a>
           </div>
         </section>
+
         <hr className="vbar opacity-20" />
 
-        <section className="hero-section min-h-[70vh] py-20">
+        <section className="hero-section min-h-[70vh] py-10 md:py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource3} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
           </div>
           <div className="content">
@@ -195,13 +196,13 @@ const Landing = () => {
             </a>
           </div>
         </section>
+
         <hr className="vbar opacity-20" />
 
-        <section className="hero-section min-h-[70vh] py-20">
+        <section className="hero-section min-h-[70vh] py-10 md:py-20">
           <div className="video-container">
             <video autoPlay muted loop playsInline className="bg-video">
               <source src={videosource4} type="video/mp4" />
-              Your browser does not support the video tag.
             </video>
           </div>
           <div className="content">
@@ -213,6 +214,7 @@ const Landing = () => {
             </a>
           </div>
         </section>
+
         <hr className="vbar opacity-20" />
 
         <section className="youtube-video-section h-[600px] px-4 bg-black text-white text-center flex flex-col justify-center items-center">
@@ -241,7 +243,7 @@ const Landing = () => {
         <hr className="opacity-15" />
         <br />
         <br />
-        {/*optimizing this for mobile users*/}
+
         <form className="w-full md:h-60 m-5" style={{ padding: "20px" }}>
           <div className="news flex flex-col md:flex-row justify-evenly gap-8">
             <div className="flex flex-col gap-8" style={{ margin: "10px" }}>
@@ -254,7 +256,7 @@ const Landing = () => {
                 </div>
               </a>
             </div>
-            {/*adjusted the email addres and first name and last name columns to adjust with the width of the*/}
+
             <div className="flex flex-col justify-center gap-8 p-4 w-80 md:w-[500px]">
               <h3 className="text-sm md:text-base font-lighter text-center md:text-left">
                 SUBSCRIBE AND NEVER MISS OUT ON WHAT WE'RE UP TO.

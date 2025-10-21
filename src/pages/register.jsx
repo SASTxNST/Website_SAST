@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Rocket, UserPlus, Mail, Lock } from "lucide-react";
 import { showToast } from "../main.jsx";
 import { BASE_URL } from "../api";
-import Footer from "../components/footer.jsx"
 
 export default function Register() {
   const [method, setMethod] = useState("email");
@@ -16,6 +15,7 @@ export default function Register() {
   const [resendTimer, setResendTimer] = useState(0);
   const [loader, setLoader] = useState(false);
   const [sendOTP, setSendOTP] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -25,6 +25,10 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   // Timer effect for resend OTP
   useEffect(() => {
@@ -58,7 +62,7 @@ export default function Register() {
     try {
       setLoader(true);
 
-      // 1️⃣ Check if user already exists
+      // Check if user already exists
       const checkRes = await fetch(`${BASE_URL}/users/check-email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +76,7 @@ export default function Register() {
         return;
       }
 
-      // 2️⃣ Send OTP if user does not exist
+      // Send OTP if user does not exist
       const res = await fetch(`${BASE_URL}/otp/email/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -127,7 +131,7 @@ export default function Register() {
       if (res.ok) {
         showToast(`OTP resent to ${formData.email.trim()}`, "success");
         setResendTimer(60);
-        setSendOTP(true); // keep track that OTP was sent
+        setSendOTP(true);
       } else {
         showToast(data.message || "Failed to resend OTP", "error");
       }
@@ -187,7 +191,7 @@ export default function Register() {
         phone: "",
       };
 
-      console.log("Register Payload:", payload); // 🐞 Debugging
+      console.log("Register Payload:", payload);
 
       const res = await fetch(`${BASE_URL}/users/register`, {
         method: "POST",
@@ -202,247 +206,623 @@ export default function Register() {
         localStorage.setItem("token", result.token);
         console.log(result.user);
         navigate("/login");
-      } 
-      else {
+      } else {
         showToast(result.message || "Registration failed!", "error");
       }
-    } 
-    catch (err) {
+    } catch (err) {
       console.error(err);
       showToast("Server error. Try again.", "error");
-    } 
-    finally {
+    } finally {
       setLoader(false);
     }
   };
 
+  const starPositions = React.useMemo(() => {
+    return Array.from({ length: 30 }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+    }));
+  }, []);
+
   return (
     <>
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .fade-in-up {
+          animation: fadeInUp 1s ease-out;
+        }
+
+        .space-container {
+          min-height: 100vh;
+          background: #000;
+          color: #fff;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .space-bg-layer {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+        }
+
+        .gradient-layer {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, #000 50%, rgba(88, 28, 135, 0.2) 100%);
+        }
+
+        .radial-layer {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 50%, rgba(0,161,255,0.1), transparent 50%);
+        }
+
+        .star {
+          position: absolute;
+          width: 2px;
+          height: 2px;
+          background: #60a5fa;
+          border-radius: 50%;
+          opacity: 0.6;
+        }
+
+        .content-wrapper {
+          position: relative;
+          z-index: 10;
+        }
+
+        .register-card {
+          background: rgba(255,255,255,0.05);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 24px;
+          padding: 48px;
+          transition: all 0.3s;
+        }
+
+        .register-card:hover {
+          border-color: rgba(59,130,246,0.3);
+          box-shadow: 0 10px 40px rgba(59,130,246,0.2);
+        }
+
+        .input-field {
+          width: 100%;
+          padding: 16px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          color: #fff;
+          font-size: 16px;
+          outline: none;
+          transition: all 0.3s;
+        }
+
+        .input-field:focus {
+          border-color: rgba(59,130,246,0.5);
+          background: rgba(255,255,255,0.08);
+        }
+
+        .input-field::placeholder {
+          color: #9ca3af;
+        }
+
+        .btn-primary {
+          width: 100%;
+          background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+          color: #fff;
+          font-weight: 700;
+          font-size: 18px;
+          padding: 16px;
+          border: none;
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.3s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(59,130,246,0.4);
+        }
+
+        .btn-primary:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .btn-secondary {
+          width: 100%;
+          background: rgba(255,255,255,0.05);
+          color: #fff;
+          font-weight: 600;
+          font-size: 16px;
+          padding: 12px;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(59,130,246,0.3);
+        }
+
+        .btn-secondary:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .method-toggle {
+          display: flex;
+          background: rgba(255,255,255,0.05);
+          border-radius: 16px;
+          padding: 4px;
+          gap: 4px;
+        }
+
+        .method-btn {
+          flex: 1;
+          padding: 12px;
+          border: none;
+          border-radius: 12px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          background: transparent;
+          color: #d1d5db;
+        }
+
+        .method-btn.active {
+          background: linear-gradient(90deg, #3b82f6 0%, #6366f1 100%);
+          color: #fff;
+          box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+        }
+
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(59,130,246,0.1);
+          border: 1px solid rgba(59,130,246,0.2);
+          border-radius: 50px;
+          padding: 8px 16px;
+          margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+          width: 20px;
+          height: 20px;
+          border: 2px solid rgba(255,255,255,0.2);
+          border-top: 2px solid #fff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      `}</style>
+
       <Navbar />
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-gray-900 dark:to-gray-800 p-4 transition-colors duration-300">
-        <div className="w-full max-w-md bg-white dark:bg-gray-900 shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          {/* Switch between Email / Phone */}
-          <div className="flex mb-6 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
-            <button
-              onClick={() => {
-                setMethod("email");
-                setStep(1);
+
+      <div className="space-container">
+        {/* Animated Background */}
+        <div className="space-bg-layer">
+          <div className="gradient-layer"></div>
+          <div className="radial-layer"></div>
+          {starPositions.map((star, i) => (
+            <div
+              key={i}
+              className="star"
+              style={{
+                left: `${star.left}%`,
+                top: `${star.top}%`,
               }}
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
-                method === "email"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
+            />
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="content-wrapper">
+          <div
+            style={{
+              minHeight: "100vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px",
+              paddingTop: "120px",
+              paddingBottom: "80px",
+            }}
+          >
+            <div
+              className="fade-in-up"
+              style={{
+                width: "100%",
+                maxWidth: "480px",
+              }}
             >
-              Email
-            </button>
-            <button
-              onClick={() =>
-                showToast("Phone registration is not implemented yet.", "error")
-              }
-              className={`flex-1 py-2 rounded-lg font-medium transition-colors duration-200 ${
-                method === "phone"
-                  ? "bg-purple-600 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
-            >
-              Phone
-            </button>
+              {/* Badge */}
+              <div style={{ textAlign: "center" }}>
+                <div className="badge">
+                  <Rocket style={{ width: 16, height: 16, color: "#60a5fa" }} />
+                  <span style={{ color: "#93c5fd", fontSize: 14, fontWeight: 500 }}>
+                    Join SAST Community
+                  </span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h1
+                style={{
+                  fontSize: "48px",
+                  fontWeight: 700,
+                  marginBottom: "16px",
+                  background: "linear-gradient(to right, #fff, #dbeafe, #93c5fd)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textAlign: "center",
+                  lineHeight: 1.1,
+                }}
+              >
+                Create Account
+              </h1>
+              <p
+                style={{
+                  color: "#d1d5db",
+                  textAlign: "center",
+                  marginBottom: "48px",
+                  fontSize: "18px",
+                }}
+              >
+                Start your journey into space exploration
+              </p>
+
+              {/* Register Card */}
+              <div className="register-card">
+                {/* Method Toggle */}
+                <div className="method-toggle" style={{ marginBottom: "32px" }}>
+                  <button
+                    onClick={() => {
+                      setMethod("email");
+                      setStep(1);
+                    }}
+                    className={`method-btn ${method === "email" ? "active" : ""}`}
+                  >
+                    Email
+                  </button>
+                  <button
+                    onClick={() =>
+                      showToast("Phone registration is not implemented yet.", "error")
+                    }
+                    className={`method-btn ${method === "phone" ? "active" : ""}`}
+                  >
+                    Phone
+                  </button>
+                </div>
+
+                {/* EMAIL REGISTRATION FLOW */}
+                {method === "email" && (
+                  <>
+                    {/* Step 1: Enter Email */}
+                    {step === 1 && (
+                      <div>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          className="input-field"
+                          placeholder="Enter your email"
+                          value={formData.email}
+                          onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                          }
+                          style={{ marginBottom: "24px" }}
+                        />
+                        <button
+                          className="btn-primary"
+                          onClick={handleSendOtp}
+                          disabled={!isValidEmail(formData.email) || loader}
+                        >
+                          {loader ? (
+                            <>
+                              <div className="spinner"></div>
+                              Sending OTP...
+                            </>
+                          ) : (
+                            <>
+                              <Mail size={20} />
+                              Send OTP
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Step 2: Verify OTP */}
+                    {step === 2 && (
+                      <div>
+                        <p
+                          style={{
+                            textAlign: "center",
+                            marginBottom: "24px",
+                            color: "#d1d5db",
+                          }}
+                        >
+                          OTP sent to{" "}
+                          <span style={{ color: "#60a5fa", fontWeight: 600 }}>
+                            {formData.email}
+                          </span>
+                        </p>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Enter OTP
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="Enter 6-digit OTP"
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value)}
+                          style={{ marginBottom: "16px" }}
+                        />
+                        <button
+                          className="btn-primary"
+                          onClick={handleVerifyOtp}
+                          style={{ marginBottom: "12px" }}
+                        >
+                          <Lock size={20} />
+                          Verify OTP
+                        </button>
+                        <button
+                          className="btn-secondary"
+                          disabled={loader || resendTimer > 0}
+                          onClick={handleResendOtp}
+                        >
+                          {loader ? (
+                            <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                              <div className="spinner"></div>
+                              Resending...
+                            </span>
+                          ) : resendTimer > 0 ? (
+                            `Resend OTP in ${resendTimer}s`
+                          ) : (
+                            "Resend OTP"
+                          )}
+                        </button>
+                        <p
+                          style={{
+                            marginTop: "24px",
+                            textAlign: "center",
+                            color: "#9ca3af",
+                            fontSize: "14px",
+                          }}
+                        >
+                          Wrong email?{" "}
+                          <span
+                            onClick={() => setStep(1)}
+                            style={{
+                              color: "#60a5fa",
+                              fontWeight: 600,
+                              cursor: "pointer",
+                            }}
+                          >
+                            Change email
+                          </span>
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Step 3: Complete Profile */}
+                    {step === 3 && (
+                      <div>
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="First Name"
+                          value={formData.firstName}
+                          onChange={(e) =>
+                            setFormData({ ...formData, firstName: e.target.value })
+                          }
+                          style={{ marginBottom: "16px" }}
+                        />
+
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          className="input-field"
+                          placeholder="Last Name"
+                          value={formData.lastName}
+                          onChange={(e) =>
+                            setFormData({ ...formData, lastName: e.target.value })
+                          }
+                          style={{ marginBottom: "16px" }}
+                        />
+
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Password
+                        </label>
+                        <div style={{ position: "relative", marginBottom: "16px" }}>
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            className="input-field"
+                            placeholder="Create a strong password"
+                            value={formData.password}
+                            onChange={(e) =>
+                              setFormData({ ...formData, password: e.target.value })
+                            }
+                            style={{ paddingRight: "48px" }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{
+                              position: "absolute",
+                              right: "16px",
+                              top: "50%",
+                              transform: "translateY(-50%)",
+                              background: "none",
+                              border: "none",
+                              color: "#60a5fa",
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                          </button>
+                        </div>
+
+                        <label
+                          style={{
+                            display: "block",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            color: "#d1d5db",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Confirm Password
+                        </label>
+                        <div style={{ position: "relative", marginBottom: "24px" }}>
+                          <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            className="input-field"
+                            placeholder="Confirm your password"
+                            value={formData.confirmPassword}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                confirmPassword: e.target.value,
+                              })
+                            }
+                            style={{ paddingRight: "48px" }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            style={{
+                              position: "absolute",
+                              right: "16px",
+                              top: "50%",
+                              transform: "translateY(-50%)",
+                              background: "none",
+                              border: "none",
+                              color: "#60a5fa",
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff size={20} />
+                            ) : (
+                              <Eye size={20} />
+                            )}
+                          </button>
+                        </div>
+
+                        <button className="btn-primary" onClick={handleRegister}>
+                          <UserPlus size={20} />
+                          Create Account
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {/* Login Link */}
+                <p
+                  style={{
+                    marginTop: "32px",
+                    textAlign: "center",
+                    color: "#9ca3af",
+                    fontSize: "16px",
+                  }}
+                >
+                  Already have an account?{" "}
+                  <span
+                    onClick={() => navigate("/login")}
+                    style={{
+                      color: "#60a5fa",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "color 0.3s",
+                    }}
+                    onMouseEnter={(e) => (e.target.style.color = "#93c5fd")}
+                    onMouseLeave={(e) => (e.target.style.color = "#60a5fa")}
+                  >
+                    Login here
+                  </span>
+                </p>
+              </div>
+            </div>
           </div>
-
-          {/* EMAIL REGISTRATION FLOW */}
-          {method === "email" && (
-            <>
-              {/* Step 1: Enter Email */}
-              {step === 1 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Register with Email
-                  </h2>
-                  <input
-                    type="email"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 disabled:opacity-50 flex justify-center items-center gap-2"
-                    onClick={handleSendOtp}
-                    disabled={!isValidEmail(formData.email) || loader}
-                  >
-                    {loader ? (
-                      <>
-                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        Sending OTP...
-                      </>
-                    ) : (
-                      "Send OTP"
-                    )}
-                  </button>
-                </div>
-              )}
-
-              {/* Step 2: Verify OTP */}
-              {step === 2 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Verify OTP
-                  </h2>
-                  <p className="text-center">
-                    Your Email is{" "}
-                    <span className="text-blue-500">{formData.email}</span>
-                  </p>
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-gray-100"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 mb-2"
-                    onClick={handleVerifyOtp}
-                  >
-                    Verify OTP
-                  </button>
-                  <button
-                    className={`w-full py-2 rounded-lg font-semibold ${
-                      resendTimer > 0 || loader
-                        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                        : "bg-purple-600 text-white hover:bg-purple-700"
-                    }`}
-                    disabled={loader || resendTimer > 0}
-                    onClick={handleResendOtp}
-                  >
-                    {loader ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        Resending OTP...
-                      </span>
-                    ) : resendTimer > 0 ? (
-                      `Resend OTP in ${resendTimer}s`
-                    ) : (
-                      "Resend OTP"
-                    )}
-                  </button>
-                  <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
-                    Want to Change your Email?{" "}
-                    <a
-                      onClick={() => setStep(1)}
-                      className="text-purple-600 dark:text-purple-400 "
-                    >
-                      <span className="hover:text-blue-500 hover:underline">
-                        Click Here
-                      </span>
-                    </a>
-                  </p>
-                </div>
-              )}
-
-              {/* Step 3: Complete Profile */}
-              {step === 3 && (
-                <div>
-                  <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
-                    Complete Your Profile
-                  </h2>
-
-                  {/* First Name */}
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4"
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, firstName: e.target.value })
-                    }
-                  />
-
-                  {/* Last Name */}
-                  <input
-                    type="text"
-                    className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg mb-4"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, lastName: e.target.value })
-                    }
-                  />
-
-                  {/* Password */}
-                  <div className="relative mb-4">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
-                      placeholder="Password"
-                      value={formData.password}
-                      onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-gray-500"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
-                  </div>
-
-                  {/* Confirm Password */}
-                  <div className="relative mb-4">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 dark:text-gray-100"
-                      placeholder="Confirm Password"
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          confirmPassword: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-3 text-gray-500"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff size={20} />
-                      ) : (
-                        <Eye size={20} />
-                      )}
-                    </button>
-                  </div>
-
-                  <button
-                    className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700"
-                    onClick={handleRegister}
-                  >
-                    Register
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-
-          <p className="mt-6 text-center text-gray-600 dark:text-gray-400">
-            Already have an account?{" "}
-            <a
-              onClick={() => navigate("/login")}
-              className="text-purple-600 hover:underline dark:text-purple-400"
-            >
-              <span className="hover:text-blue-500 hover:underline">Login</span>
-            </a>
-          </p>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

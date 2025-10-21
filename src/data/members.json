@@ -1,5 +1,20 @@
 [
   {
+    "slug": "abhinav-bajpai",
+    "name": "Abhinav Bajpai",
+    "role": "Member",
+    "location": "Lucknow, Uttar Pradesh",
+    "bio": "Passionate about space technology and software development. Contributing to open-source projects while exploring the fascinating world of aerospace. Enthusiastic about creating innovative solutions that bridge the gap between technology and space exploration.",
+    "status": "active",
+    "avatarUrl": "https://github.com/abhinavbajpai30.png",
+    "links": {
+      "github": "https://github.com/abhinavbajpai30",
+      "x": "https://x.com/abhinavbajpai30",
+      "linkedin": "https://www.linkedin.com/in/abhinavbajpai30/",
+      "community": null
+    }
+  },
+  {
     "slug": "kavya-katal",
     "name": "Kavya Katal",
     "role": "Contributor",
@@ -70,7 +85,8 @@
       "github": "https://github.com/1Kunalvats9",
       "x": null,
       "linkedin": "https://www.linkedin.com/in/kunal-vats-b67aa2309/",
-      "community": null
+     "community": null
     }
   }
+  
 ]

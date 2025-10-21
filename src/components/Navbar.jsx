@@ -39,7 +39,6 @@ const Navbar = () => {
         className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}
         style={{ zIndex: 50 }} // keep header above page
       >
-        {/* IMPORTANT: override the global `.container { position:absolute }` */}
         <div
           className="container header-content"
           style={{ position: "relative", width: "100%" }}
@@ -71,17 +70,18 @@ const Navbar = () => {
                 </Link>
               </li>
 
-               <li className="nebula-link">
+              <li className="nebula-link">
                 <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">
                   Nebula
                 </a>
               </li>
 
-              
-
               <li><a href="/news">Astronomy News</a></li>
               <li><a href="/track">Track</a></li>
-              <li><Link to="/Register">Register</Link></li>
+              <li><Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link></li>
+
+              {/* New Explore Link */}
+              <li><Link to="/explore" onClick={() => setMenuOpen(false)}>Explore</Link></li>
             </ul>
           </nav>
 

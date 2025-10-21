@@ -58,5 +58,19 @@
       "linkedin": "https://www.linkedin.com/in/pratayasilla/",
       "community": null
     }
+  },
+  {
+    "slug": "kunal-vats",
+    "name": "Kunal Vats",
+    "role": "Member",
+    "location": "Bhiwadi, Rajasthan",
+    "bio": null,
+    "avatarUrl": null,
+    "links": {
+      "github": "https://github.com/1Kunalvats9",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/kunal-vats-b67aa2309/",
+      "community": null
+    }
   }
 ]

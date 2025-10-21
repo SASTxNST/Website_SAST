@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppContent from "./AppContent.jsx";
 import { Toaster, toast } from "react-hot-toast";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
+// import Explore from ".src/pages/Explore";
 
 // Global toast queue for max 3 toasts
 const toastQueue = [];
@@ -14,7 +15,8 @@ export const showToast = (message, type = "success") => {
     const oldest = toastQueue.shift();
     toast.dismiss(oldest);
   }
-  const id = type === "success" ? toast.success(message) : toast.error(message);
+  const id =
+    type === "success" ? toast.success(message) : toast.error(message);
   toastQueue.push(id);
   return id;
 };
@@ -23,23 +25,25 @@ export const showToast = (message, type = "success") => {
 window.showToast = showToast;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Router>
+  <React.StrictMode>
     <SettingsProvider>
-      {/* Global Toaster */}
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: "#333",
-            color: "#fff",
-            textAlign: "center",
-            justifyContent: "center",
-          },
-          success: { duration: 1500 },
-          error: { duration: 2500 },
-        }}
-      />
-      <AppContent />
+      <Router>
+        {/* Global Toaster */}
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              background: "#333",
+              color: "#fff",
+              textAlign: "center",
+              justifyContent: "center",
+            },
+            success: { duration: 1500 },
+            error: { duration: 2500 },
+          }}
+        />
+        <AppContent />
+      </Router>
     </SettingsProvider>
-  </Router>
+  </React.StrictMode>
 );

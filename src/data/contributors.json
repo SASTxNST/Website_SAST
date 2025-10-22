@@ -195,5 +195,21 @@
       "community": null
     },
     "repos": ["Website"]
+  },
+  {
+    "slug": "prabhav-jain",
+    "name": "Prabhav Jain",
+    "role": "Contributor",
+    "location": "Jabalpur , Madhya Pradesh",
+    "bio": "“Leave me alone, I know what I’m doing.” - Kimi Raikkonen",
+    "status": "active",
+    "avatarUrl": "https://pin.it/3ZS73BEl6",
+    "links": {
+      "github": "https://github.com/Prabhav1437",
+      "x": "https://x.com/Prabhav15627081",
+      "linkedin": "https://www.linkedin.com/in/prabhav-jain-32386b328/",
+      "community": null
+    },
+    "repos": ["Website"]
   }
 ]

@@ -24,7 +24,6 @@ import MemberProfile from "./pages/MemberProfile.jsx";
 import ContributorProfile from "./pages/ContributorProfile.jsx";
 import Contributors from "./pages/Contributors.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
-
 import Discover from "./pages/Discover.jsx";
 import DiscoverImages from "./pages/discover/DiscoverImages.jsx"; // Create this for images section
 import DiscoverVideos from "./pages/discover/DiscoverVideos.jsx"; // Create this for videos section

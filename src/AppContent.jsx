@@ -22,6 +22,12 @@ import Members from "./pages/Members.jsx";
 import MemberProfile from "./pages/MemberProfile.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
 
+import Discover from "./pages/Discover.jsx";
+import DiscoverImages from "./pages/discover/DiscoverImages.jsx"; // Create this for images section
+import DiscoverVideos from "./pages/discover/DiscoverVideos.jsx"; // Create this for videos section
+import DiscoverEvents from "./pages/discover/DiscoverEvents.jsx"; // Create for event highlights
+import DiscoverRecordings from "./pages/discover/DiscoverRecordings.jsx"; // Create for session recordings
+
 import { Ion } from "cesium";
 import useSettings from "./hooks/UseSettings.jsx";
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
@@ -30,6 +36,7 @@ const AppContent = () => {
   const location = useLocation();
   const hideNavbarRoutes = ["/merch", "/contributions"];
   const { settings } = useSettings();
+
   return (
     <>
       {settings[1].enabled && <CursorEffects />}
@@ -55,6 +62,14 @@ const AppContent = () => {
           <Route path="/footer" element={<Footer />} />
           <Route path="/community/members" element={<Members />} />
           <Route path="/community/members/:slug" element={<MemberProfile />} />
+
+          {/* Discover page with nested routes */}
+          <Route path="/discover" element={<Discover />}>
+            <Route path="images" element={<DiscoverImages />} />
+            <Route path="videos" element={<DiscoverVideos />} />
+            <Route path="events" element={<DiscoverEvents />} />
+            <Route path="recordings" element={<DiscoverRecordings />} />
+          </Route>
         </Routes>
       </main>
     </>

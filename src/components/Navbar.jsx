@@ -7,6 +7,7 @@ import logo from "../Landing_media/SAST.png";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -32,14 +33,15 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <header
         className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}
-        style={{ zIndex: 50 }} // keep header above page
+        style={{ zIndex: 50 }}
       >
-        {/* IMPORTANT: override the global `.container { position:absolute }` */}
         <div
           className="container header-content"
           style={{ position: "relative", width: "100%" }}
@@ -61,27 +63,33 @@ const Navbar = () => {
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
             <ul className="nav-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/newsletter">Newsletter</a></li>
-              <li><a href="/events">Events</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li>
-                <Link to="/community/members" onClick={() => setMenuOpen(false)}>
-                  Members
-                </Link>
+              <li><Link to="/" onClick={closeMenu}>Home</Link></li>
+              <li><Link to="/newsletter" onClick={closeMenu}>Newsletter</Link></li>
+              <li><Link to="/events" onClick={closeMenu}>Events</Link></li>
+              <li><Link to="/projects" onClick={closeMenu}>Projects</Link></li>
+              <li><Link to="/community/members" onClick={closeMenu}>Members</Link></li>
+              <li className="nebula-link">
+                <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">Nebula</a>
               </li>
 
-               <li className="nebula-link">
-                <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">
-                  Nebula
-                </a>
+              {/* Discover Dropdown */}
+              <li className="dropdown">
+                <button onClick={toggleDropdown} className="dropdown-toggle" type="button" aria-haspopup="true" aria-expanded={dropdownOpen}>
+                  Discover
+                </button>
+                {dropdownOpen && (
+                  <ul className="dropdown-menu">
+                    <li><Link to="/discover/images" onClick={() => { closeMenu(); setDropdownOpen(false); }}>Images</Link></li>
+                    <li><Link to="/discover/videos" onClick={() => { closeMenu(); setDropdownOpen(false); }}>Videos</Link></li>
+                    <li><Link to="/discover/events" onClick={() => { closeMenu(); setDropdownOpen(false); }}>Event Highlights</Link></li>
+                    <li><Link to="/discover/recordings" onClick={() => { closeMenu(); setDropdownOpen(false); }}>Recordings</Link></li>
+                  </ul>
+                )}
               </li>
 
-              
-
-              <li><a href="/news">Astronomy News</a></li>
-              <li><a href="/track">Track</a></li>
-              <li><Link to="/Register">Register</Link></li>
+              <li><Link to="/news" onClick={closeMenu}>Astronomy News</Link></li>
+              <li><Link to="/track" onClick={closeMenu}>Track</Link></li>
+              <li><Link to="/register" onClick={closeMenu}>Register</Link></li>
             </ul>
           </nav>
 

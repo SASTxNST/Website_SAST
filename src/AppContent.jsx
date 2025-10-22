@@ -6,6 +6,7 @@ import Landing from "./components/Landing.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Newsletter from "./components/Newsletter.jsx";
 import Events from "./components/Events.jsx";
+import EventCalendarPage from "./pages/EventCalendarPage.jsx";
 import Projects from "./components/Projects.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from "./pages/ContributionRanks.jsx";
@@ -20,6 +21,8 @@ import Footer from "./components/footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import Members from "./pages/Members.jsx";
 import MemberProfile from "./pages/MemberProfile.jsx";
+import ContributorProfile from "./pages/ContributorProfile.jsx";
+import Contributors from "./pages/Contributors.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
 
 import Discover from "./pages/Discover.jsx";
@@ -52,6 +55,7 @@ const AppContent = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/calendar" element={<EventCalendarPage />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/login" element={<Login />} />
           <Route path="/merch" element={<Store />} />
@@ -70,6 +74,8 @@ const AppContent = () => {
             <Route path="events" element={<DiscoverEvents />} />
             <Route path="recordings" element={<DiscoverRecordings />} />
           </Route>
+          <Route path="/contributors" element={<Contributors />} />
+          <Route path="/contributors/:slug" element={<ContributorProfile />} />
         </Routes>
       </main>
     </>

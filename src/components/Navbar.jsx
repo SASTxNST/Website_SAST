@@ -10,8 +10,11 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : true);
+
+
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -34,6 +37,7 @@ const Navbar = () => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+  const toggleMenu = () => setMenuOpen((o) => !o);
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -46,14 +50,16 @@ const Navbar = () => {
           className="container header-content"
           style={{ position: "relative", width: "100%" }}
         >
-          <a href="/" className="logo">
+          <Link to="/" className="logo" onClick={closeMenu}>
             <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
-          </a>
+          </Link>
 
           {isMobile && (
             <button
               className={`hamburger-menu ${menuOpen ? "open" : ""}`}
               onClick={toggleMenu}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
@@ -85,6 +91,38 @@ const Navbar = () => {
                     <li><Link to="/discover/recordings" onClick={() => { closeMenu(); setDropdownOpen(false); }}>Recordings</Link></li>
                   </ul>
                 )}
+              <li>
+                <Link to="/" onClick={closeMenu}>Home</Link>
+              </li>
+
+              <li>
+                <Link to="/newsletter" onClick={closeMenu}>Newsletter</Link>
+              </li>
+              <li>
+                <Link to="/events" onClick={closeMenu}>Events</Link>
+              </li>
+              <li>
+                <Link to="/projects" onClick={closeMenu}>Projects</Link>
+              </li>
+              <li>
+                <Link to="/community/members" onClick={closeMenu}>Members</Link>
+              </li>
+               <li className="nebula-link">
+                <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">
+                  Nebula
+                </a>
+              </li>
+              <li>
+                <Link to="/contributors" onClick={closeMenu}>Contributors</Link>
+              </li>
+              <li>
+                <Link to="/register" onClick={closeMenu}>Register</Link>
+              </li>
+              <li>
+                <Link to="/news" onClick={closeMenu}>Astronomy News</Link>
+              </li>
+              <li>
+                <Link to="/track" onClick={closeMenu}>Track</Link>
               </li>
 
               <li><Link to="/news" onClick={closeMenu}>Astronomy News</Link></li>

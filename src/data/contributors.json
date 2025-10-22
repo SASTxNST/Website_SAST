@@ -1,0 +1,108 @@
+[
+  {
+    "slug": "kavya-katal",
+    "name": "Kavya Katal",
+    "role": "Maintainer",
+    "location": "Faridabad, Haryana, India",
+    "bio": "Passionate Full Stack Developer and AI enthusiast exploring the intersection of Open Source, Cloud Native, and Web Technologies. I enjoy contributing to developer communities, building scalable solutions, and continuously learning to create impactful, innovative systems.",
+    "status": "active",
+    "avatarUrl": "https://github.com/KatalKavya96.png",
+    "links": {
+      "github": "https://github.com/KatalKavya96",
+      "x": "https://x.com/",
+      "linkedin": "https://www.linkedin.com/in/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website", "FTM", "Orbion", "Nebula"]
+  },
+  {
+
+    "slug": "shaik-junaid-sami",
+    "name": "Shaik Junaid Sami",
+    "role": "Contributor",
+    "location": "Kurnool, Andhra Pradesh",
+    "bio": "B.Tech student specializing in Computer Science and Artificial Intelligence at Newton School of Technology. Passionate full-stack developer with hands-on experience in the MERN stack. Skilled in problem-solving and Data Structures & Algorithms, with a strong foundation in JavaScript and Python. Eager to build scalable web applications and continuously learn new technologies to create meaningful digital experiences.",
+    "status": "active",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/180095616?s=400&u=5cc49987fdf3e25995fdd72872945f925343ff88&v=4",
+    "links": {
+      "github": "https://github.com/mrstrange1708/",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/shaik-mohammed-junaid-sami-20885430b/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+
+    "slug": "kavya-mukhija",
+    "name": "Kavya Mukhija",
+    "role": "Contributor",
+    "location": "Rajasthan, India",
+    "bio": "Computer Science and AI undergraduate at Newton School of Technology, driven by a passion for applying cutting-edge technology to tackle real-world challenges. Proficient in C++ and Java with a keen interest in machine learning. Committed to driving innovation through collaborative projects and continuous learning in the ever-evolving tech landscape.",
+    "status": "active",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/D5622AQFpmZ9lolO1XQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1731865806201?e=1762992000&v=beta&t=gz9sEjK7NEcmWnhOCMKEbVwFbuY92EtItygKZnZaCXk",
+    "links": {
+      "github": "https://github.com/KatalKavya96",
+      "linkedin": "https://www.linkedin.com/in/kavya-mukhija-59b75a323/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "chaitanya-sai-meka",
+    "name": "Chaitanya Sai Meka",
+    "role": "Contributor",
+    "location": "Rajahmundry, Andhra Pradesh, India",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/176647589?v=4",
+    "links": {
+      "github": "https://github.com/ChaitanyaSai-Meka",
+      "linkedin": "https://www.linkedin.com/in/chaitanya-sai-meka/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "neelanshu-karn",
+    "name": "Neelanshu Karn",
+    "role": "Contributor",
+    "location": "Prayagraj, Uttar Pradesh",
+    "bio": "President SAST, Tech Leader - Leads Innovation through Technology",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/D4E03AQG5IMAd_OxYLg/profile-displayphoto-shrink_800_800/B4EZWOxzmZH0Ac-/0/1741857176517?e=1762992000&v=beta&t=3t-vI4PiVQ44pqGZr2NW531NIn430G3Fh_FxZhSo1zA",
+    "links": {
+      "github": "https://github.com/karn-cyber",
+      "linkedin": "https://www.linkedin.com/in/neelanshu-karn-05146130a/?originalSubdomain=in",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website", "Orbion", "Nebula"]
+  },
+  {
+    "slug": "sai-sathwik-anchuri",
+    "name": "Sai Sathwik Anchuri",
+    "role": "Contributor",
+    "location": "Hyderabad, Telangana",
+    "bio": "Tech enthusiast exploring open-source, innovation, and impactful problem-solving.",
+    "avatarUrl": "https://github.com/SaiSathwikAnchuri.png",
+    "links": {
+      "github": "https://github.com/SaiSathwikAnchuri",
+      "linkedin": "https://linkedin.com/in/saisathwik-anchuri-604b85292/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "nakul_jaglan",
+    "name": "Nakul Jaglan",
+    "role": "Contributor",
+    "location": "Delhi, India",
+    "bio": "Full Stack Developer",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/114090662?v=4",
+    "links": {
+      "github": "https://github.com/Nakul-Jaglan",
+      "x": "https://x.com/Nakul_Jaglan",
+      "linkedin": "https://linkedin.com/in/nakuljaglan",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website"]
+  }
+]

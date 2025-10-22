@@ -7,10 +7,10 @@ import logo from "../Landing_media/SAST.png";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : true);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -31,26 +31,29 @@ const Navbar = () => {
     };
   }, []);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMenu = () => setMenuOpen((o) => !o);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <header
         className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}
-        style={{ zIndex: 50 }} // keep header above page
+        style={{ zIndex: 50 }}
       >
         <div
           className="container header-content"
           style={{ position: "relative", width: "100%" }}
         >
-          <a href="/" className="logo">
+          <Link to="/" className="logo" onClick={closeMenu}>
             <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
-          </a>
+          </Link>
 
           {isMobile && (
             <button
               className={`hamburger-menu ${menuOpen ? "open" : ""}`}
               onClick={toggleMenu}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               <span className="hamburger-line"></span>
               <span className="hamburger-line"></span>
@@ -60,20 +63,39 @@ const Navbar = () => {
 
           <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
             <ul className="nav-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/newsletter">Newsletter</a></li>
-              <li><a href="/events">Events</a></li>
-              <li><a href="/projects">Projects</a></li>
               <li>
-                <Link to="/community/members" onClick={() => setMenuOpen(false)}>
-                  Members
-                </Link>
+                <Link to="/" onClick={closeMenu}>Home</Link>
               </li>
 
               <li className="nebula-link">
+              <li>
+                <Link to="/newsletter" onClick={closeMenu}>Newsletter</Link>
+              </li>
+              <li>
+                <Link to="/events" onClick={closeMenu}>Events</Link>
+              </li>
+              <li>
+                <Link to="/projects" onClick={closeMenu}>Projects</Link>
+              </li>
+              <li>
+                <Link to="/community/members" onClick={closeMenu}>Members</Link>
+              </li>
+               <li className="nebula-link">
                 <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">
                   Nebula
                 </a>
+              </li>
+              <li>
+                <Link to="/contributors" onClick={closeMenu}>Contributors</Link>
+              </li>
+              <li>
+                <Link to="/register" onClick={closeMenu}>Register</Link>
+              </li>
+              <li>
+                <Link to="/news" onClick={closeMenu}>Astronomy News</Link>
+              </li>
+              <li>
+                <Link to="/track" onClick={closeMenu}>Track</Link>
               </li>
 
               <li><a href="/news">Astronomy News</a></li>
@@ -82,6 +104,7 @@ const Navbar = () => {
 
               {/* New Explore Link */}
               <li><Link to="/explore" onClick={() => setMenuOpen(false)}>Explore</Link></li>
+
             </ul>
           </nav>
 

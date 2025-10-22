@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppContent from "./AppContent.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
 // import Explore from ".src/pages/Explore";
@@ -24,8 +25,12 @@ export const showToast = (message, type = "success") => {
 // Optional: attach globally
 window.showToast = showToast;
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+  <Router>
+    <QueryClientProvider client={queryClient}>
     <SettingsProvider>
       <Router>
         {/* Global Toaster */}
@@ -46,4 +51,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </Router>
     </SettingsProvider>
   </React.StrictMode>
+</QueryClientProvider>  
+</Router>
 );

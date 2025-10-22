@@ -197,6 +197,21 @@
     "repos": ["Website"]
   },
   {
+    "slug": "pranay-gadh",
+    "name": "Pranay Gadh",
+    "role": "Contributor",
+    "location": "New Delhi, India",
+    "bio": "Mathematics and Computing undergraduate at DTU",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/187594765?s=400",
+    "links": {
+      "github": "https://github.com/Pranay22077",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/pranay22077",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
     "slug": "prabhav-jain",
     "name": "Prabhav Jain",
     "role": "Contributor",
@@ -226,5 +241,4 @@
     },
     "repos": ["Website"]
   }
-
 ]

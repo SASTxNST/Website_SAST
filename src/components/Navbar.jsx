@@ -45,8 +45,12 @@ const Navbar = () => {
           style={{ position: "relative", width: "100%" }}
         >
           <NavLink to="/" className="logo" onClick={closeMenu}>
-            <img src={logo} alt="Logo" width="60" height="60" className="rounded-md" />
-          </NavLink>
+  <img
+    src={logo}
+    alt="Logo"
+    className="logo-img rounded-md"
+  />
+</NavLink>
 
           {isMobile && (
             <button

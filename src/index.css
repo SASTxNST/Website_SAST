@@ -29,52 +29,85 @@ body.cursor-hidden {
 .header-content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; /* vertically center everything */
+  padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(200px);
   border-radius: 2px;
   box-shadow: 1px 1px 10px 0px rgba(250, 250, 250, 0.3);
-  /* Subtle shadow */
+  max-width: 90%; /* reduce from 95% */
 }
 
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;          /* ensure it doesn’t overflow */
+}
+
+/* Nav links spacing */
 .main-nav ul {
   display: flex;
-  gap: 3rem;
+  gap: 1rem; /* reduced spacing between links */
+  align-items: center; /* vertical center */
+  margin: 0;
+  padding: 0;
 }
+
 
 .main-nav a {
   color: var(--color-text-secondary);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   transition: color 0.3s ease;
+  font-weight: 500;
 }
 
-.main-nav a:hover {
-  color: var(--color-text);
-}
-.main-nav a.active{
+.main-nav a:hover,
+.main-nav a.active {
   color: var(--color-text);
   font-weight: 600;
 }
 
 
+.logo {
+    display: flex;
+    align-items: center;
+    z-index: 50;
+    min-width: 60px; /* optional, prevents collapsing */
+    padding-right: 20px;
+}
+
+.logo-img {
+    height: 60px;
+    width: auto; /* keeps aspect ratio */
+    display: block;
+}
+
+
+
+/* Contact button spacing */
 .contact-button {
-  padding: 0.75rem 1.5rem;
+  margin-left: 1rem; /* space between last link and button */
+  align-self: center; /* vertical alignment */
+  padding: 0.5rem 1.2rem;   /* smaller, responsive padding */
   border: 1px solid var(--color-text-secondary);
   border-radius: 4px;
   transition: all 0.3s ease;
+  font-size: 0.875rem;      /* slightly smaller font */
 }
 
 .contact-button:hover {
   background-color: var(--color-text);
   color: var(--color-background);
 }
-
 @media (max-width: 768px) {
   .main-nav {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: var(--color-background);
     color: var(--color-text);
+    flex-wrap: wrap;
   }
 
   .main-nav .nav-links li a {
@@ -99,9 +132,19 @@ body.cursor-hidden {
     margin: 0 auto;
   }
 
-  .header-content {
-    justify-content: space-between;
-  }
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem; /* enough for logo and links */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px); /* not 200px */
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 2px;
+  box-shadow: 1px 1px 10px rgba(250, 250, 250, 0.3);
+}
+
+
 }
 
 .hero {
@@ -1304,11 +1347,21 @@ a {
     font-size: 1.25rem;
     font-weight: 500;
     color: white;
+    font-size: clamp(1rem, 2vw, 1.25rem);
   }
 
   .contact-button {
-    display: none;
-  }
+  padding: 0.5rem 1.2rem;       /* Balanced padding */
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 6px;           /* Slightly rounded corners */
+  font-size: 0.875rem;          /* Small, readable text */
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-left: 1rem;            /* Keeps distance from nav links */
+}
 }
 
 .learn_more {
@@ -1342,9 +1395,12 @@ a {
 
 /* Put ONLY the navbar's container back into normal flow */
 .header .container {
-  position: relative; /* overrides the global `.container { position:absolute }` */
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
 }
-
 /* Reserve space below the fixed header for routed pages */
 :root {
   --header-offset: 112px; /* desktop default; tweak if needed */

@@ -7,14 +7,14 @@ import "../components/EventCalendar/EventCalendar.css";
 
 const EventCalendarPage = () => {
   return (
-    <div className="event-calendar-page">
+    <div className="event-calendar-page ">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="calendar-header"
       >
-        <h1 className="calendar-title">
+        <h1 className="calendar-title ">
           Event Calendar
         </h1>
         <p className="calendar-subtitle">

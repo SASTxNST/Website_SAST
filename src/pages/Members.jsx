@@ -2,28 +2,48 @@
 import React from "react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllMembers, getActiveMembers } from "../lib/members/data";
+import { getAllMembers } from "../lib/members/data";
+import { Search } from "lucide-react";
 
-/* ---------------- Filter pill ---------------- */
+/* ---------------- Search Bar ---------------- */
 
-function FilterPill({ value = true, onChange }) {
+function SearchBar({ value, onChange, placeholder = "Search members..." }) {
+  return (
+    <div className="relative w-full max-w-md">
+      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full rounded-xl border border-white/15 bg-white/5 py-3 pl-10 pr-4 text-white placeholder-white/50 backdrop-blur transition focus:border-emerald-400/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/20"
+      />
+    </div>
+  );
+}
+
+/* ---------------- Status Filter Pills ---------------- */
+
+function StatusPill({ label, active, onClick }) {
   return (
     <button
-      onClick={() => onChange(!value)}
-      aria-pressed={value}
-      className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 text-sm text-white/90 backdrop-blur hover:bg-white/10 hover:border-white/25"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`inline-flex items-center gap-2 rounded-xl text-sm backdrop-blur transition ${
+        active
+          ? "border border-emerald-400/45 bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/20"
+          : "border border-white/15 bg-white/5 text-white/90 hover:bg-white/10 hover:border-white/25"
+      }`}
       style={{ padding: "0.5rem 1rem" }}
     >
       <span
         className={`h-2 w-2 rounded-full ${
-          value
+          active
             ? "bg-emerald-400 shadow-[0_0_0_3px_rgba(16,185,129,.15)]"
             : "bg-zinc-500"
         }`}
       />
-      <span>Active</span>
-      <span className="opacity-70">×</span>
-      <span className="opacity-70">▾</span>
+      <span className="capitalize">{label}</span>
     </button>
   );
 }
@@ -68,15 +88,34 @@ function MemberCard({ m }) {
 
 export default function Members() {
   const all = getAllMembers();
-  const active = getActiveMembers();
 
-  const [activeOnly, setActiveOnly] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showActive, setShowActive] = useState(true);
+  const [showInactive, setShowInactive] = useState(true);
 
-  // Source data based on filter (NO dummy padding)
-  const data = useMemo(
-    () => (activeOnly ? active : all),
-    [activeOnly, all, active]
-  );
+  // Source data based on filters
+  const data = useMemo(() => {
+    let filtered = all;
+
+    // Filter by status (active/inactive)
+    if (showActive && !showInactive) {
+      filtered = filtered.filter((m) => (m.status ?? "active") === "active");
+    } else if (!showActive && showInactive) {
+      filtered = filtered.filter((m) => (m.status ?? "active") === "inactive");
+    } else if (!showActive && !showInactive) {
+      filtered = [];
+    }
+
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter((member) =>
+        member.name.toLowerCase().includes(searchLower)
+      );
+    }
+
+    return filtered;
+  }, [searchTerm, showActive, showInactive, all]);
 
   return (
     <React.Fragment>
@@ -103,26 +142,65 @@ export default function Members() {
               A warm and welcoming collection of open sourcers
             </p>
 
-            <div className="absolute right-0 top-1 hidden md:block">
-              <FilterPill value={activeOnly} onChange={setActiveOnly} />
-            </div>
           </header>
 
+          {/* Search and Filter Controls */}
           <div
-            className="flex w-full justify-center md:hidden"
+            className="flex w-full flex-col items-center gap-4 md:flex-row md:justify-center"
             style={{ marginBottom: "2rem" }}
           >
-            <FilterPill value={activeOnly} onChange={setActiveOnly} />
+            <SearchBar value={searchTerm} onChange={setSearchTerm} />
+            <div className="flex items-center gap-2">
+              <StatusPill
+                label="Active"
+                active={showActive}
+                onClick={() => setShowActive(!showActive)}
+              />
+              <StatusPill
+                label="Inactive"
+                active={showInactive}
+                onClick={() => setShowInactive(!showInactive)}
+              />
+            </div>
           </div>
 
-          <div
-            className="grid w-full place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            style={{ gap: "2.5rem" }}
-          >
-            {data.map((m) => (
-              <MemberCard key={m.slug} m={m} />
-            ))}
-          </div>
+          {/* Results counter */}
+          {(searchTerm.trim() || !showActive || !showInactive) && (
+            <div className="mb-4 text-center">
+              <p className="text-sm text-white/60">
+                Showing <span className="font-semibold text-emerald-400">{data.length}</span>{" "}
+                {data.length === 1 ? "member" : "members"}
+              </p>
+            </div>
+          )}
+
+          {/* Grid */}
+          {data.length > 0 ? (
+            <div
+              className="grid w-full place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              style={{ gap: "2.5rem" }}
+            >
+              {data.map((m) => (
+                <MemberCard key={m.slug} m={m} />
+              ))}
+            </div>
+          ) : (
+            <div className="py-16 text-center">
+              <p className="text-lg text-white/60">
+                No members found matching your filters.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchTerm("");
+                  setShowActive(true);
+                  setShowInactive(true);
+                }}
+                className="mt-4 rounded-xl border border-red-400/45 bg-red-500/15 px-6 py-2 text-red-200 backdrop-blur transition hover:bg-red-500/20"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
 
           <div style={{ marginTop: "3rem" }} />
         </div>

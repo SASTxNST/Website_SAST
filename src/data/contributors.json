@@ -330,5 +330,65 @@
       "community": null
     },
     "repos": ["Website", "Nebula"]
+  },
+  {
+    "slug": "padam-rathi",
+    "name": "Padam Rathi",
+    "role": "Member",
+    "location": "Nagpur, India",
+    "bio": "Full Stack Web Developer with strong skills in Python, web development, and full-stack projects. Experienced in contributions at LinkupAI on API integrations, hackathon platforms, Firebase storage, and PDF automation. Competitive programmer (Codeforces 1151, CodeChef 1433) with 400+ problems solved across online coding platforms. Passionate about AI and solving real-world challenges through technology.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/189894380",
+    "links": {
+      "github": "https://github.com/IronwallxR5",
+      "x": "https://x.com/Rathi_Padam",
+      "linkedin": "https://www.linkedin.com/in/padam-rathi-00b4b533b/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "suraj-singh",
+    "name": "Suraj Singh",
+    "role": "Member",
+    "location": "Meerut, Uttar Pradesh",
+    "bio": "Full-Stack Developer(MERN) | Focused on clean code, scalability & problem solving.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/199275615?v=4",
+    "links": {
+      "github": "https://github.com/surajsingh9389",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/surajsingh9389?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "dhairya-goel",
+    "name": "Dhairy Goel",
+    "role": "Member",
+    "location": "Delhi, India",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/77429914?v=4",
+    "links": {
+      "github": "https://github.com/dhairyagoel-git",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/dhairya-goel-b6b400306/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "yashi-agrawal",
+    "name": "Yashi Agrawal",
+    "role": "Contributor",
+    "location": "Azamgarh, Uttar Pradesh",
+    "bio": "Full-Stack Developer",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/190743490?v=4",
+    "links": {
+      "github": "https://github.com/11yashiagrawal",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/yashi-agrawal-5b7a75323",
+      "community": null
+    },
+    "repos": ["Website"]
   }
 ]

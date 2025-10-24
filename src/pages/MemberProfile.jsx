@@ -63,11 +63,12 @@ export default function MemberProfile() {
 
   return (
     <article
-      className="w-full"
+      className="w-full pt-30"
       style={{
         paddingLeft: "1.5rem",
         paddingRight: "1.5rem",
         paddingBottom: "6rem",
+        
       }}
     >
       <div
@@ -83,8 +84,11 @@ export default function MemberProfile() {
       </div>
 
       <div
-        className="text-center font-semibold tracking-wide text-emerald-200/90"
-        style={{ marginBottom: "1.25rem" }}
+        className="text-center font-bold text-[50px] tracking-wide text-emerald-200/90 pb-5 font-family-['arial']"
+        style={{ marginBottom: "1.25rem"
+        }
+      
+      }
       >
         SAST Community Member
       </div>

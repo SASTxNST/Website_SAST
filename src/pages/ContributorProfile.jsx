@@ -63,7 +63,7 @@ export default function ContributorProfile() {
 
   return (
     <article
-      className="w-full"
+      className="w-full pt-30"
       style={{
         paddingLeft: "1.5rem",
         paddingRight: "1.5rem",
@@ -83,7 +83,7 @@ export default function ContributorProfile() {
       </div>
 
       <div
-        className="text-center font-semibold tracking-wide text-emerald-200/90"
+        className="text-center font-bold text-[50px] tracking-wide text-emerald-200/90"
         style={{ marginBottom: "1.25rem" }}
       >
         SAST Contributor

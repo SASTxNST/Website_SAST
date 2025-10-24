@@ -37,12 +37,13 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`header ${isNavbarHidden ? "hidden-navbar" : ""}`}
+        className={`header ${isNavbarHidden ? "hidden-navbar" : ""} `}
         style={{ zIndex: 50 }}
       >
         <div
-          className="container header-content"
+          className="container header-content w-max flex justify-between items-center gap-8"
           style={{ position: "relative", width: "100%" }}
+          
         >
           <NavLink to="/" className="logo" onClick={closeMenu}>
   <img
@@ -65,7 +66,7 @@ const Navbar = () => {
             </button>
           )}
 
-          <nav className={`main-nav ${menuOpen ? "active" : ""}`}>
+          <nav className={`main-nav ${menuOpen ? "active" : ""} flex justify-center items-center w-max `}>
             <ul className="nav-links">
 
              
@@ -98,10 +99,10 @@ const Navbar = () => {
               <li>
                 <NavLink to="/register" onClick={closeMenu}>Register</NavLink>
               </li>
-              <li>
-                <NavLink to="/news" onClick={closeMenu}>Astronomy News</NavLink>
+              <li className="w-max">
+                <NavLink to="/news" onClick={closeMenu} >Astronomy News</NavLink>
               </li>
-              <li>
+              <li className="">
                 <NavLink to="/track" onClick={closeMenu}>Track</NavLink>
               </li>
 

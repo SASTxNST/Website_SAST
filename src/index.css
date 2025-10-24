@@ -211,7 +211,8 @@ body {
 }
 
 .container {
-  max-width: 1440px;
+  max-width: max-content;
+  
   margin: 0 0;
   padding: 0.5rem 2rem;
   width: 100%;
@@ -221,6 +222,7 @@ body {
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;
+    min-width: 100%;
   }
 }
 

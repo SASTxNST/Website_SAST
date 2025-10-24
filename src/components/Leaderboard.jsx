@@ -9,22 +9,34 @@ const Leaderboard = ({ repoOwner, repoName, repos, onSelectRepo }) => {
   const [contributors, setContributors] = useState([]);
   const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchContributors = async () => {
     setIsLoading(true);
+    setError(null);
     let attempts = 0;
     let data = [];
+    let lastError = null;
 
     while (attempts < 10) {
       try {
         const res = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/stats/contributors`);
+        if (!res.ok) {
+          throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
+        }
         data = await res.json();
         if (Array.isArray(data) && data.length > 0) break;
       } catch (err) {
-        console.error('Fetch error:', err);
+        lastError = err;
+        // Only log in development
+        if (import.meta.env.DEV) {
+          console.error('Fetch error:', err);
+        }
       }
       attempts++;
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      if (attempts < 10) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
     }
 
     if (Array.isArray(data) && data.length > 0) {
@@ -41,9 +53,13 @@ const Leaderboard = ({ repoOwner, repoName, repos, onSelectRepo }) => {
       }));
       setContributors(enriched);
       setIsValid(true);
+      setError(null);
     } else {
       setContributors([]);
       setIsValid(false);
+      if (lastError) {
+        setError('Unable to fetch contributors. Please try again later.');
+      }
     }
     setIsLoading(false);
   };
@@ -101,7 +117,9 @@ const Leaderboard = ({ repoOwner, repoName, repos, onSelectRepo }) => {
           </div>
         ) : (!isValid || contributors.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '2rem' }}>
-            <p>No contributors found. Please check back soon.</p>
+            <p style={{ color: error ? '#ff6b6b' : 'inherit', marginBottom: '0.5rem' }}>
+              {error || 'No contributors found. Please check back soon.'}
+            </p>
             <button
               onClick={fetchContributors}
               style={{
@@ -111,8 +129,11 @@ const Leaderboard = ({ repoOwner, repoName, repos, onSelectRepo }) => {
                 padding: '0.5rem 1rem',
                 border: 'none',
                 borderRadius: '6px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                transition: 'background-color 0.3s'
               }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#3a3a6f'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#2a2a4f'}
             >
               <FaRedo style={{ marginRight: '0.5rem' }} /> Retry
             </button>

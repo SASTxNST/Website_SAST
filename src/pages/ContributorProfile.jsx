@@ -70,17 +70,18 @@ export default function ContributorProfile() {
         paddingBottom: "6rem",
       }}
     >
-      <div
-        className="w-full"
-        style={{ maxWidth: "1200px", margin: "0 auto 0.75rem auto" }}
-      >
-        <Link
-          to="/contributors"
-          className="inline-flex items-center gap-2 text-white/80 hover:text-white"
-        >
-          ← Go Back
-        </Link>
-      </div>
+  <div className="fixed left-9 top-32 z-50">
+  <Link to="/contributors">
+    <button
+      className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white/80 hover:text-white hover:bg-gray-700 rounded-lg shadow-md transition-all"
+    >
+      ← Go Back
+    </button>
+  </Link>
+</div>
+
+
+
 
       <div
         className="text-center font-bold text-[50px] tracking-wide text-emerald-200/90"

@@ -1,19 +1,30 @@
 /* Navbar Container */
 .navbar-header {
   position: fixed;
-  top: 0;
+  top: 10px;
   left: 0;
   right: 0;
   z-index: 1000;
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  max-width: 95%;
+  max-width: 980px;
   transition: transform 0.3s ease;
 }
 
 .navbar-header.hidden {
   transform: translateY(-100%);
+}
+
+/* Keep navbar visible on pages that explicitly pin it */
+body.pin-navbar .navbar-header.hidden {
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .navbar-header {
+    max-width: 90%;
+  }
 }
 
 .navbar-content {
@@ -22,12 +33,42 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 2px;
-  box-shadow: 1px 1px 10px 0px rgba(250, 250, 250, 0.3);
+  padding: 0.5rem 0.875rem;
+  background: rgba(17, 25, 40, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Projects page: increase transparency when viewing past projects */
+body.projects-page.projects-past .navbar-content {
+  background: rgba(17, 25, 40, 0.35);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Projects page: generally make navbar more transparent and subdued */
+body.projects-page .navbar-content {
+  background: rgba(17, 25, 40, 0.2);
+  border-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+/* Dim the links a bit on projects to reduce visual weight under dropdowns */
+body.projects-page .nav-link,
+body.projects-page .dropdown-toggle,
+body.projects-page .contact-button {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body.projects-page .nav-link.active {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.projects-page .dropdown-menu {
+  background: rgba(17, 25, 40, 0.75);
 }
 
 /* Logo */
@@ -41,14 +82,16 @@
 }
 
 .navbar-logo img {
-  border-radius: 0.375rem;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
 }
 
 /* Desktop Navigation */
 .desktop-nav {
   display: none;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -58,20 +101,24 @@
 }
 
 .nav-link {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: color 0.3s ease;
+  padding: 0.375rem 0.625rem;
+  border-radius: 9999px;
 }
 
 .nav-link:hover {
   color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-link.active {
   color: rgba(255, 255, 255, 1);
   font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Dropdown */
@@ -83,17 +130,20 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.7);
   background: none;
   border: none;
   cursor: pointer;
   transition: color 0.3s ease;
+  padding: 0.375rem 0.625rem;
+  border-radius: 9999px;
 }
 
 .dropdown:hover .dropdown-toggle {
   color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .dropdown-icon {
@@ -113,11 +163,11 @@
   transform: translateX(-50%) translateY(-10px);
   margin-top: 0.5rem;
   width: 12rem;
-  background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(17, 25, 40, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
@@ -133,8 +183,8 @@
 
 .dropdown-item {
   display: block;
-  padding: 0.75rem 1rem;
-  font-size: 1.25rem;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   transition: all 0.2s ease;
@@ -142,9 +192,9 @@
 }
 
 .dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: rgba(255, 255, 255, 1);
-  padding-left: 1.5rem;
+  padding-left: 1.25rem;
 }
 
 .dropdown-item.active {
@@ -155,13 +205,14 @@
 
 /* Nebula Link */
 .nebula-link {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #ff6f61;
   text-decoration: none;
   /* padding: 0.375rem 0.75rem; */
-  border-radius: 0.375rem;
+  border-radius: 9999px;
   transition: all 0.3s ease;
+  padding: 0.375rem 0.625rem;
 }
 
 .nebula-link:hover {
@@ -172,14 +223,15 @@
 /* Contact Button */
 .contact-button {
   display: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.25rem;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
   text-decoration: none;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 @media (min-width: 768px) {
@@ -189,8 +241,8 @@
 }
 
 .contact-button:hover {
-  background: rgba(255, 255, 255, 1);
-  color: #000;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 /* Hamburger Menu */
@@ -198,8 +250,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -215,8 +267,8 @@
 }
 
 .hamburger-line {
-  width: 2rem;
-  height: 0.2rem;
+  width: 1.75rem;
+  height: 0.16rem;
   background: #fff;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -224,7 +276,7 @@
 }
 
 .hamburger-menu.open .hamburger-line:first-child {
-  transform: rotate(45deg) translateY(9px) translateX(6px);
+  transform: rotate(45deg) translateY(7px) translateX(5px);
   background: #60a5fa;
 }
 
@@ -234,7 +286,7 @@
 }
 
 .hamburger-menu.open .hamburger-line:last-child {
-  transform: rotate(-45deg) translateY(-9px) translateX(6px);
+  transform: rotate(-45deg) translateY(-7px) translateX(5px);
   background: #60a5fa;
 }
 

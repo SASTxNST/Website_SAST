@@ -449,5 +449,80 @@
       "community": null
     },
     "repos": ["Website"]
+  },
+  {
+    "slug": "trishit-swarnakar",
+    "name": "Trishit Swarnakar",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/Trishix.png",
+    "links": {
+      "github": "https://github.com/Trishix",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "aaryan-yadav",
+    "name": "Aaryan Yadav",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/69Igris.png",
+    "links": {
+      "github": "https://github.com/69Igris",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "arnav-ahirwar",
+    "name": "Arnav Ahirwar",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/arnav-terex.png",
+    "links": {
+      "github": "https://github.com/arnav-terex",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "kapish-rohilla",
+    "name": "Kapish Rohilla",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/kapish9741.png",
+    "links": {
+      "github": "https://github.com/kapish9741",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "sneha-bayan",
+    "name": "Sneha Bayan",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/sneha-bayan.png",
+    "links": {
+      "github": "https://github.com/sneha-bayan",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
   }
 ]

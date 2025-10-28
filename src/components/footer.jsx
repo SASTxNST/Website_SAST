@@ -6,154 +6,229 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaTwitter,
+  FaGithub,
+  FaRocket,
+  FaSatellite,
+  FaGlobe,
 } from "react-icons/fa";
 
 function Footer() {
   return (
-    <div>
-        <footer className="bg-transparent text-white">
-            <div className="w-full foot flex flex-wrap md:flex-nowrap justify-start items-start gap-0 px-6 h-80 border border-white/15">
-            {/* Logo + Socials */}
-            <div
-                className="flex-shrink-0 flex flex-col items-center w-full md:min-w-[300px] md:w-auto h-full border-r border-white/15 pt-4 md:pt-0"
-                style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
-            >
-                <div className="foot_logo flex justify-center items-center mb-4 w-full h-[80%]">
-                <img
-                    className="w-full h-full object-cover opacity-70"
+    <footer className="relative w-full mt-32">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/50"></div>
+      
+      {/* Main Footer Content */}
+      <div className="relative z-10">
+        {/* Top Section with proper spacing */}
+        <div className="w-full px-12 py-20 border-t border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+              
+              {/* Brand Section */}
+              <div className="lg:col-span-1 flex flex-col">
+                <div className="mb-6">
+                  <img
                     src={logo}
-                    alt="Logo"
-                />
+                    alt="SAST Logo"
+                    className="h-14 w-auto"
+                  />
                 </div>
-
-                <div className="social_icons flex justify-center items-center pt-4 w-full h-[30%] gap-9">
-                <a
-                    href="https://youtube.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white text-2xl hover:text-red-600 transition"
-                    aria-label="YouTube"
-                >
-                    <FaYoutube />
-                </a>
-                <a
-                    href="https://www.instagram.com/sast.rishihood/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white text-2xl hover:text-pink-600 transition"
-                    aria-label="Instagram"
-                >
-                    <FaInstagram />
-                </a>
-                <a
+                <p className="text-sm text-gray-300 leading-relaxed mb-8 max-w-xs">
+                  Society for Aerospace and Space Technology - Pioneering the future of space exploration and aerospace innovation.
+                </p>
+                
+                {/* Social Media Icons */}
+                <div className="flex items-center space-x-3">
+                  <a
                     href="https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white text-2xl hover:text-blue-600 transition"
+                    className="group relative p-2.5 rounded-lg bg-white/5 hover:bg-blue-500/20 transition-all duration-200 border border-white/10 hover:border-blue-500/40"
                     aria-label="LinkedIn"
-                >
-                    <FaLinkedinIn />
-                </a>
-                <a
+                  >
+                    <FaLinkedinIn className="text-lg text-white group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/sast.rishihood/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2.5 rounded-lg bg-white/5 hover:bg-pink-500/20 transition-all duration-200 border border-white/10 hover:border-pink-500/40"
+                    aria-label="Instagram"
+                  >
+                    <FaInstagram className="text-lg text-white group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-2.5 rounded-lg bg-white/5 hover:bg-red-500/20 transition-all duration-200 border border-white/10 hover:border-red-500/40"
+                    aria-label="YouTube"
+                  >
+                    <FaYoutube className="text-lg text-white group-hover:scale-110 transition-transform" />
+                  </a>
+                  <a
                     href="https://x.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white text-2xl hover:text-sky-400 transition"
-                    aria-label="X"
-                >
-                    <FaTwitter />
-                </a>
+                    className="group relative p-2.5 rounded-lg bg-white/5 hover:bg-sky-500/20 transition-all duration-200 border border-white/10 hover:border-sky-500/40"
+                    aria-label="X (Twitter)"
+                  >
+                    <FaTwitter className="text-lg text-white group-hover:scale-110 transition-transform" />
+                  </a>
                 </div>
-            </div>
+              </div>
 
-            {/* Sections - completely hidden below xl */}
-            <div className="hidden xl:flex flex-wrap w-full h-full justify-center items-center text-center">
-                {[
-                {
-                    title: "ABOUT",
-                    items: [
-                    "Mission",
-                    "SAST Locations",
-                    "History",
-                    "FAQs",
+              {/* Explore Section */}
+              <div className="flex flex-col">
+                <div className="mb-7">
+                  <h3 className="text-base font-semibold text-white flex items-center space-x-2 tracking-wide">
+                    <FaRocket className="text-blue-400 text-lg" />
+                    <span>Explore</span>
+                  </h3>
+                </div>
+                <ul className="space-y-2.5">
+                  {[
+                    "Mission & Vision",
+                    "Our History",
                     "News & Events",
-                    ],
-                },
-                {
-                    title: "CAREERS",
-                    items: [
-                    "Career Finder",
-                    "Benefits",
-                    "Education",
-                    "Training",
-                    "Life in SAST",
-                    ],
-                },
-                {
-                    title: "CAPABILITIES",
-                    items: [
-                    "Protecting Satellites",
-                    "Facilitating Launches",
-                    "Education",
-                    "Experience a Launch",
-                    "Life in SAST",
-                    ],
-                },
-                {
-                    title: "HOW TO JOIN",
-                    items: [
-                    "What to Expect",
-                    "For Families",
-                    "Live Chat",
-                    "Training",
-                    "Life in SAST",
-                    ],
-                },
-                ].map(({ title, items }, idx) => (
-                <div
-                    key={title}
-                    className={`flex flex-col justify-center items-center gap-8 h-full min-w-[150px] flex-1 px-4 text-white
-                ${idx === 0 ? "mr-4" : ""}
-                ${idx !== 3 ? "border-r border-white/15" : ""}
-            `}
-                    style={{ borderRightColor: "rgba(255,255,255,0.1)" }}
-                >
-                    <h2 className="font-bold text-xl">{title}</h2>
-                    {items.map((item) => (
-                    <h4
-                        key={item}
-                        className="font-light text-sm cursor-pointer hover:underline whitespace-nowrap text-center"
-                    >
-                        {item}
-                    </h4>
-                    ))}
-                </div>
-                ))}
-            </div>
-            </div>
+                    "Projects",
+                    "Gallery",
+                    "Locations",
+                  ].map((item, idx) => (
+                    <li key={idx}>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition-colors duration-200 text-sm group flex items-center"
+                      >
+                        <span className="w-0 h-0.5 bg-blue-400 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                        <span>{item}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* Bottom Bar */}
-            <div className="h-20 w-full flex flex-wrap justify-evenly items-center gap-2 px-6 bg-transparent">
-            {[
-                "SAST",
-                "PRIVACY POLICY",
-                "ACCESSIBILITY",
-                "WATCH VIDEOS",
-                "SITEMAP",
-                "COOKIE SETTINGS",
-            ].map((text) => (
-                <div
-                key={text}
-                className="text-xs font-bold whitespace-nowrap cursor-pointer hover:underline"
-                >
-                {text}
+              {/* Resources Section */}
+              <div className="flex flex-col">
+                <div className="mb-7">
+                  <h3 className="text-base font-semibold text-white flex items-center space-x-2 tracking-wide">
+                    <FaSatellite className="text-purple-400 text-lg" />
+                    <span>Resources</span>
+                  </h3>
                 </div>
-            ))}
+                <ul className="space-y-2.5">
+                  {[
+                    "Documentation",
+                    "Research Papers",
+                    "Tutorials",
+                    "Contribute",
+                    "Member Portal",
+                    "Training Programs",
+                  ].map((item, idx) => (
+                    <li key={idx}>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition-colors duration-200 text-sm group flex items-center"
+                      >
+                        <span className="w-0 h-0.5 bg-purple-400 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                        <span>{item}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Get Involved Section */}
+              <div className="flex flex-col">
+                <div className="mb-7">
+                  <h3 className="text-base font-semibold text-white flex items-center space-x-2 tracking-wide">
+                    <FaGlobe className="text-green-400 text-lg" />
+                    <span>Get Involved</span>
+                  </h3>
+                </div>
+                <ul className="space-y-2.5">
+                  {[
+                    "Join Our Team",
+                    "Become a Member",
+                    "Partnership",
+                    "Volunteer",
+                    "Contact Us",
+                    "FAQs",
+                  ].map((item, idx) => (
+                    <li key={idx}>
+                      <a
+                        href="#"
+                        className="text-gray-400 hover:text-white transition-colors duration-200 text-sm group flex items-center"
+                      >
+                        <span className="w-0 h-0.5 bg-green-400 group-hover:w-2 group-hover:mr-2 transition-all duration-200"></span>
+                        <span>{item}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-      </footer>
-      
-    </div>
-  )
+          </div>
+        </div>
+
+        {/* Bottom Bar with professional styling */}
+        <div className="w-full px-12 py-8 border-t border-white/10 bg-black/30 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+              {/* Left side - Copyright */}
+              <div className="flex items-center text-sm text-gray-400">
+                <span className="text-white font-medium">© 2024 SAST.</span>
+                <span className="mx-1">All rights reserved.</span>
+              </div>
+              
+              {/* Right side - Links */}
+              <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium text-gray-400">
+                <a 
+                  href="#" 
+                  className="hover:text-white transition-colors duration-200"
+                >
+                  Privacy Policy
+                </a>
+                <div className="w-0.5 h-0.5 bg-gray-500 rounded-full"></div>
+                <a 
+                  href="#" 
+                  className="hover:text-white transition-colors duration-200"
+                >
+                  Terms of Service
+                </a>
+                <div className="w-0.5 h-0.5 bg-gray-500 rounded-full"></div>
+                <a 
+                  href="#" 
+                  className="hover:text-white transition-colors duration-200"
+                >
+                  Accessibility
+                </a>
+                <div className="w-0.5 h-0.5 bg-gray-500 rounded-full"></div>
+                <a 
+                  href="#" 
+                  className="hover:text-white transition-colors duration-200"
+                >
+                  Sitemap
+                </a>
+                <div className="w-0.5 h-0.5 bg-gray-500 rounded-full"></div>
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-200 flex items-center space-x-1.5 group"
+                >
+                  <FaGithub className="group-hover:scale-110 transition-transform" />
+                  <span>Open Source</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Subtle decorative top border */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+      </div>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;

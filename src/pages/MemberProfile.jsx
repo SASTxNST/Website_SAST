@@ -74,7 +74,7 @@ export default function MemberProfile() {
     <div className="fixed left-9 top-32 z-50">
       <Link to="/contributors">
         <button
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white/80 hover:text-white hover:bg-gray-700 rounded-lg shadow-md transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-transparent-800 text-white/80 hover:text-white hover:bg-gray-700 rounded-lg shadow-md transition-all"
         >
           ← Go Back
         </button>

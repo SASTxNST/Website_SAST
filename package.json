@@ -32,7 +32,7 @@
     "satellite.js": "^6.0.0",
     "tailwind-merge": "^3.3.1",
     "toast": "^0.5.4",
-    "z": "^1.0.9"
+    "z": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

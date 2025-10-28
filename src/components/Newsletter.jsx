@@ -13,6 +13,8 @@ import {
   Satellite,
   Globe,
 } from "lucide-react";
+import LoadingSpinner from './LoadingSpinner';
+import NewsletterSkeleton from './NewsletterSkeleton';
 import { useNavigate } from "react-router-dom";
 
 const Newsletter = () => {
@@ -23,9 +25,15 @@ const Newsletter = () => {
   const [lastName, setLastName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [isLoadingNewsletters, setIsLoadingNewsletters] = useState(true);
+  const [isDownloading, setIsDownloading] = useState(null);
 
   useEffect(() => {
     setIsVisible(true);
+    // Simulate loading newsletters
+    setTimeout(() => {
+      setIsLoadingNewsletters(false);
+    }, 1500);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -41,22 +49,33 @@ const Newsletter = () => {
     alert("Successfully subscribed to SAST Newsletter!");
   };
 
-  const handleDownload = (newsletter) => {
+  const handleDownload = async (newsletter) => {
     if (!newsletter.available || !newsletter.pdfUrl) {
       alert("This newsletter is not available for download yet. Please check back later!");
       return;
     }
 
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = newsletter.pdfUrl;
-    link.download = `SAST_Newsletter_${newsletter.year}_${newsletter.title.replace(/\s+/g, '_')}.pdf`;
-    link.target = '_blank';
+    setIsDownloading(newsletter.title);
     
-    // Append to body, click, and remove
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // Simulate download delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.href = newsletter.pdfUrl;
+      link.download = `SAST_Newsletter_${newsletter.year}_${newsletter.title.replace(/\s+/g, '_')}.pdf`;
+      link.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      alert('Failed to download newsletter. Please try again.');
+    } finally {
+      setIsDownloading(null);
+    }
   };
 
   const newsletters = [
@@ -374,7 +393,13 @@ const Newsletter = () => {
                 gap: 32,
               }}
             >
-              {newsletters.map((newsletter, index) => (
+              {isLoadingNewsletters ? (
+                // Show skeleton loaders while loading
+                Array(3).fill().map((_, index) => (
+                  <NewsletterSkeleton key={index} />
+                ))
+              ) : (
+                newsletters.map((newsletter, index) => (
                 <div
                   key={index}
                   onMouseEnter={() => setHoveredCard(index)}
@@ -513,7 +538,7 @@ const Newsletter = () => {
                       </div>
                       <button
                         onClick={() => handleDownload(newsletter)}
-                        disabled={!newsletter.available}
+                        disabled={!newsletter.available || isDownloading === newsletter.title}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -524,27 +549,36 @@ const Newsletter = () => {
                           borderRadius: 12,
                           fontWeight: 600,
                           border: "none",
-                          cursor: newsletter.available ? "pointer" : "not-allowed",
+                          cursor: newsletter.available && isDownloading !== newsletter.title ? "pointer" : "not-allowed",
                           transition: "all 0.3s",
                           opacity: newsletter.available ? 1 : 0.6,
                           transform:
                             hoveredCard === index && newsletter.available ? "scale(1.05)" : "scale(1)",
                         }}
                       >
-                        <Download style={{ width: 16, height: 16 }} />
-                        {newsletter.available ? "Download" : "Coming Soon"}
-                        {newsletter.available && (
-                          <ChevronRight
-                            style={{
-                              width: 16,
-                              height: 16,
-                              transition: "transform 0.3s",
-                              transform:
-                                hoveredCard === index
-                                  ? "translateX(5px)"
-                                  : "translateX(0)",
-                            }}
-                          />
+                        {isDownloading === newsletter.title ? (
+                          <>
+                            <LoadingSpinner size={16} />
+                            Downloading...
+                          </>
+                        ) : (
+                          <>
+                            <Download style={{ width: 16, height: 16 }} />
+                            {newsletter.available ? "Download" : "Coming Soon"}
+                            {newsletter.available && (
+                              <ChevronRight
+                                style={{
+                                  width: 16,
+                                  height: 16,
+                                  transition: "transform 0.3s",
+                                  transform:
+                                    hoveredCard === index
+                                      ? "translateX(5px)"
+                                      : "translateX(0)",
+                                }}
+                              />
+                            )}
+                          </>
                         )}
                       </button>
                     </div>

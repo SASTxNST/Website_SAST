@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../Landing_media/SAST.png";
 
@@ -9,6 +9,8 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   // Navigation items configuration
   const navItems = [
@@ -37,6 +39,7 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsNavbarHidden(currentScrollY > lastScrollY && currentScrollY > 100);
+      setScrolled(currentScrollY > 8);
       lastScrollY = currentScrollY;
     };
 
@@ -49,11 +52,21 @@ const Navbar = () => {
       }
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        setExploreOpen(false);
+        setCommunityOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -80,11 +93,16 @@ const Navbar = () => {
   const toggleExplore = () => setExploreOpen((o) => !o);
   const toggleCommunity = () => setCommunityOpen((o) => !o);
 
+  // Close any open menus when the route changes
+  useEffect(() => {
+    closeMenu();
+  }, [location.pathname]);
+
   return (
-    <header className={`navbar-header ${isNavbarHidden ? "hidden" : ""}`}>
+    <header className={`navbar-header ${isNavbarHidden ? "hidden" : ""} ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-content">
         {/* Logo */}
-        <NavLink to="/" onClick={closeMenu} className="navbar-logo">
+        <NavLink to="/" onClick={closeMenu} className="navbar-logo" aria-label="Go to home">
           <img src={logo} alt="SAST Logo" width="60" height="60" />
         </NavLink>
 
@@ -102,7 +120,7 @@ const Navbar = () => {
 
           {/* Explore Dropdown */}
           <div className="dropdown">
-            <button className="dropdown-toggle">
+            <button className="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
               Explore
               <svg
                 className="dropdown-icon"
@@ -135,7 +153,7 @@ const Navbar = () => {
 
           {/* Community Dropdown */}
           <div className="dropdown">
-            <button className="dropdown-toggle">
+            <button className="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
               Community
               <svg
                 className="dropdown-icon"
@@ -199,6 +217,7 @@ const Navbar = () => {
           className={`hamburger-menu ${menuOpen ? "open" : ""}`}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
         >
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
@@ -206,7 +225,7 @@ const Navbar = () => {
         </button>
 
         {/* Mobile Menu */}
-        <nav className={`mobile-nav ${menuOpen ? "active" : ""}`}>
+        <nav id="mobile-nav" className={`mobile-nav ${menuOpen ? "active" : ""}`}>
           <ul className="mobile-nav-list">
             <li className="mobile-nav-item mobile-nav-header">
               <div className="mobile-nav-header-title">Menu</div>

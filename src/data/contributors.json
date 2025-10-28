@@ -524,5 +524,65 @@
       "community": null
     },
     "repos": ["Website"]
+  },
+  {
+    "slug": "krishna-dave",
+    "name": "Krishna Dave",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/krishna-dave206.png",
+    "links": {
+      "github": "https://github.com/krishna-dave206",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "debashis-pani",
+    "name": "Debashis Pani",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/pani2004.png",
+    "links": {
+      "github": "https://github.com/pani2004",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "rocoy",
+    "name": "Rocoy",
+    "role": "Contributor",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/r0c0y.png",
+    "links": {
+      "github": "https://github.com/r0c0y",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "mohit",
+    "name": "Mohit",
+    "role": "Member",
+    "location": null,
+    "bio": null,
+    "avatarUrl": "https://github.com/mohit-22.png",
+    "links": {
+      "github": "https://github.com/mohit-22",
+      "x": null,
+      "linkedin": null,
+      "community": null
+    },
+    "repos": ["Website"]
   }
 ]

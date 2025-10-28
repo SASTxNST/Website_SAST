@@ -1,9 +1,33 @@
 import { defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
 import cesium from "vite-plugin-cesium";
+
 export default defineConfig({
-  plugins: [tailwindcss(), cesium()],
+  plugins: [react(), cesium()],
   server: {
-    allowedHosts: ["691c-2a09-bac5-3b51-1a46-00-29e-d.ngrok-free.app"],
+    port: 5173,
+    host: true,
+    open: true,
+    strictPort: true,
+    watch: {
+      usePolling: true
+    }
   },
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: '/index.html'
+      }
+    }
+  },
+  base: '/',
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
+  }
 });

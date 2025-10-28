@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --host",
+    "start": "vite"
   },
   "dependencies": {
     "@radix-ui/react-toast": "^1.2.15",
@@ -39,7 +40,7 @@
     "@tailwindcss/vite": "^4.1.14",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^5.1.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
@@ -48,7 +49,7 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.2",
     "tailwindcss": "^4.0.7",
-    "vite": "^6.4.1",
+    "vite": "^7.1.12",
     "vite-plugin-cesium": "^1.2.23"
   }
 }

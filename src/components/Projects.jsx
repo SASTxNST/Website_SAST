@@ -11,26 +11,40 @@ import Cubesat1_png from "../Landing_media/Cubesastr.jpeg";
 const Projects = () => {
   const [filterType, setFilterType] = useState("all");
 
+  // Project type constants for consistency
+  const PROJECT_TYPES = {
+    CURRENT: "current",
+    UPCOMING: "upcoming",
+    PAST: "past"
+  };
+
   const projects = [
-    { id: 1, title: "TARS AI", date: "2025-02-13", type: "current", imgSrc: Tars_png },
-    { id: 2, title: "MOON CRAWLER", date: "2025-02-13", type: "current1", imgSrc: MoonC_png },
-    { id: 3, title: "SAT.V2", date: "2025-02-13", type: "current", imgSrc: Cubesat2_png },
-    { id: 4, title: "VECTOR MONOCOPTER THRUSTER", date: "2026-02-13", type: "upcoming", imgSrc: Monocopter_png },
-    { id: 5, title: "SAT.V1", date: "2024-11-12", type: "past", imgSrc: Cubesat1_png }
+    { id: 1, title: "TARS AI", date: "2025-02-13", type: PROJECT_TYPES.CURRENT, imgSrc: Tars_png },
+    { id: 2, title: "MOON CRAWLER", date: "2025-02-13", type: PROJECT_TYPES.CURRENT, imgSrc: MoonC_png },
+    { id: 3, title: "SAT.V2", date: "2025-02-13", type: PROJECT_TYPES.CURRENT, imgSrc: Cubesat2_png },
+    { id: 4, title: "VECTOR MONOCOPTER THRUSTER", date: "2026-02-13", type: PROJECT_TYPES.UPCOMING, imgSrc: Monocopter_png },
+    { id: 5, title: "SAT.V1", date: "2024-11-12", type: PROJECT_TYPES.PAST, imgSrc: Cubesat1_png }
   ];
 
   const getFilteredProjects = () => {
-    if (filterType === "all") return projects;
-    if (filterType === "past") return projects.filter(project => project.type === "past");
-    if (filterType === "ongoing") return projects.filter(project => project.type === "current1");
-    if (filterType === "future") return projects.filter(project => project.type === "upcoming") ;
-    return [];
+    switch (filterType) {
+      case "all":
+        return projects;
+      case "past":
+        return projects.filter(project => project.type === PROJECT_TYPES.PAST);
+      case "ongoing":
+        return projects.filter(project => project.type === PROJECT_TYPES.CURRENT);
+      case "future":
+        return projects.filter(project => project.type === PROJECT_TYPES.UPCOMING);
+      default:
+        return [];
+    }
   };
 
   const filtered = getFilteredProjects();
 
   const getProjectLink = (project) => {
-    if (filterType === "ongoing" && project.title === "MOON CRAWLER") {
+    if (filterType === "ongoing" && project.type === PROJECT_TYPES.CURRENT && project.title === "MOON CRAWLER") {
       return "https://custom-link-for-moon-crawler.com";
     }
     return "https://www.linkedin.com/company/society-for-astrophysics-and-space-technology/?viewAsMember=true";
@@ -77,9 +91,9 @@ const Projects = () => {
               {/* Text Content */}
               <div className="absolute bottom-24 sm:bottom-40 left-6 sm:left-20 z-10 max-w-[90%] sm:max-w-xl text-left space-y-4 sm:space-y-6">
                 <h6 className="text-base sm:text-2xl uppercase text-gray-300 tracking-wider">
-                  {project.type === "past"
+                  {project.type === PROJECT_TYPES.PAST
                     ? "Past Project"
-                    : project.type === "upcoming"
+                    : project.type === PROJECT_TYPES.UPCOMING
                     ? "Upcoming Project"
                     : "Current Project"}
                 </h6>

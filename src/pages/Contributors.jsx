@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRepos, getContributorsByRepo, getAllContributors } from "../lib/contributors/data";
 import FilterPill from "../components/FilterPill";
+import { Search } from "lucide-react";
 
 /* ---------------- Repo Filter Pill ---------------- */
 
@@ -89,6 +90,23 @@ function ContributorCard({ c }) {
   );
 }
 
+/* ---------------- Search Bar ---------------- */
+
+function SearchBar({ value, onChange, placeholder = "Search contributors..." }) {
+  return (
+    <div className="relative w-full max-w-md">
+      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full rounded-xl border border-white/15 bg-white/5 py-3 pl-10 pr-4 text-white placeholder-white/50 backdrop-blur transition focus:border-emerald-400/50 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400/20"
+      />
+    </div>
+  );
+}
+
 /* ---------------- Page ---------------- */
 
 export default function Contributors() {
@@ -97,15 +115,18 @@ export default function Contributors() {
 
   const [activeRepo, setActiveRepo] = useState(repos[0] || "all");
   const [activeFilters, setActiveFilters] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Extract unique values for each filterable field
   const availableFilters = useMemo(() => {
     const roles = [...new Set(allContribs.map((c) => c.role).filter(Boolean))].sort();
     const locations = [...new Set(allContribs.map((c) => c.location).filter(Boolean))].sort();
+    const names = [...new Set(allContribs.map((c) => c.name).filter(Boolean))].sort();
     
     return {
       role: roles,
       location: locations,
+      name: names,
     };
   }, [allContribs]);
 
@@ -126,14 +147,23 @@ export default function Contributors() {
           if (key === "location") {
             return contributor.location === value;
           }
+          if (key === "name") {
+            return (contributor.name || "").toLowerCase() === (value || "").toLowerCase();
+          }
           
           return true;
         });
       });
     }
 
+    // Apply search filter (name match)
+    if (searchTerm && searchTerm.trim()) {
+      const s = searchTerm.toLowerCase();
+      filtered = filtered.filter((c) => (c.name || "").toLowerCase().includes(s));
+    }
+
     return filtered;
-  }, [activeRepo, activeFilters, allContribs]);
+  }, [activeRepo, activeFilters, allContribs, searchTerm]);
 
   return (
     <React.Fragment>
@@ -167,6 +197,10 @@ export default function Contributors() {
             className="flex w-full flex-wrap items-center justify-center gap-2"
             style={{ marginBottom: "1.5rem" }}
           >
+            {/* Search bar (placed above pills on small screens) */}
+            <div className="w-full flex justify-center" style={{ marginBottom: "0.5rem" }}>
+              <SearchBar value={searchTerm} onChange={setSearchTerm} />
+            </div>
             <RepoPill
               label="all"
               active={!activeRepo || activeRepo === "all"}
@@ -192,7 +226,7 @@ export default function Contributors() {
           </div>
 
           {/* Results counter */}
-          {(activeFilters.length > 0 || activeRepo !== "all") && (
+          {(activeFilters.length > 0 || activeRepo !== "all" || (searchTerm && searchTerm.trim())) && (
             <div className="mb-4 text-center">
               <p className="text-sm text-white/60">
                 Showing <span className="font-semibold text-emerald-400">{data.length}</span>{" "}
@@ -220,6 +254,7 @@ export default function Contributors() {
                 onClick={() => {
                   setActiveFilters([]);
                   setActiveRepo("all");
+                  setSearchTerm("");
                 }}
                 className="mt-4 rounded-xl border border-emerald-400/45 bg-emerald-500/15 px-6 py-2 text-emerald-200 backdrop-blur transition hover:bg-emerald-500/20"
               >

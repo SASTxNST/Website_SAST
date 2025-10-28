@@ -71,8 +71,8 @@ const Newsletter = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-    } catch (error) {
-      alert('Failed to download newsletter. Please try again.');
+    } catch (err) {
+      alert(`Failed to download newsletter: ${err.message}. Please try again.`);
     } finally {
       setIsDownloading(null);
     }
@@ -393,12 +393,11 @@ const Newsletter = () => {
                 gap: 32,
               }}
             >
-              {isLoadingNewsletters ? (
-                // Show skeleton loaders while loading
+              {isLoadingNewsletters ? 
                 Array(3).fill().map((_, index) => (
                   <NewsletterSkeleton key={index} />
                 ))
-              ) : (
+               : 
                 newsletters.map((newsletter, index) => (
                 <div
                   key={index}

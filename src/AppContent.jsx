@@ -26,6 +26,8 @@ import Contributors from "./pages/Contributors.jsx";
 import DocsHub from "./pages/DocsHub.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
 import ChatBot from "./components/ChatBot.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import { Ion } from "cesium";
 import useSettings from "./hooks/UseSettings.jsx";
 import Loader from "./components/Loader.jsx";
@@ -52,27 +54,30 @@ const AppContent = () => {
       <ChatBot />
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
 
-      <main className="">
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/newsletter" element={<Newsletter />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/calendar" element={<EventCalendarPage />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/merch" element={<Store />} />
-          <Route path="/contributions" element={<ContributionRanks />} />
-          <Route path="/news" element={<AstronomyNews />} />
-          <Route path="/track" element={<SatelliteTracker />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/footer" element={<Footer />} />
-          <Route path="/community/members" element={<Members />} />
-          <Route path="/community/members/:slug" element={<MemberProfile />} />
-          <Route path="/contributors" element={<Contributors />} />
-          <Route path="/contributors/:slug" element={<ContributorProfile />} />
-          <Route path="/docs/*" element={<DocsHub />} />
-        </Routes>
-      </main>
+      <ErrorBoundary>
+        <main className="">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/newsletter" element={<Newsletter />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/calendar" element={<EventCalendarPage />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/merch" element={<Store />} />
+            <Route path="/contributions" element={<ContributionRanks />} />
+            <Route path="/news" element={<AstronomyNews />} />
+            <Route path="/track" element={<SatelliteTracker />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/community/members" element={<Members />} />
+            <Route path="/community/members/:slug" element={<MemberProfile />} />
+            <Route path="/contributors" element={<Contributors />} />
+            <Route path="/contributors/:slug" element={<ContributorProfile />} />
+            <Route path="/docs/*" element={<DocsHub />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+      </ErrorBoundary>
     </>
   );
 };

@@ -35,6 +35,7 @@ setInterval(() => {
 }, 60 * 1000);
 
 // Email transporter using Gmail via TLS/587
+// Gate verbose logging behind NODE_ENV so production doesn't leak transport debug info.
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -43,8 +44,8 @@ const transporter = nodemailer.createTransport({
         user: process.env.OTP_EMAIL_USER,
         pass: process.env.OTP_EMAIL_PASS // Gmail App Password
     },
-    logger: true,
-    debug: true
+    logger: process.env.NODE_ENV !== 'production',
+    debug: process.env.NODE_ENV !== 'production'
 });
 
 // Send OTP via email
@@ -75,8 +76,8 @@ Exploring beyond limits, securing every step.`,
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log(`OTP ${otp} sent to email ${email}`);
-        console.log('Email info:', info);
+        // Do not log OTPs or sensitive email content. Log only that an email was sent.
+        console.log(`OTP email sent to ${email}`);
         return true;
     } catch (error) {
         console.error('Failed to send OTP email:', error);

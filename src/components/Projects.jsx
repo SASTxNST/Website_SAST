@@ -9,12 +9,16 @@ import Monocopter_png from "../Landing_media/monocopter.webp";
 import Cubesat1_png from "../Landing_media/Cubesastr.jpeg";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useLenis from '../utils/lenis';
+import Footer from "./footer";
 
 const Projects = () => {
+  useLenis();
   const [filterType, setFilterType] = useState("all");
   const [atEnd, setAtEnd] = useState(false);
   const [rebuilding, setRebuilding] = useState(false);
   const filterRef = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     // Pin global navbar while on Projects page
@@ -68,8 +72,6 @@ const Projects = () => {
       }
     });
 
-    // Note: snapping disabled to prevent jumps when switching filters
-
     // Stack-style cover transition: next fades/scales in, previous fades out
     sections.forEach((section, i) => {
       gsap.set(section, { opacity: i === 0 ? 1 : 0, scale: 1.01 });
@@ -114,7 +116,9 @@ const Projects = () => {
       const last = all[all.length - 1];
       if (!last) return setAtEnd(false);
       const y = window.scrollY || window.pageYOffset;
-      setAtEnd(y >= (last.offsetTop - 8));
+      // Check if we've scrolled past all project sections
+      const containerBottom = containerRef.current?.offsetTop + containerRef.current?.scrollHeight;
+      setAtEnd(y >= (last.offsetTop - 8) || y >= containerBottom - window.innerHeight);
     };
     updateAtEnd();
     window.addEventListener('scroll', updateAtEnd, { passive: true });
@@ -254,7 +258,8 @@ const Projects = () => {
       const last = all[all.length - 1];
       if (!last) return setAtEnd(false);
       const y = window.scrollY || window.pageYOffset;
-      setAtEnd(y >= last.offsetTop - 8);
+      const containerBottom = containerRef.current?.offsetTop + containerRef.current?.scrollHeight;
+      setAtEnd(y >= last.offsetTop - 8 || y >= containerBottom - window.innerHeight);
     };
     updateAtEnd();
     window.addEventListener('scroll', updateAtEnd, { passive: true });
@@ -278,7 +283,7 @@ const Projects = () => {
   }, [filterType]);
 
   return (
-    <div className="relative w-full min-h-screen bg-black text-white">
+    <div className="relative w-full min-h-screen bg-black text-white" ref={containerRef}>
       {/* Filter Buttons */}
       <div className="fixed top-[96px] left-1/2 transform -translate-x-1/2 z-[70] w-full max-w-md px-4" ref={filterRef}>
         <div className="flex items-center justify-center gap-3 m-4 p-3 rounded-full bg-black/30 border border-white/20 shadow-xl backdrop-blur-md">
@@ -302,48 +307,67 @@ const Projects = () => {
       </div>
 
       {/* Scroll Section - Stack style: each section sticks and next covers previous */}
-      <section className="min-h-[100vh] " style={{ visibility: rebuilding ? 'hidden' : 'visible' }}>
+      <section className="min-h-[100vh]" style={{ visibility: rebuilding ? 'hidden' : 'visible' }}>
         {filtered.map((project, idx) => (
           <div
             key={project.id}
-            className="relative w-full h-screen sticky top-0 project-section"
+            className="relative w-full h-screen top-0 project-section overflow-hidden"
             style={{ zIndex: filtered.length - idx }}
           >
-              {/* Background Image */}
+            {/* Background Image with Gradient Mask */}
+            <div className="absolute inset-0">
               <img
                 src={project.imgSrc}
                 alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover project-bg"
+                className="w-full h-full object-cover project-bg scale-105"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)'
+                }}
               />
-              {/* Light Overlay */}
-              <div className="absolute inset-0 bg-black/10" />
+            </div>
 
-              {/* Text Content */}
-              <div className="absolute bottom-24 sm:bottom-40 left-6 sm:left-20 z-10 max-w-[90%] sm:max-w-xl text-left space-y-4 sm:space-y-6 project-content">
-                <h6 className="text-base sm:text-2xl uppercase text-gray-300 tracking-wider">
-                  {project.type === "past"
-                    ? "Past Project"
-                    : project.type === "future"
-                    ? "Future Project"
-                    : "Current Project"}
-                </h6>
-                <h1 className="text-2xl sm:text-6xl font-bold text-white">
-                  {project.title}
-                </h1>
-                <a
-                  href={getProjectLink(project)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="learn_more h-15 w-40 sm:w-48 ml-1 sm:ml-4 text-sm sm:text-xl font-bold border border-white px-4 py-2 sm:px-8 sm:py-3 hover:scale-105 transition duration-150 flex justify-center items-center gap-1"
-                >
-                  <p>LEARN </p>
-                  <p>MORE</p>
-                </a>
+            {/* Enhanced Overlay with Gradient Fade */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.3) 100%)'
+              }}
+            />
 
-              </div>
+            {/* Text Content */}
+            <div className="absolute bottom-24 sm:bottom-40 left-6 sm:left-20 z-10 max-w-[90%] sm:max-w-xl text-left space-y-4 sm:space-y-6 project-content">
+              <h6 className="text-base sm:text-2xl uppercase text-gray-300 tracking-wider">
+                {project.type === "past"
+                  ? "Past Project"
+                  : project.type === "future"
+                  ? "Future Project"
+                  : "Current Project"}
+              </h6>
+              <h1 className="text-2xl sm:text-6xl font-bold text-white">
+                {project.title}
+              </h1>
+              <a
+                href={getProjectLink(project)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="learn_more h-15 w-40 sm:w-48 ml-1 sm:ml-4 text-sm sm:text-xl font-bold border border-white px-4 py-2 sm:px-8 sm:py-3 hover:scale-105 transition duration-150 flex justify-center items-center gap-1"
+              >
+                <p>LEARN </p>
+                <p>MORE</p>
+              </a>
+            </div>
           </div>
         ))}
       </section>
+
+      {/* Spacer to ensure footer is visible */}
+      <div className="relative z-40 h-20 bg-transparent"></div>
+
+      {/* Footer with proper positioning */}
+      <div className="relative z-50 bg-black">
+        <Footer />
+      </div>
 
       {/* Down Arrow Indicator */}
       <button
@@ -358,6 +382,12 @@ const Projects = () => {
           const next = sections.find((s) => s.offsetTop > y + 10);
           if (next) {
             window.scrollTo({ top: next.offsetTop, behavior: 'smooth' });
+          } else {
+            // If no next section, scroll to footer
+            const footer = document.querySelector('footer');
+            if (footer) {
+              footer.scrollIntoView({ behavior: 'smooth' });
+            }
           }
         }}
         className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] p-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition animate-bounce"

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import "../index.css";
 import { motion, useScroll, useTransform } from "framer-motion";
 import videoe1 from "../Landing_media/satellitevid.mp4";
 import waterpng from "../Landing_media/waterrocket.png";
@@ -40,13 +39,20 @@ const Events = () => {
 
   const getFilteredEvents = () => {
     const currentDate = new Date().toISOString().split("T")[0];
-    return events.filter(({ date }) => {
-      if (filterType === "all") return true;
-      if (filterType === "past") return date < currentDate;
-      if (filterType === "ongoing") return date === currentDate;
-      if (filterType === "future") return date > currentDate;
-      return true;
-    });
+    return calendarEventsData.events
+      .filter(({ id }) => id <= 7) // Only show events with images
+      .map(event => ({
+        ...event,
+        imgSrc: events.find(e => e.id === event.id)?.imgSrc || '',
+        videoSrc: events.find(e => e.id === event.id)?.videoSrc || ''
+      }))
+      .filter(({ startDate }) => {
+        if (filterType === "all") return true;
+        if (filterType === "past") return startDate < currentDate;
+        if (filterType === "ongoing") return startDate === currentDate;
+        if (filterType === "future") return startDate > currentDate;
+        return true;
+      });
   };
 
   const filterTypes = ["all", "past", "ongoing", "future"];
@@ -272,22 +278,27 @@ const Events = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     const handleHover = (event, action) => {
-      const video = event.currentTarget.querySelector("video");
+      const card = event.currentTarget;
+      const video = card.querySelector("video");
       if (!video) return;
 
       if (isMobile) {
-        video.paused ? video.play() : video.pause();
-        video.classList.toggle("opacity-60");
+        if (video.paused) {
+          video.play().catch(err => console.log("Video play failed:", err));
+        } else {
+          video.pause();
+        }
       } else {
-        if (action === "play") video.play();
-        else {
+        if (action === "play") {
+          video.play().catch(err => console.log("Video play failed:", err));
+        } else {
           video.pause();
           video.currentTime = 0;
         }
       }
     };
 
-    const cards = document.querySelectorAll(".card");
+    const cards = document.querySelectorAll(".group");
     cards.forEach((card) => {
       if (isMobile) {
         card.addEventListener("click", (e) => handleHover(e, "toggle"));
@@ -323,7 +334,7 @@ const Events = () => {
         <section className="w-full flex flex-col items-center mt-28">
 
           {/* 🌌 Filter Navbar */}
-          <div className="flex flex-col md:flex-row items-center justify-center w-full mt-8 px-4 gap-4 md:gap-0 md:relative">
+          <div className="flex flex-col md:flex-row items-center justify-center w-full mt-8 px-4 py-4 md:py-12 sm:py-6 gap-4 md:gap-0 md:relative">
             <div className="md:absolute md:left-8 lg:left-40 w-full md:w-auto">
               <Link
                 to="/calendar"
@@ -380,34 +391,58 @@ const Events = () => {
           </div>
 
           {/* Events Grid */}
-          <div className="events grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 px-4 w-full max-w-7xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 sm:mt-10 px-4 sm:px-6 md:px-8 w-full max-w-7xl mx-auto">
             {getFilteredEvents().map((event) => (
-              <div
+              <motion.div
                 key={event.id}
-                className="card group relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="group relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-lg shadow-lg hover:shadow-2xl hover:shadow-blue-500/20 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
               >
                 <div className="relative w-full h-full">
                   <img
                     src={event.imgSrc}
                     alt={event.title}
                     loading="lazy"
-                    className="rounded-sm lg:rounded-xl md:rounded-md w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
                   />
                   <video
-                    className="rounded-sm lg:rounded-xl md:rounded-md absolute top-0 left-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+                    className="absolute top-0 left-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                     loop
                     muted
+                    playsInline
                   >
                     <source src={event.videoSrc} type="video/mp4" />
                   </video>
-                  <div className="card-info p-4 text-white absolute bottom-0 w-full">
-                    <h2 className="text-lg font-semibold">{event.title}</h2>
-                    <p className="text-sm text-gray-200 line-clamp-2">
+                  
+                  {/* Date Badge */}
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
+                    <div className="bg-blue-500/90 backdrop-blur-sm text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl shadow-lg">
+                      <p className="text-xs sm:text-sm font-semibold">
+                        {new Date(event.startDate).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric', 
+                          year: 'numeric' 
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                  
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 w-full p-3 sm:p-4 md:p-5 text-white transform translate-y-0 group-hover:translate-y-0 transition-transform duration-300">
+                    <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold mb-1 sm:mb-1.5 md:mb-2 line-clamp-1 drop-shadow-lg">
+                      {event.title}
+                    </h2>
+                    <p className="text-[10px] sm:text-xs md:text-sm text-gray-200 line-clamp-2 leading-relaxed drop-shadow-md">
                       {event.description}
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>

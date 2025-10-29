@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { getRepos, getContributorsByRepo, getAllContributors } from "../lib/contributors/data";
+import {
+  getRepos,
+  getContributorsByRepo,
+  getAllContributors,
+} from "../lib/contributors/data";
 import FilterPill from "../components/FilterPill";
 
 /* ---------------- Repo Filter Pill ---------------- */
@@ -57,7 +61,10 @@ function ContributorCard({ c }) {
           {c.name}
         </h3>
         {c.role && (
-          <p className="text-base text-white/75 sm:text-lg" style={{ marginTop: "0.5rem" }}>
+          <p
+            className="text-base text-white/75 sm:text-lg"
+            style={{ marginTop: "0.5rem" }}
+          >
             {c.role}
           </p>
         )}
@@ -78,7 +85,7 @@ function ContributorCard({ c }) {
                 fontSize: "0.85rem",
                 letterSpacing: "0.01em",
                 transition: "all 0.3s ease",
-                }}
+              }}
             >
               {r}
             </span>
@@ -100,9 +107,13 @@ export default function Contributors() {
 
   // Extract unique values for each filterable field
   const availableFilters = useMemo(() => {
-    const roles = [...new Set(allContribs.map((c) => c.role).filter(Boolean))].sort();
-    const locations = [...new Set(allContribs.map((c) => c.location).filter(Boolean))].sort();
-    
+    const roles = [
+      ...new Set(allContribs.map((c) => c.role).filter(Boolean)),
+    ].sort();
+    const locations = [
+      ...new Set(allContribs.map((c) => c.location).filter(Boolean)),
+    ].sort();
+
     return {
       role: roles,
       location: locations,
@@ -119,14 +130,14 @@ export default function Contributors() {
       filtered = filtered.filter((contributor) => {
         return activeFilters.every((filter) => {
           const { key, value } = filter;
-          
+
           if (key === "role") {
             return contributor.role === value;
           }
           if (key === "location") {
             return contributor.location === value;
           }
-          
+
           return true;
         });
       });
@@ -137,7 +148,10 @@ export default function Contributors() {
 
   return (
     <React.Fragment>
-      <section className="w-full pt-44 md:pt-56 px-0" style={{ paddingBottom: "7rem" }}>
+      <section
+        className="w-full pt-44 md:pt-56 px-0"
+        style={{ paddingBottom: "7rem" }}
+      >
         <div
           style={{
             maxWidth: "1200px",
@@ -195,7 +209,10 @@ export default function Contributors() {
           {(activeFilters.length > 0 || activeRepo !== "all") && (
             <div className="mb-4 text-center">
               <p className="text-sm text-white/60">
-                Showing <span className="font-semibold text-emerald-400">{data.length}</span>{" "}
+                Showing{" "}
+                <span className="font-semibold text-emerald-400">
+                  {data.length}
+                </span>{" "}
                 {data.length === 1 ? "contributor" : "contributors"}
               </p>
             </div>
@@ -207,9 +224,12 @@ export default function Contributors() {
               className="grid w-full place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
               style={{ gap: "2.5rem" }}
             >
-              {data.map((c) => (
-                <ContributorCard key={c.slug} c={c} />
-              ))}
+              {data
+                .slice() 
+                .sort((a, b) => a.name.localeCompare(b.name)) 
+                .map((c) => (
+                  <ContributorCard key={c.slug} c={c} />
+                ))}
             </div>
           ) : (
             <div className="py-16 text-center">

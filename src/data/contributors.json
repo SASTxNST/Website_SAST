@@ -16,6 +16,38 @@
     "repos": ["Website", "FTM", "Orbion", "Nebula"]
   },
   {
+    "slug": "pratyush-parida",
+    "name": "Pratyush Parida",
+    "role": "Contributor",
+    "location": "Bhubaneshwar, Odisha, India",
+    "bio": "Enthusiastic Full Stack Developer and AI explorer passionate about the intersection of Open Source, Cloud Native, and Web Technologies. I love contributing to developer communities, building scalable and impactful solutions, and constantly learning to push the boundaries of innovation.",
+    "status": "active",
+    "avatarUrl": "https://github.com/MaverickP24.png",
+    "links": {
+      "github": "https://github.com/MaverickP24",
+      "x": "https://x.com/Pratyus81821108",
+      "linkedin": "https://www.linkedin.com/in/pratyush-parida-552941264/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website", "Nebula"]
+  },
+  {
+    "slug": "krishna-dubale",
+    "name": "Krishna Dubale",
+    "role": "Contributor",
+    "location": "Pune, Maharashtra, India",
+    "bio": "Open Source Cotributor",
+    "status": "active",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/185831101?v=4",
+    "links": {
+      "github": "https://github.com/KrishnaDubale",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/krishna-dubale-9bb186320/?originalSubdomain=in",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website"]
+  },
+  {
     "slug": "shaik-junaid-sami",
     "name": "Shaik Junaid Sami",
     "role": "Contributor",
@@ -73,6 +105,34 @@
       "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
     },
     "repos": ["Website", "Orbion", "Nebula"]
+  },
+  {
+    "slug": "pratyush-chouksey",
+    "name": "Pratyush Chouksey",
+    "role": "Contributor",
+    "location": "Nagpur, Maharashtra",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/188962306?v=4",
+    "links": {
+      "github": "https://github.com/Pratyush-Chouksey",
+      "linkedin": "https://www.linkedin.com/in/pratyush-chouksey/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "kaustubh-hiwanj",
+    "name": "Kaustubh Hiwanj",
+    "role": "Contributor",
+    "location": "Nagpur, Maharashtra",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/184677708",
+    "links": {
+      "github": "https://github.com/Kaustubh0505",
+      "linkedin": "https://www.linkedin.com/in/kaustubh-hiwanj-429b302b1/",
+      "community": null
+    },
+    "repos": ["Website"]
   },
   {
     "slug": "sai-sathwik-anchuri",
@@ -449,5 +509,50 @@
       "community": null
     },
     "repos": ["Website"]
+  },
+  {
+    "slug": "aaryan-yadav",
+    "name": "Aaryan Yadav",
+    "role": "Contributor",
+    "location": "Ambala, Haryana",
+    "bio": "General-Secretary of GDG-RU | Passionate full stack developer with expertise in React and Node.js. Always eager to contribute to open source projects and learn new technologies.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/183892159?s=400&u=a82ed9ac7f043942ac6f7ae3963bc7cdddef0a01&v=4",
+    "links": {
+      "github": "https://github.com/69Igris",
+      "x": "https://x.com/yaaryan181",
+      "linkedin": "https://www.linkedin.com/in/aaryan-yadav-272b8a315/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website"]
+  },
+  {
+  "slug": "Kapish9741",
+  "name": "Kapish rohilla",
+  "role": "Contributor",
+  "location": "Delhi, India",
+  "bio": "Full Stack Developer",
+  "avatarUrl": "https://avatars.githubusercontent.com/u/84222013?v=4",
+  "links": {
+  "github": "https://github.com/kapish9741",
+  "x": "https://x.com/KapishRohilla",
+  "linkedin": "https://www.linkedin.com/in/kapishrohilla/",
+  "community": null
+  },
+  "repos": ["Website"]
+  },
+    {
+  "slug": "Aniket-bit7",
+  "name": "Aniket Pathak",
+  "role": "Contributor",
+  "location": "India",
+  "bio": "Full Stack Developer",
+  "avatarUrl": "https://avatars.githubusercontent.com/u/188983898?v=4",
+  "links": {
+  "github": "https://github.com/Aniket-bit7",
+  "x": "https://x.com/AniketPathak_",
+  "linkedin": "https://www.linkedin.com/in/aniket-pathak-13822b311/",
+  "community": null
+  },
+  "repos": ["Website"]
   }
 ]

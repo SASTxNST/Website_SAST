@@ -6,7 +6,7 @@ import AppContent from "./AppContent.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
-
+import { MessagesProvider } from "./context/MessagesContext.jsx";
 // Global toast queue for max 3 toasts
 const toastQueue = [];
 
@@ -28,23 +28,25 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
     <QueryClientProvider client={queryClient}>
-    <SettingsProvider>
-      {/* Global Toaster */}
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: {
-            background: "#333",
-            color: "#fff",
-            textAlign: "center",
-            justifyContent: "center",
-          },
-          success: { duration: 1500 },
-          error: { duration: 2500 },
-        }}
-      />
-      <AppContent />
-    </SettingsProvider>
-</QueryClientProvider>  
-</Router>
+      <SettingsProvider>
+        <MessagesProvider>
+          {/* Global Toaster */}
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: "#333",
+                color: "#fff",
+                textAlign: "center",
+                justifyContent: "center",
+              },
+              success: { duration: 1500 },
+              error: { duration: 2500 },
+            }}
+          />
+          <AppContent />
+        </MessagesProvider>
+      </SettingsProvider>
+    </QueryClientProvider>
+  </Router>
 );

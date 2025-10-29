@@ -1,8 +1,13 @@
 /* eslint-disable no-undef */
 const express = require("express");
 require("dotenv").config();
+const { validateEnv } = require("./utils/envValidator");
 const botRouter = require("./routes/botRoutes");
+const { errorHandler } = require("./middleware/validation");
 const cors = require("cors");
+
+// Validate environment variables on startup
+validateEnv();
 
 const app = express();
 app.use(
@@ -22,6 +27,9 @@ app.use("/bot", botRouter);
 app.get("/", (req, res) => {
   res.send("Backend is Running!");
 });
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

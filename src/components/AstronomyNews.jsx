@@ -104,10 +104,23 @@ export default function AstronomyNews() {
   return (
     <div className="pt-44 md:pt-56 px-0">
       <div className="astronomy-news-container">
-        <header className="astronomy-header">
-          <h1 className="astronomy-title">Astronomy News</h1>
+        {/* Header Section */}
+        <header className="flex flex-col items-center text-center space-y-6 mb-16 md:pb-12 pb-4 relative">
+          {/* Badge */}
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+            <span className="text-sm text-gray-300 font-medium">Latest Updates</span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white py-8">
+            Astronomy News
+          </h1>
+
+          {/* Refresh Button - Positioned on the right */}
           <button
-            className={`refresh-button ${isRefreshing || isFetching ? "loading" : ""}`}
+            className={`absolute top-0 right-4 md:right-8 px-6 py-2.5 bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-200 backdrop-blur-sm rounded-full bg-gradient-to-b from-neutral-600 via-neutral-800 to-neutral-900 cursor-pointer ${
+              isRefreshing || isFetching ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             onClick={handleRefresh}
             disabled={isRefreshing || isFetching}
           >
@@ -141,33 +154,64 @@ export default function AstronomyNews() {
         )}
 
         {flattened.length > 0 && (
-          <div className="news-grid">
+          <div className="news-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
             {flattened.map((item) => (
               <article
                 key={item.id}
-                className="news-card"
-                onClick={() =>
-                  window.open(item.url, "_blank", "noopener,noreferrer")
-                }
+                className="group relative bg-zinc-900/50 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10"
               >
-                <div className="news-image-container">
+                {/* Image Section */}
+                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-zinc-800 to-zinc-900">
                   <img
                     src={item.image || "/vite.svg"}
                     alt={item.title}
-                    className="news-image"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
                     onError={(e) => {
                       e.target.src = "/vite.svg";
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-60"></div>
                 </div>
 
-                <div className="news-content">
-                  <h2 className="news-title">{item.title}</h2>
-                  <p className="news-summary">{item.summary}</p>
+                {/* Content Section */}
+                <div className="p-6 space-y-4">
+                  <h2 className="text-xl font-bold text-white leading-tight line-clamp-2 group-hover:text-blue-400 transition-colors duration-200">
+                    {item.title}
+                  </h2>
+                  
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                    {item.summary}
+                  </p>
+
                   {item.source && (
-                    <div className="news-source">{item.source}</div>
+                    <div className="text-xs text-gray-500 pt-2">
+                      {item.source}
+                    </div>
                   )}
+
+                  {/* Read More Link */}
+                  <button
+                    onClick={() =>
+                      window.open(item.url, "_blank", "noopener,noreferrer")
+                    }
+                    className="inline-flex items-center gap-2 text-white font-medium text-sm hover:text-blue-400 transition-colors duration-200 group/btn cursor-pointer"
+                  >
+                    <span>Read more</span>
+                    <svg
+                      className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </article>
             ))}
@@ -190,7 +234,7 @@ export default function AstronomyNews() {
 
       {/* Scroll to Top Button */}
       <button
-        className={`fixed bottom-30 right-10 w-14 h-14 md:w-12 md:h-12 bg-white/10 border border-white/20 rounded-full text-white cursor-pointer flex items-center justify-center z-[1000] backdrop-blur-md shadow-lg transition-all duration-300 ease-out ${
+        className={`fixed bottom-8 right-25 w-14 h-14 md:w-12 md:h-12 bg-white/10 border border-white/20 rounded-full text-white cursor-pointer flex items-center justify-center z-[1000] backdrop-blur-md shadow-lg transition-all duration-300 ease-out ${
           showScrollToTop
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible translate-y-5"

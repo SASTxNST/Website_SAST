@@ -554,5 +554,22 @@
   "community": null
   },
   "repos": ["Website"]
+  },
+    {
+  "slug": "sneha-bayan",
+  "name": "Sneha Bayan",
+  "role": "Contributor",
+  "location": "Assam, India",
+  "bio": "Aspiring Software Developer | Tech Enthusiast @ Newton School of Technology | Passionate About Coding, Creativity & Continuous Learning",
+  "avatarUrl": "https://avatars.githubusercontent.com/u/229448425?v=4",
+  "links": {
+  "github": "https://github.com/sneha-bayan",
+  "x": null,
+  "linkedin": "https://www.linkedin.com/in/sneha-bayan-27a255381/",
+  "community": null
+  },
+  "repos": ["Website"]
   }
+
+  
 ]

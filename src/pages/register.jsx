@@ -190,9 +190,6 @@ export default function Register() {
         name: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
         phone: "",
       };
-
-      console.log("Register Payload:", payload);
-
       const res = await fetch(`${BASE_URL}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +201,6 @@ export default function Register() {
       if (res.ok && result.user) {
         showToast("Registered successfully!", "success");
         localStorage.setItem("token", result.token);
-        console.log(result.user);
         navigate("/login");
       } else {
         showToast(result.message || "Registration failed!", "error");

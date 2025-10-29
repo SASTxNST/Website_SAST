@@ -35,6 +35,7 @@ setInterval(() => {
 }, 60 * 1000);
 
 // Email transporter using Gmail via TLS/587
+// Gate verbose logging behind NODE_ENV so production doesn't leak transport debug info.
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -43,8 +44,8 @@ const transporter = nodemailer.createTransport({
         user: process.env.OTP_EMAIL_USER,
         pass: process.env.OTP_EMAIL_PASS // Gmail App Password
     },
-    logger: true,
-    debug: true
+    logger: process.env.NODE_ENV !== 'production',
+    debug: process.env.NODE_ENV !== 'production'
 });
 
 // Send OTP via email
@@ -75,8 +76,8 @@ Exploring beyond limits, securing every step.`,
 
     try {
         const info = await transporter.sendMail(mailOptions);
-        console.log(`OTP ${otp} sent to email ${email}`);
-        console.log('Email info:', info);
+        // Do not log OTPs or sensitive email content. Log only that an email was sent.
+        console.log(`OTP email sent to ${email}`);
         return true;
     } catch (error) {
         console.error('Failed to send OTP email:', error);
@@ -84,8 +85,35 @@ Exploring beyond limits, securing every step.`,
     }
 };
 
-// Send OTP via phone (stub)
+// Initialize Twilio client
+const twilio = require('twilio');
+const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+// Validate phone number format
+const isValidPhoneNumber = (phone) => {
+    const phoneRegex = /^\+[1-9]\d{1,14}$/;
+    return phoneRegex.test(phone);
+};
+
+// Send OTP via phone using Twilio
 exports.sendOtpPhone = async (phone, otp) => {
-    console.log(`Sending OTP ${otp} to phone ${phone}`);
-    // integrate actual SMS service here
+    try {
+        // Validate phone number format
+        if (!isValidPhoneNumber(phone)) {
+            throw new Error('Invalid phone number format. Must be in E.164 format (e.g., +1234567890)');
+        }
+
+        // Send SMS using Twilio
+        const message = await client.messages.create({
+            body: `Your SAST secure access code is: ${otp}. Valid for 5 minutes. If you did not request this code, please ignore.`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: phone
+        });
+
+        console.log(`OTP ${otp} sent to phone ${phone}. Message SID: ${message.sid}`);
+        return true;
+    } catch (error) {
+        console.error('Failed to send OTP SMS:', error);
+        throw new Error(error.message || 'OTP SMS sending failed');
+    }
 };

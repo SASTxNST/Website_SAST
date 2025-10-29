@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import videoe1 from "../Landing_media/satellitevid.mp4";
 import waterpng from "../Landing_media/waterrocket.png";
 import watervid from "../Landing_media/bharatmpvid.mp4";
@@ -17,51 +17,24 @@ import comet_vid from "../Landing_media/Comentvid.mp4";
 import launch_png from "../Landing_media/offlaunch.jpeg";
 import launch_vid from "../Landing_media/launchvid.mp4";
 import useLenis from "../utils/lenis";
+import Footer from "./footer";
 
 const Events = () => {
   const [filterType, setFilterType] = useState("all");
+  const timelineRef = useRef(null);
+  
+  // Use framer-motion's useScroll for smooth timeline animation
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 80%", "end 20%"]
+  });
+
+  // Transform scroll progress to height percentage
+  const heightProgress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  
   useLenis();
 
-  useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    const handleHover = (event, action) => {
-      const video = event.currentTarget.querySelector("video");
-      if (!video) return;
-
-      if (isMobile) {
-        video.paused ? video.play() : video.pause();
-        video.classList.toggle("opacity-60");
-      } else {
-        if (action === "play") video.play();
-        else {
-          video.pause();
-          video.currentTime = 0;
-        }
-      }
-    };
-
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-      if (isMobile) {
-        card.addEventListener("click", (e) => handleHover(e, "toggle"));
-      } else {
-        card.addEventListener("mouseenter", (e) => handleHover(e, "play"));
-        card.addEventListener("mouseleave", (e) => handleHover(e, "pause"));
-      }
-    });
-
-    return () => {
-      cards.forEach((card) => {
-        if (isMobile) {
-          card.removeEventListener("click", (e) => handleHover(e, "toggle"));
-        } else {
-          card.removeEventListener("mouseenter", (e) => handleHover(e, "play"));
-          card.removeEventListener("mouseleave", (e) => handleHover(e, "pause"));
-        }
-      });
-    };
-  }, [filterType]);
+  useLenis();
 
   const filterEvents = (type) => setFilterType(type);
 
@@ -138,43 +111,234 @@ const Events = () => {
     },
   ];
 
-  const timelineData = [...events]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .map(({ date, title, description }) => ({
-      date: date.slice(0, 7),
+  const calendarEventsData = 
+  {
+    "events": [
+      {
+        "id": 1,
+        "title": "Water Rocket Launch",
+        "startDate": "2025-02-16",
+        "endDate": "2025-02-16",
+        "time": "10:00 AM - 4:00 PM",
+        "location": "University Campus Ground",
+        "category": "Competition",
+        "description": "A thrilling competition where teams designed, built, and launched water-powered rockets. Test your engineering skills and compete for glory!",
+        "image": "/src/Landing_media/waterrocket.png",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Competition", "Hands-on", "Team Event"]
+      },
+      {
+        "id": 2,
+        "title": "Cubesat Showcase",
+        "startDate": "2024-12-12",
+        "endDate": "2024-12-12",
+        "time": "2:00 PM - 5:00 PM",
+        "location": "Tech Exhibition Hall",
+        "category": "Exhibition",
+        "description": "Experience our latest CubeSat technology demonstration and learn about satellite systems and space exploration.",
+        "image": "/src/Landing_media/bharatmp.jpeg",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Exhibition", "Technology", "Space"]
+      },
+      {
+        "id": 3,
+        "title": "SAST Damru Exhibit",
+        "startDate": "2024-01-05",
+        "endDate": "2024-01-05",
+        "time": "11:00 AM - 3:00 PM",
+        "location": "Science Museum",
+        "category": "Exhibition",
+        "description": "A unique exhibit showcasing scientific wonders and innovative projects from SAST members.",
+        "image": "/src/Landing_media/DamruExhibit.jpeg",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Exhibition", "Innovation", "Science"]
+      },
+      {
+        "id": 4,
+        "title": "Club Onboarding 2025",
+        "startDate": "2025-08-15",
+        "endDate": "2025-08-15",
+        "time": "5:00 PM - 7:00 PM",
+        "location": "Main Auditorium",
+        "category": "Recruitment",
+        "description": "Welcoming space enthusiasts to SAST Club. Join us to explore opportunities in space technology and astronomy!",
+        "image": "/src/Landing_media/Onboarding_1.jpeg",
+        "status": "upcoming",
+        "registrationLink": "https://forms.example.com/sast-onboarding",
+        "tags": ["Recruitment", "Orientation", "Networking"]
+      },
+      {
+        "id": 5,
+        "title": "Guest Lecture - Dr. Rajkumar Vedam",
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-13",
+        "time": "4:00 PM - 6:00 PM",
+        "location": "Conference Hall",
+        "category": "Workshop",
+        "description": "Insights from Dr. Vedam on future space advancements, satellite technology, and career opportunities in aerospace.",
+        "image": "/src/Landing_media/rajkumarv.jpeg",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Workshop", "Guest Lecture", "Career"]
+      },
+      {
+        "id": 6,
+        "title": "Tsuchinshan Comet Spotting",
+        "startDate": "2024-10-20",
+        "endDate": "2024-10-20",
+        "time": "8:00 PM - 11:00 PM",
+        "location": "Observatory Deck",
+        "category": "Observation",
+        "description": "Observe celestial phenomena in real-time. Join us for an unforgettable night of comet watching and stargazing.",
+        "image": "/src/Landing_media/Tsuchinshan.jpeg",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Observation", "Astronomy", "Night Event"]
+      },
+      {
+        "id": 7,
+        "title": "SAST Official Launch",
+        "startDate": "2024-01-05",
+        "endDate": "2024-01-05",
+        "time": "10:00 AM - 1:00 PM",
+        "location": "University Grounds",
+        "category": "Ceremony",
+        "description": "Inaugurating SAST's journey and vision. A historic moment marking the beginning of our space exploration endeavors.",
+        "image": "/src/Landing_media/offlaunch.jpeg",
+        "status": "completed",
+        "registrationLink": "",
+        "tags": ["Ceremony", "Launch", "Historic"]
+      },
+      {
+        "id": 8,
+        "title": "Annual Astronomy Quiz 2025",
+        "startDate": "2025-11-10",
+        "endDate": "2025-11-10",
+        "time": "3:00 PM - 6:00 PM",
+        "location": "Main Auditorium",
+        "category": "Competition",
+        "description": "Test your knowledge of astronomy, space science, and astrophysics in this exciting quiz competition with amazing prizes!",
+        "image": "",
+        "status": "upcoming",
+        "registrationLink": "https://forms.example.com/astro-quiz",
+        "tags": ["Competition", "Quiz", "Prizes"]
+      },
+      {
+        "id": 9,
+        "title": "Rocket Propulsion Workshop",
+        "startDate": "2025-09-20",
+        "endDate": "2025-09-22",
+        "time": "9:00 AM - 5:00 PM",
+        "location": "Engineering Lab",
+        "category": "Workshop",
+        "description": "A comprehensive 3-day workshop on rocket propulsion systems, engine design, and practical applications in space technology.",
+        "image": "",
+        "status": "upcoming",
+        "registrationLink": "https://forms.example.com/rocket-workshop",
+        "tags": ["Workshop", "Engineering", "Multi-day"]
+      },
+      {
+        "id": 10,
+        "title": "Satellite Hackathon 2025",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-17",
+        "time": "24 Hours",
+        "location": "Innovation Center",
+        "category": "Competition",
+        "description": "48-hour hackathon focused on satellite communication, data analysis, and space technology innovations. Form teams and compete!",
+        "image": "",
+        "status": "upcoming",
+        "registrationLink": "https://forms.example.com/sat-hackathon",
+        "tags": ["Competition", "Hackathon", "Team Event"]
+      }
+    ]
+  };
+
+
+  const timelineData = calendarEventsData.events
+    .sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+    .map(({ startDate, title, description, category, status }) => ({
+      date: new Date(startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
       title,
       description,
+      category,
+      status,
     }));
 
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    const handleHover = (event, action) => {
+      const video = event.currentTarget.querySelector("video");
+      if (!video) return;
+
+      if (isMobile) {
+        video.paused ? video.play() : video.pause();
+        video.classList.toggle("opacity-60");
+      } else {
+        if (action === "play") video.play();
+        else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    };
+
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => {
+      if (isMobile) {
+        card.addEventListener("click", (e) => handleHover(e, "toggle"));
+      } else {
+        card.addEventListener("mouseenter", (e) => handleHover(e, "play"));
+        card.addEventListener("mouseleave", (e) => handleHover(e, "pause"));
+      }
+    });
+
+    return () => {
+      cards.forEach((card) => {
+        if (isMobile) {
+          card.removeEventListener("click", (e) => handleHover(e, "toggle"));
+        } else {
+          card.removeEventListener("mouseenter", (e) => handleHover(e, "play"));
+          card.removeEventListener("mouseleave", (e) => handleHover(e, "pause"));
+        }
+      });
+    };
+  }, [filterType]);
+
   return (
-    <div className="pt-44 md:pt-56 px-0">
+    <>
+      {/* Video Background - Fixed */}
       <div className="fixed top-0 left-0 w-full h-full -z-10">
         <video autoPlay loop muted className="w-full h-full object-cover">
           <source src={videoe1} type="video/mp4" />
         </video>
       </div>
 
-      <div className="relative z-10 bg-black/80 min-h-screen pb-40">
-        <section className="eventssec flex flex-col items-center mt-28 px-2">
+      {/* Main Content - Not constrained by video */}
+      <div className="relative w-full min-h-screen pt-44 md:pt-56 pb-40">
+        <section className="w-full flex flex-col items-center mt-28">
 
           {/* 🌌 Filter Navbar */}
-          <div className="flex items-center justify-center w-full mt-8 relative " >
-            <div className="flex items-center justify-between gap-4 mb-8 absolute left-40">
+          <div className="flex flex-col md:flex-row items-center justify-center w-full mt-8 px-4 gap-4 md:gap-0 md:relative">
+            <div className="md:absolute md:left-8 lg:left-40 w-full md:w-auto">
               <Link
                 to="/calendar"
-                className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 text-sm text-white/90 backdrop-blur hover:bg-white/10 transition-colors duration-200"
-                style={{ padding: "0.5rem 1rem" }}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 text-sm text-white/90 backdrop-blur hover:bg-white/10 transition-colors duration-200 px-4 py-2 w-full md:w-auto"
               >
-                <span>📅 Calendar</span>
+                <span>Calendar</span>
               </Link>
             </div>
 
-            <div className="relative flex items-center justify-between bg-white/5 backdrop-blur-md border border-white/10 rounded-full shadow-md px-3 py-2 sm:px-4 sm:py-3 overflow-x-auto no-scrollbar w-full max-w-[90vw] sm:w-[600px]">
+            <div className="relative flex items-center justify-between bg-white/5 backdrop-blur-md border border-white/10 rounded-full shadow-md px-3 py-2 sm:px-4 sm:py-3 overflow-x-auto no-scrollbar w-full max-w-[95vw] sm:max-w-md md:max-w-lg">
               {filterTypes.map((type) => (
                 <button
                   key={type}
                   onClick={() => filterEvents(type)}
-                  className={`relative text-sm sm:text-base px-4 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap font-medium ${
+                  className={`relative text-xs sm:text-sm md:text-base px-3 sm:px-4 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap font-medium ${
                     filterType === type
                       ? "text-blue-400 font-semibold"
                       : "text-gray-300 hover:text-white"
@@ -197,10 +361,10 @@ const Events = () => {
                     filterType === "all"
                       ? "5%"
                       : filterType === "past"
-                      ? "30%"
+                      ? "25%"
                       : filterType === "ongoing"
-                      ? "58%"
-                      : "80%",
+                      ? "48%"
+                      : "77%",
                   width:
                     filterType === "all"
                       ? "80px"
@@ -226,10 +390,11 @@ const Events = () => {
                   <img
                     src={event.imgSrc}
                     alt={event.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                    className="rounded-sm lg:rounded-xl md:rounded-md w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <video
-                    className="absolute top-0 left-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500"
+                    className="rounded-sm lg:rounded-xl md:rounded-md absolute top-0 left-0 w-full h-full object-cover opacity-0 group-hover:opacity-60 transition-opacity duration-500"
                     loop
                     muted
                   >
@@ -249,15 +414,123 @@ const Events = () => {
       </div>
 
       {/* Timeline Section */}
-      <section className="timeline_sast">
-        <div className="w-full max-w-5xl mb-40">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-20 text-gradient-to-r from-blue-400 to-sky-500">
+      <section ref={timelineRef} className="timeline_sast relative w-full">
+        <div className="timeline-container">
+          <h2 className="timeline-title">
             SAST Events Timeline
           </h2>
-          {/* Timeline code remains same */}
+          
+          <div className="timeline-wrapper">
+            {/* Animated Timeline line - Desktop */}
+            <div className="timeline-line-desktop relative">
+              <motion.div
+                className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-sky-400 to-blue-500 shadow-[0_0_20px_rgba(56,189,248,0.6),0_0_40px_rgba(59,130,246,0.4)]"
+                style={{
+                  height: heightProgress,
+                  transformOrigin: "top",
+                  filter: "blur(0.5px)"
+                }}
+              />
+              {/* Glow effect at the end of the line */}
+              <motion.div
+                className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-sky-400"
+                style={{
+                  top: heightProgress,
+                  boxShadow: "0 0 20px 8px rgba(56, 189, 248, 0.8), 0 0 40px 12px rgba(59, 130, 246, 0.75)",
+                }}
+              />
+            </div>
+            
+            {/* Animated Mobile timeline line */}
+            <div className="timeline-line-mobile relative">
+              <motion.div
+                className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-sky-400 to-blue-500 shadow-[0_0_15px_rgba(56,189,248,0.7),0_0_30px_rgba(59,130,246,0.6)]"
+                style={{
+                  height: heightProgress,
+                  transformOrigin: "top",
+                  filter: "blur(0.2px)"
+                }}
+              />
+              {/* Glow effect at the end of the line */}
+              <motion.div
+                className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-sky-300"
+                style={{
+                  top: heightProgress,
+                  boxShadow: "0 0 15px 6px rgba(56, 189, 248, 0.8), 0 0 30px 10px rgba(59, 130, 246, 0.8)",
+                }}
+              />
+            </div>
+
+            {timelineData.map((event, index) => {
+              // Calculate when each item should appear based on scroll progress
+              const itemOffset = index / (timelineData.length - 1);
+              const itemProgress = useTransform(
+                scrollYProgress,
+                [Math.max(0, itemOffset - 0.15), Math.min(1, itemOffset + 0.05)],
+                [0, 1]
+              );
+              
+              return (
+                <motion.div
+                  key={index}
+                  style={{
+                    opacity: itemProgress,
+                  }}
+                  className={`timeline-item ${index % 2 === 0 ? 'reverse' : ''}`}
+                >
+                {/* Timeline dot with scale animation */}
+                <motion.div
+                  style={{
+                    scale: itemProgress,
+                  }}
+                  className={`timeline-dot ${event.status === 'upcoming' ? 'pulse' : ''}`}
+                >
+                  {event.status === 'upcoming' && (
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.7, 1, 0.7],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute inset-0 rounded-full bg-blue-400"
+                    />
+                  )}
+                </motion.div>
+
+                {/* Content card */}
+                <motion.div
+                  style={{
+                    opacity: itemProgress,
+                    x: index % 2 === 0 ? useTransform(itemProgress, [0, 1], [50, 0]) : useTransform(itemProgress, [0, 1], [-50, 0])
+                  }}
+                  className={`timeline-content ${index % 2 === 0 ? 'reverse' : 'normal'}`}
+                >
+                  <div className="timeline-card">
+                    <div className={`timeline-card-inner ${index % 2 === 0 ? 'reverse' : ''}`}>
+                      <span className={`timeline-badge ${event.status === 'completed' ? 'completed' : 'upcoming'}`}>
+                        {event.category} • {event.status === 'completed' ? 'Completed' : 'Upcoming'}
+                      </span>
+                      <h3 className="timeline-event-title">{event.title}</h3>
+                      <p className="timeline-event-date">{event.date}</p>
+                      <p className="timeline-event-description">{event.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Spacer for desktop */}
+                <div className="timeline-spacer"></div>
+              </motion.div>
+              );
+            })}
+          </div>
         </div>
       </section>
-    </div>
+      <Footer />
+    </>
   );
 };
 

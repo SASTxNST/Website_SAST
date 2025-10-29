@@ -16,6 +16,22 @@
     "repos": ["Website", "FTM", "Orbion", "Nebula"]
   },
   {
+    "slug": "pratyush-parida",
+    "name": "Pratyush Parida",
+    "role": "Contributor",
+    "location": "Bhubaneshwar, Odisha, India",
+    "bio": "Enthusiastic Full Stack Developer and AI explorer passionate about the intersection of Open Source, Cloud Native, and Web Technologies. I love contributing to developer communities, building scalable and impactful solutions, and constantly learning to push the boundaries of innovation.",
+    "status": "active",
+    "avatarUrl": "https://github.com/MaverickP24.png",
+    "links": {
+      "github": "https://github.com/MaverickP24",
+      "x": "https://x.com/Pratyus81821108",
+      "linkedin": "https://www.linkedin.com/in/pratyush-parida-552941264/",
+      "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
+    },
+    "repos": ["Website", "Nebula"]
+  },
+  {
     "slug": "shaik-junaid-sami",
     "name": "Shaik Junaid Sami",
     "role": "Contributor",
@@ -73,6 +89,34 @@
       "community": "https://www.linkedin.com/company/society-for-aerospace-and-space-technology/?viewAsMember=true"
     },
     "repos": ["Website", "Orbion", "Nebula"]
+  },
+  {
+    "slug": "pratyush-chouksey",
+    "name": "Pratyush Chouksey",
+    "role": "Contributor",
+    "location": "Nagpur, Maharashtra",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/188962306?v=4",
+    "links": {
+      "github": "https://github.com/Pratyush-Chouksey",
+      "linkedin": "https://www.linkedin.com/in/pratyush-chouksey/",
+      "community": null
+    },
+    "repos": ["Website"]
+  },
+  {
+    "slug": "kaustubh-hiwanj",
+    "name": "Kaustubh Hiwanj",
+    "role": "Contributor",
+    "location": "Nagpur, Maharashtra",
+    "bio": "Open Source Contributor",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/DIMAd_OxYLg/profile-displaypdhhoto-shrink_800_800/B4EZ41857176517?e=1762992000&v=beta&t=3t-vI4PiVQ44pqGZr2NW531NIn430G3Fh_FxZhSo1zA",
+    "links": {
+      "github": "https://github.com/Kaustubh0505",
+      "linkedin": "https://www.linkedin.com/in/kaustubh-hiwanj-429b302b1/",
+      "community": null
+    },
+    "repos": ["Website"]
   },
   {
     "slug": "sai-sathwik-anchuri",
@@ -217,7 +261,7 @@
     "role": "Contributor",
     "location": "Jabalpur, Madhya Pradesh",
     "bio": "\"Leave me alone, I know what I’m doing.\" - Kimi Raikkonen",
-    "avatarUrl": "https://drive.google.com/file/d/15t3KlqmnwtUUxarVa7Y7tan8dMErlmQR/view?usp=sharing",
+    "avatarUrl": "https://github.com/Prabhav1437.png",
     "links": {
       "github": "https://github.com/Prabhav1437",
       "x": "https://x.com/Prabhav15627081",

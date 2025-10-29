@@ -73,13 +73,14 @@ export default function MemberProfile() {
     >
       <div
         className="w-full"
-        style={{ maxWidth: "1200px", margin: "0 auto 0.75rem auto" }}
+        style={{ maxWidth: "1200px", margin: "28px auto 0.75rem auto" }}
       >
-        <Link
-          to="/community/members"
-          className="inline-flex items-center gap-2 text-white/80 hover:text-white"
-        >
-          ← Go Back
+        <Link to="/contributors">
+          <button
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white border border-white/30 hover:border-white rounded-full px-4 py-2 transition-all duration-200 bg-transparent"
+          >
+            ← Go Back
+          </button>
         </Link>
       </div>
 

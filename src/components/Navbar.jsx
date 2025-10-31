@@ -87,7 +87,7 @@ const Navbar = () => {
             </NavLink>
 
             {navItems.map((item) => (
-              <NavLink key={item.path} to={item.path} className={({ isActive }) => cn("relative px-3 py-1.5 text-sm font-medium rounded-full transition-colors duration-200", isActive ? "text-blue-400 bg-white/10" : "text-gray-300 hover:text-white hover:bg-white/5")}>
+              <NavLink key={item.path} to={item.path} className={({ isActive }) => cn("relative px-3 py-1.5 text-sm font-medium rounded-full transition-colors duration-200", isActive ? "text-blue-400 bg-white/11" : "text-gray-300 hover:text-white hover:bg-white/5")}>
                 {item.name}
               </NavLink>
             ))}

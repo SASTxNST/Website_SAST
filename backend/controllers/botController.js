@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-const { genRes } = require("../utils/botService");
+import { genRes } from "../utils/botService.js";
 
 const returnResponse = async (req, res) => {
   try {
@@ -13,4 +12,4 @@ const returnResponse = async (req, res) => {
   }
 };
 
-module.exports = returnResponse;
+export default returnResponse;

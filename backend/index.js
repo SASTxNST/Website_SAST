@@ -1,8 +1,9 @@
-/* eslint-disable no-undef */
-const express = require("express");
-require("dotenv").config();
-const botRouter = require("./routes/botRoutes");
-const cors = require("cors");
+import express from "express";
+import dotenv from "dotenv";
+import botRouter from "./routes/botRoutes.js";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js"
+dotenv.config();
 
 const app = express();
 app.use(
@@ -17,8 +18,8 @@ const port = process.env.SERVER_PORT || 3000;
 
 app.use(express.json());
 
-app.use("/bot", botRouter);
-
+app.use("/api/bot", botRouter);
+app.use("/api/auth",userRoutes)
 app.get("/", (req, res) => {
   res.send("Backend is Running!");
 });

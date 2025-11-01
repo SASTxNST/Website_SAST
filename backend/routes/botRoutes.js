@@ -1,10 +1,8 @@
-/* eslint-disable no-undef */
-const express = require("express");
-const returnResponse = require("../controllers/botController");
+import express from "express";
+import returnResponse from "../controllers/botController.js";
+
 const botRouter = express.Router();
 
 botRouter.post("/", returnResponse);
 
-module.exports = {
-    botRouter
-};
+export default botRouter;

@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-const { GoogleGenAI } = require("@google/genai");
+import { GoogleGenAI } from "@google/genai";
 
 const systemPrompt = `
 You are SAST BOT — the official website assistant for the Society for Astronomy and Space Technology (SAST).
@@ -30,7 +29,7 @@ You may summarize or explain scientific concepts, but do not make assumptions or
 `;
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-exports.genRes = async (msg, history) => {
+export const genRes = async (msg, history) => {
   const chat = await ai.chats.create({
     model: "gemini-2.5-flash",
     history: history,

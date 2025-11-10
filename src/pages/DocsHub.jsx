@@ -12,7 +12,6 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { FileText, Search, Book, ArrowLeft, CheckCircle } from "lucide-react";
 
-// Import all markdown files
 import aboutSast from "../components/docs/about-sast.md?raw";
 import codeOfConduct from "../components/docs/code-of-conduct.md?raw";
 import communityRoles from "../components/docs/community-roles.md?raw";
@@ -24,18 +23,60 @@ import guidelines from "../components/docs/guidelines.md?raw";
 import learning from "../components/docs/learning.md?raw";
 import memberNames from "../components/docs/member-names.md?raw";
 
+// ✅ NEW: single doc that lists all department PDFs
+import departmentalDocs from "../components/docs/departmental-docs.md?raw";
+
 // Map of all docs with their content
 const DOCS_MAP = {
-  "about-sast": { title: "About SAST", content: aboutSast, category: "Introduction" },
-  guidelines: { title: "Guidelines", content: guidelines, category: "Getting Started" },
-  contribution: { title: "Contribution Guide", content: contribution, category: "Getting Started" },
-  "code-of-conduct": { title: "Code of Conduct", content: codeOfConduct, category: "Getting Started" },
-  "github-process": { title: "GitHub Process", content: githubProcess, category: "Development" },
-  "community-roles": { title: "Community Roles", content: communityRoles, category: "Community" },
+  "about-sast": {
+    title: "About SAST",
+    content: aboutSast,
+    category: "Introduction",
+  },
+  guidelines: {
+    title: "Guidelines",
+    content: guidelines,
+    category: "Getting Started",
+  },
+  contribution: {
+    title: "Contribution Guide",
+    content: contribution,
+    category: "Getting Started",
+  },
+  "code-of-conduct": {
+    title: "Code of Conduct",
+    content: codeOfConduct,
+    category: "Getting Started",
+  },
+  "github-process": {
+    title: "GitHub Process",
+    content: githubProcess,
+    category: "Development",
+  },
+  "community-roles": {
+    title: "Community Roles",
+    content: communityRoles,
+    category: "Community",
+  },
   faqs: { title: "FAQs", content: faqs, category: "Help" },
   learning: { title: "Learning Resources", content: learning, category: "Resources" },
-  "contributors-name": { title: "Contributors", content: contributorsName, category: "Community" },
-  "member-names": { title: "Members", content: memberNames, category: "Community" },
+  "contributors-name": {
+    title: "Contributors",
+    content: contributorsName,
+    category: "Community",
+  },
+  "member-names": {
+    title: "Members",
+    content: memberNames,
+    category: "Community",
+  },
+
+  // ✅ NEW entry
+  "departmental-docs": {
+    title: "SAST Departmental Docs",
+    content: departmentalDocs,
+    category: "Departments",
+  },
 };
 
 // Header Component
@@ -48,18 +89,15 @@ function DocsHeader() {
       </div>
       <h1 className="docs-header-title">Community Handbook</h1>
       <p className="docs-header-description">
-        Your comprehensive guide to contributing, learning, and growing with
-        SAST.
+        Your comprehensive guide to contributing, learning, and growing with SAST.
       </p>
       <div className="docs-header-divider"></div>
       <div className="docs-header-tags">
-        {["Open Source", "Community Guidelines", "Best Practices"].map(
-          (tag) => (
-            <span key={tag} className="docs-header-tag">
-              {tag}
-            </span>
-          )
-        )}
+        {["Open Source", "Community Guidelines", "Best Practices"].map((tag) => (
+          <span key={tag} className="docs-header-tag">
+            {tag}
+          </span>
+        ))}
       </div>
     </header>
   );

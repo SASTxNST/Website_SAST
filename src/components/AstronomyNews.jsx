@@ -7,13 +7,21 @@ import { fetchAstronomyNews } from "../utils/astronomy-news";
 
 const PAGE_SIZE = 9;
 
+// Astronomy-themed fallback images for news articles without images
+// Using NASA and APOD (Astronomy Picture of the Day) images for better theme consistency
 const spaceImages = [
-  "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1447433819943-74a20887a81e?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=800&q=80",
+  "https://images-assets.nasa.gov/image/PIA12235/PIA12235~orig.jpg", // Saturn
+  "https://apod.nasa.gov/apod/image/1901/IC405_Abolfath_3952.jpg", // Comet
+  "https://images-assets.nasa.gov/image/PIA04921/PIA04921~orig.jpg", // Mars
+  "https://apod.nasa.gov/apod/image/1807/NGC6744-HaLRGBpugh1024.jpg", // Galaxy
+  "https://images-assets.nasa.gov/image/PIA03606/PIA03606~orig.jpg", // Jupiter
+  "https://apod.nasa.gov/apod/image/1701/OrionNebula_Hubble_960.jpg", // Orion Nebula
+  "https://apod.nasa.gov/apod/image/1902/MilkyWayPanorama_Merzlyakov_2000.jpg", // Milky Way
+  "https://apod.nasa.gov/apod/image/1709/LagoonTrifid_Vargas_1824.jpg", // Nebulae
+  "https://apod.nasa.gov/apod/image/1611/M42Huygens_4000.jpg", // Orion Nebula detailed
+  "https://images-assets.nasa.gov/image/PIA23190/PIA23190~orig.jpg", // Earth from space
+  "https://apod.nasa.gov/apod/image/2008/NGC281_Ayoub_960.jpg", // Pacman Nebula
+  "https://images-assets.nasa.gov/image/PIA21734/PIA21734~orig.jpg", // James Webb image
 ];
 
 export default function AstronomyNews() {
@@ -114,21 +122,6 @@ export default function AstronomyNews() {
     }
   };
 
-  function getRandomAstronomyImage() {
-    const images = [
-      "https://images-assets.nasa.gov/image/PIA12235/PIA12235~orig.jpg",
-      "https://apod.nasa.gov/apod/image/1901/IC405_Abolfath_3952.jpg",
-      "https://images-assets.nasa.gov/image/PIA04921/PIA04921~orig.jpg",
-      "https://apod.nasa.gov/apod/image/1807/NGC6744-HaLRGBpugh1024.jpg",
-      "https://images-assets.nasa.gov/image/PIA03606/PIA03606~orig.jpg",
-      "https://apod.nasa.gov/apod/image/1701/OrionNebula_Hubble_960.jpg",
-      "https://apod.nasa.gov/apod/image/1902/MilkyWayPanorama_Merzlyakov_2000.jpg",
-      "https://apod.nasa.gov/apod/image/1709/LagoonTrifid_Vargas_1824.jpg",
-    ];
-
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-  }
 
   return (
     <div className="pt-20 md:pt-15 px-0">
@@ -187,6 +180,7 @@ export default function AstronomyNews() {
                     className="news-image w-full h-56 object-cover rounded-t-2xl opacity-90 transition-transform duration-500 hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
+                      // Fallback to astronomy-themed image if original image fails to load
                       e.target.src = fallbackImages.get(item.id);
                     }}
                   />

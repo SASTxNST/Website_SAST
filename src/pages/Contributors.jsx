@@ -207,7 +207,7 @@ export default function Contributors() {
 
           {/* Results counter */}
           {(activeFilters.length > 0 || activeRepo !== "all") && (
-            <div className="mb-4 text-center">
+            <div className="mb-8 text-center">
               <p className="text-sm text-white/60">
                 Showing{" "}
                 <span className="font-semibold text-emerald-400">

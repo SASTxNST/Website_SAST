@@ -64,6 +64,7 @@ const Navbar = () => {
               <li><a href="/">Home</a></li>
               <li><a href="/newsletter">Newsletter</a></li>
               <li><a href="/events">Events</a></li>
+              <li><a href="/discover">Discover</a></li>
               <li><a href="/projects">Projects</a></li>
               <li>
                 <Link to="/community/members" onClick={() => setMenuOpen(false)}>
@@ -71,13 +72,13 @@ const Navbar = () => {
                 </Link>
               </li>
 
-               <li className="nebula-link">
+              <li className="nebula-link">
                 <a href="https://nebula.sastclub.tech/" target="_blank" rel="noopener noreferrer">
                   Nebula
                 </a>
               </li>
 
-              
+
 
               <li><a href="/news">Astronomy News</a></li>
               <li><a href="/track">Track</a></li>

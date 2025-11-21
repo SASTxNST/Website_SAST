@@ -21,6 +21,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import Members from "./pages/Members.jsx";
 import MemberProfile from "./pages/MemberProfile.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
+import Discover from "./pages/Discover.jsx";
 
 import { Ion } from "cesium";
 import useSettings from "./hooks/UseSettings.jsx";
@@ -45,6 +46,7 @@ const AppContent = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/discover" element={<Discover />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/login" element={<Login />} />
           <Route path="/merch" element={<Store />} />

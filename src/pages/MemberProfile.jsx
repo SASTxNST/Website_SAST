@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { getMemberBySlug } from "../lib/members/data";
 import { Github, Linkedin, Globe, Twitter } from "lucide-react";
@@ -63,11 +62,12 @@ export default function MemberProfile() {
 
   return (
     <article
-      className="w-full"
+      className="w-full pt-30"
       style={{
         paddingLeft: "1.5rem",
         paddingRight: "1.5rem",
         paddingBottom: "6rem",
+
       }}
     >
       <div
@@ -83,8 +83,12 @@ export default function MemberProfile() {
       </div>
 
       <div
-        className="text-center font-semibold tracking-wide text-emerald-200/90"
-        style={{ marginBottom: "1.25rem" }}
+        className="text-center font-bold text-[50px] tracking-wide text-emerald-200/90 pb-5 font-family-['arial']"
+        style={{
+          marginBottom: "1.25rem"
+        }
+
+        }
       >
         SAST Community Member
       </div>
@@ -133,7 +137,7 @@ export default function MemberProfile() {
               className="text-2xl italic text-emerald-300/90"
               style={{ marginTop: "0.6rem" }}
             >
-              Vice President, Maintainer
+              Member
             </p>
           )}
 

@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
 import Landing from "./components/Landing.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Newsletter from "./components/Newsletter.jsx";
 import Events from "./components/Events.jsx";
+import EventCalendarPage from "./pages/EventCalendarPage.jsx";
 import Projects from "./components/Projects.jsx";
 import Store from "./components/Store.jsx";
 import ContributionRanks from "./pages/ContributionRanks.jsx";
@@ -20,33 +21,46 @@ import Footer from "./components/footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import Members from "./pages/Members.jsx";
 import MemberProfile from "./pages/MemberProfile.jsx";
+import ContributorProfile from "./pages/ContributorProfile.jsx";
+import Contributors from "./pages/Contributors.jsx";
+import DocsHub from "./pages/DocsHub.jsx";
 import SettingsMenu from "./components/SettingsMenu.jsx";
 import Discover from "./pages/Discover.jsx";
-
+import ChatBot from "./components/ChatBot.jsx";
+import NotFound from "./pages/NotFound.jsx";
 import { Ion } from "cesium";
 import useSettings from "./hooks/UseSettings.jsx";
+import Loader from "./components/Loader.jsx";
 Ion.defaultAccessToken = import.meta.env.VITE_CESIUM_TOKEN;
 
 const AppContent = () => {
   const location = useLocation();
   const hideNavbarRoutes = ["/merch", "/contributions"];
-  const { settings } = useSettings();
+  const { settings, getSetting } = useSettings();
+  const isPointerEnabled = getSetting("pointerAnimations");
+
+  useEffect(() => {
+    document.body.style.cursor = isPointerEnabled ? "none" : "auto";
+  }, [isPointerEnabled]);
+
   return (
     <>
-      {settings[1].enabled && <CursorEffects />}
       {settings[0].enabled && <NotifierSat />}
-      <DiamondCursor />
+      {isPointerEnabled && <CursorEffects isActive={isPointerEnabled} />}
+      <DiamondCursor isActive={isPointerEnabled} />
+      <Loader />
       <ScrollToTop />
       <SettingsMenu />
-
+      <ChatBot />
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
 
-      <main className="pt-44 md:pt-56 px-0">
+      <main className="">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/events" element={<Events />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/calendar" element={<EventCalendarPage />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/login" element={<Login />} />
           <Route path="/merch" element={<Store />} />
@@ -57,6 +71,10 @@ const AppContent = () => {
           <Route path="/footer" element={<Footer />} />
           <Route path="/community/members" element={<Members />} />
           <Route path="/community/members/:slug" element={<MemberProfile />} />
+          <Route path="/contributors" element={<Contributors />} />
+          <Route path="/contributors/:slug" element={<ContributorProfile />} />
+          <Route path="/docs/*" element={<DocsHub />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </>

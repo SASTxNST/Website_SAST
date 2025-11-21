@@ -1,7 +1,7 @@
-# SAST Club Website
+# 🌌 Society for Aerospace and Space Technology (SAST) — Official Website  
 
-Welcome to the official repository of the **Society for Astrophysics and Space Technology (SAST)** website.  
-Our goal is to collaboratively build and maintain a beautiful, functional platform that reflects the spirit, achievements, and events of our club.
+Welcome to the official repository of the **Society for Astrophysics and Space Technology (SAST)** at **Rishihood University**.  
+This project is dedicated to building a modern, interactive, and informative website that showcases our club’s **spirit, achievements, research, and events** in the field of space and astrophysics.  
 
 ---
 
@@ -14,7 +14,7 @@ Follow these steps to set up and run the project locally:
 git clone https://github.com/SASTxNST/Website_SAST.git
 cd Website_SAST
 ```
-
+ 
 ### Step 2: Install Dependencies
 ```bash
 npm install

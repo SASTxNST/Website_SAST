@@ -41,6 +41,24 @@ const Newsletter = () => {
     alert("Successfully subscribed to SAST Newsletter!");
   };
 
+  const handleDownload = (newsletter) => {
+    if (!newsletter.available || !newsletter.pdfUrl) {
+      alert("This newsletter is not available for download yet. Please check back later!");
+      return;
+    }
+
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = newsletter.pdfUrl;
+    link.download = `SAST_Newsletter_${newsletter.year}_${newsletter.title.replace(/\s+/g, '_')}.pdf`;
+    link.target = '_blank';
+    
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const newsletters = [
     {
       year: "2024",
@@ -50,6 +68,8 @@ const Newsletter = () => {
         "Explore breakthrough innovations in quantum computing applications for space exploration, satellite communications, and deep space missions.",
       downloads: "2.4K",
       featured: true,
+      pdfUrl: "/pdf/sast_newsletter_1.pdf",
+      available: true,
     },
     {
       year: "2023",
@@ -59,6 +79,8 @@ const Newsletter = () => {
         "Comprehensive analysis of next-generation propulsion technologies including ion drives, nuclear thermal propulsion, and breakthrough physics.",
       downloads: "1.8K",
       featured: false,
+      pdfUrl: null,
+      available: false,
     },
     {
       year: "2022",
@@ -68,6 +90,8 @@ const Newsletter = () => {
         "Revolutionary developments in miniaturized satellite technology, mission success stories, and future orbital deployment strategies.",
       downloads: "1.2K",
       featured: false,
+      pdfUrl: null,
+      available: false,
     },
   ];
 
@@ -488,35 +512,40 @@ const Newsletter = () => {
                         <span>{newsletter.downloads} downloads</span>
                       </div>
                       <button
+                        onClick={() => handleDownload(newsletter)}
+                        disabled={!newsletter.available}
                         style={{
                           display: "flex",
                           alignItems: "center",
                           gap: 8,
-                          background: "#3b82f6",
+                          background: newsletter.available ? "#3b82f6" : "#6b7280",
                           color: "#fff",
                           padding: "12px 24px",
                           borderRadius: 12,
                           fontWeight: 600,
                           border: "none",
-                          cursor: "pointer",
+                          cursor: newsletter.available ? "pointer" : "not-allowed",
                           transition: "all 0.3s",
+                          opacity: newsletter.available ? 1 : 0.6,
                           transform:
-                            hoveredCard === index ? "scale(1.05)" : "scale(1)",
+                            hoveredCard === index && newsletter.available ? "scale(1.05)" : "scale(1)",
                         }}
                       >
                         <Download style={{ width: 16, height: 16 }} />
-                        Download
-                        <ChevronRight
-                          style={{
-                            width: 16,
-                            height: 16,
-                            transition: "transform 0.3s",
-                            transform:
-                              hoveredCard === index
-                                ? "translateX(5px)"
-                                : "translateX(0)",
-                          }}
-                        />
+                        {newsletter.available ? "Download" : "Coming Soon"}
+                        {newsletter.available && (
+                          <ChevronRight
+                            style={{
+                              width: 16,
+                              height: 16,
+                              transition: "transform 0.3s",
+                              transform:
+                                hoveredCard === index
+                                  ? "translateX(5px)"
+                                  : "translateX(0)",
+                            }}
+                          />
+                        )}
                       </button>
                     </div>
                   </div>

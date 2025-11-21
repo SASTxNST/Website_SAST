@@ -125,3 +125,4 @@ firebase-debug.*
 # Local configs
 *.local
 *.envrc
+.vercel

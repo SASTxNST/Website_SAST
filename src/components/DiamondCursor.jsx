@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import "./DiamondCursor.css";
-
-const DiamondCursor = () => {
+const DiamondCursor = ({ isActive = true }) => {
   const cursorRef = useRef(null);
 
+  // Move cursor
   useEffect(() => {
+    if (!isActive) return;
+
     const move = (e) => {
       if (cursorRef.current) {
         cursorRef.current.style.left = `${e.clientX}px`;
@@ -15,10 +16,34 @@ const DiamondCursor = () => {
 
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
-  }, []);
+  }, [isActive]);
+
+  // Hide system cursor completely
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    if (isActive) {
+      html.style.cursor = "none";
+      body.style.cursor = "none";
+    } else {
+      html.style.cursor = "auto";
+      body.style.cursor = "auto";
+    }
+
+    // Cleanup when component unmounts
+    return () => {
+      html.style.cursor = "auto";
+      body.style.cursor = "auto";
+    };
+  }, [isActive]);
 
   return (
-    <div className="cursor-diamond" ref={cursorRef}>
+    <div
+      className="cursor-diamond"
+      ref={cursorRef}
+      style={{ display: isActive ? "block" : "none" }}
+    >
       <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="geminiGradient" x1="0%" y1="0%" x2="100%" y2="0%">

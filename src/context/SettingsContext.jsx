@@ -6,6 +6,7 @@ const defaultSettings = [
   { id: "pointerAnimations", label: "Pointer Animations", enabled: true },
   { id: "autoPlay", label: "Auto Play Videos", enabled: true },
   { id: "useLocation", label: "Use location", enabled: true },
+  { id: "smoothScroll", label: "Smooth Scroll", enabled: true },
 ];
 
 const SettingsContext = createContext();

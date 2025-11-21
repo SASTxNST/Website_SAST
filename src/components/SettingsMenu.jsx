@@ -191,6 +191,7 @@ const SettingsMenu = () => {
                 </div>
               </div>
             ))}
+            
           </div>
         </div>
       )}

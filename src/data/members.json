@@ -1,8 +1,23 @@
 [
   {
+    "slug": "abhinav-bajpai",
+    "name": "Abhinav Bajpai",
+    "role": "Tech Team",
+    "location": "Lucknow, Uttar Pradesh",
+    "bio": "Passionate about space technology and software development. Contributing to open-source projects while exploring the fascinating world of aerospace. Enthusiastic about creating innovative solutions that bridge the gap between technology and space exploration.",
+    "status": "active",
+    "avatarUrl": "https://github.com/abhinavbajpai30.png",
+    "links": {
+      "github": "https://github.com/abhinavbajpai30",
+      "x": "https://x.com/abhinavbajpai30",
+      "linkedin": "https://www.linkedin.com/in/abhinavbajpai30/",
+      "community": null
+    }
+  },
+  {
     "slug": "kavya-katal",
     "name": "Kavya Katal",
-    "role": "Contributor",
+    "role": "Vice President",
     "location": "Faridabad, Haryana, India",
     "bio": "Passionate Full Stack Developer and AI enthusiast exploring the intersection of Open Source, Cloud Native, and Web Technologies. I enjoy contributing to developer communities, building scalable solutions, and continuously learning to create impactful, innovative systems.",
     "status": "active",
@@ -17,11 +32,11 @@
   {
     "slug": "neelanshu-karn",
     "name": "Neelanshu Karn",
-    "role": "Frontend Developer",
+    "role": "President",
     "location": "Prayagraj, Uttar Pradesh",
     "bio": "President SAST, Tech Leader - Leads Innovation through Technology",
     "status": "active",
-    "avatarUrl": "/images/members/neelanshu.jpg",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/D4E03AQG5IMAd_OxYLg/profile-displayphoto-shrink_800_800/B4EZWOxzmZH0Ac-/0/1741857176517?e=1762992000&v=beta&t=3t-vI4PiVQ44pqGZr2NW531NIn430G3Fh_FxZhSo1zA",
     "links": {
       "github": "https://github.com/karn-cyber",
       "x": "",
@@ -47,9 +62,9 @@
   {
     "slug": "prataya-silla",
     "name": "Prataya Silla",
-    "role": "Member",
+    "role": "UI/UX Lead",
     "location": "Rayagada, Odisha",
-    "bio": "🚀 Passionate about building scalable web applications and creative digital experiences.🎯 Currently diving deeper into backend development, open-source contributions, and real-world freelance projects.📹 Also working with motion graphics and video editing to build a strong, creative portfolio.",
+    "bio": "Passionate about building scalable web applications and creative digital experiences.🎯 Currently diving deeper into backend development, open-source contributions, and real-world freelance projects.📹 Also working with motion graphics and video editing to build a strong, creative portfolio.",
     "status": "active",
     "avatarUrl": "https://avatars.githubusercontent.com/u/185405536?v=4",
     "links": {
@@ -58,5 +73,68 @@
       "linkedin": "https://www.linkedin.com/in/pratayasilla/",
       "community": null
     }
+  },
+  {
+    "slug": "rudra-pratap-singh-choudhary",
+    "name": "Rudra Pratap Singh Choudhary",
+    "role": "Astronomy Lead",
+    "location": "Neemuch, Madhya Pradesh, India",
+    "bio": "Hi, I am one of the founding member of SAST with expertise in astronomy, I am volunteer at Aryabhat foundation and participated and conducted various national level astronomy quizzes.",
+    "status": "active",
+    "avatarUrl": "https://i.postimg.cc/z3YZjVtN/rps.jpg",
+    "links": {
+      "github": "https://github.com/Rudra-choudhary",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/rudra-choudhary-b27b41306/",
+      "community": null
+    }
+  },
+  {
+    "slug": "ankit-kumar-pandey",
+    "name": "Ankit Kumar Pandey",
+    "role": "Tech Team",
+    "location": "Delhi",
+    "bio": "B.Tech student specializing in Computer Science and Artificial Intelligence at Newton School of Technology. Passionate about leveraging technology to solve real-world problems. Experienced in C++ and Java. Enthusiast of machine learning, aiming to contribute to innovative projects. Always eager to learn and grow in the dynamic field of technology.",
+    "status": "active",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/D5603AQEVqh5V3TCD3w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724601446512?e=1762387200&v=beta&t=G_9xhuuj0Ai845-mHFjgsVuPz98K3vv_LDbuzO4wKXQ",
+    "links": {
+      "github": "https://github.com/Ankitgkp",
+      "x": "https://x.com/proprataya",
+      "linkedin": "https://www.linkedin.com/in/ankit-pandey01/",
+      "community": null
+    }
+
+
+  },
+  {
+    "slug": "kavya-mukhija",
+    "name": "Kavya Mukhija",
+    "role": "Member",
+    "location": "Delhi",
+    "bio": "Computer Science and AI undergraduate at Newton School of Technology, driven by a passion for applying cutting-edge technology to tackle real-world challenges. Proficient in C++ and Java with a keen interest in machine learning. Committed to driving innovation through collaborative projects and continuous learning in the ever-evolving tech landscape.",
+    "status": "active",
+    "avatarUrl": "https://media.licdn.com/dms/image/v2/D5622AQFpmZ9lolO1XQ/feedshare-shrink_1280/feedshare-shrink_1280/0/1731865806201?e=1762992000&v=beta&t=gz9sEjK7NEcmWnhOCMKEbVwFbuY92EtItygKZnZaCXk",
+    "links": {
+      "github": "https://github.com/offxkavya",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/kavya-mukhija-59b75a323/",
+      "community": null
+    }
+  },
+  {
+    "slug": "kunal-vats",
+    "name": "Kunal Vats",
+    "role": "Tech Team",
+    "location": "Bhiwadi, Rajasthan",
+    "bio": null,
+    "status": "active",
+    "avatarUrl": "https://github.com/1Kunalvats9.png",
+    "links": {
+      "github": "https://github.com/1Kunalvats9",
+      "x": null,
+      "linkedin": "https://www.linkedin.com/in/kunal-vats-b67aa2309/",
+      "community": null
+    }
+
   }
 ]

@@ -112,7 +112,7 @@ const Landing = () => {
               <br />
               NEXT GENERATION
               <br />
-              OF SPACE EXPLORERS.....
+              OF SPACE EXPLORERS...
             </h1>
           </div>
         </section>
@@ -148,7 +148,7 @@ const Landing = () => {
           </div>
         </section>
 
-        <section className="stats-container">
+        {/* <section className="stats-container">
           <div className="stats-wrapper">
             <div className="stats-header">
               <h2 className="stats-title">
@@ -176,7 +176,7 @@ const Landing = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <hr className="vbar opacity-20" />
         <section className="hero-section py-12 md:py-20 min-h-[auto] md:min-h-[70vh] flex flex-col justify-center">

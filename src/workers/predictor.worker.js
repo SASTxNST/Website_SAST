@@ -73,8 +73,8 @@ self.onmessage = function (e) {
 
       const distance = Math.sqrt(
         Math.pow(userEcf.x - ecf.x, 2) +
-          Math.pow(userEcf.y - ecf.y, 2) +
-          Math.pow(userEcf.z - ecf.z, 2)
+        Math.pow(userEcf.y - ecf.y, 2) +
+        Math.pow(userEcf.z - ecf.z, 2)
       );
 
       if (distance <= radiusKm) {

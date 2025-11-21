@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
-const CursorEffects = () => {
+const CursorEffects = ({ isActive = true }) => {
   useEffect(() => {
+    if (!isActive) return;
+
     const handleMouseMove = (e) => {
       const star = document.createElement("div");
       star.className = "cursor-trail";
@@ -14,11 +16,9 @@ const CursorEffects = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isActive]);
 
   return null;
 };
 
 export default CursorEffects;
-
-

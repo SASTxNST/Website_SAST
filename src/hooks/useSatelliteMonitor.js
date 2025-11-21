@@ -232,7 +232,7 @@ export const useSatelliteMonitor = () => {
         startGlobalMonitoring();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [useLocationEnabled]);
 
   const clearNotification = () => {

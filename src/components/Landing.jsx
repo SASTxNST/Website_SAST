@@ -10,7 +10,7 @@ import videosource5 from "../Landing_media/spacerealastro.mov";
 import img1 from "../Landing_media/All-possible-through-our-state-of-the-art-space-service-2160x2170-4-2160x1660.webp";
 import img2 from "../Landing_media/frequent_lines.webp";
 import helmet_png from "../Landing_media/helm.jpg";
-import Footer from "./footer";
+import Footer from "./Footer";
 import useLenis from "../utils/lenis";
 import useSettings from "../hooks/UseSettings";
 

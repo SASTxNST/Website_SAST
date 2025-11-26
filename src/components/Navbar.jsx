@@ -7,27 +7,32 @@ import logo from "../Landing_media/SAST.png";
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setMenuOpen(false);
+      }
+    };
 
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+
+    let lastScrollY = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsNavbarHidden(currentScrollY > lastScrollY);
       lastScrollY = currentScrollY;
     };
 
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) setMenuOpen(false);
-    };
-
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
